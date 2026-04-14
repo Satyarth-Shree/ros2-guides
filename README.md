@@ -12,6 +12,7 @@ Currently this guide has tutorials related to the following frameworks:
 Currently one tutorial has been published for ROS. Here is the exact order in which the tutorials must be followed:
 
 1. [ROS 2 Tutorial for Beginners (Part 1): Create Your First Workspace and Package](Tutorials/part-1-create-your-first-workspace-and-package.md)
+2. [ROS 2 Tutorial for Beginners (Part 2): Create Your First Node](Tutorials/part-2-creating-your-first-node.md)
 
 These tutorials are also maintained in a technical blog format. [Click here to view in blog format.](https://rossimplified.substack.com/p/get-started-with-ros-2?r=61m4w1)
 
