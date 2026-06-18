@@ -14,6 +14,7 @@ Currently one tutorial has been published for ROS. Here is the exact order in wh
 1. [ROS 2 Tutorial for Beginners (Part 1): Create Your First Workspace and Package](Tutorials/part-1-create-your-first-workspace-and-package.md)
 2. [ROS 2 Tutorial for Beginners (Part 2): Create Your First Node](Tutorials/part-2-creating-your-first-node.md)
 
+Only these two articles have been fully converted into markdown forms. The rest of them are currently incomplete. I am in the midst of converting them. For the other articles you can refer to the blog format, the link of which has been shared below.
 These tutorials are also maintained in a technical blog format. [Click here to view in blog format.](https://rossimplified.substack.com/p/get-started-with-ros-2?r=61m4w1)
 
 ---
