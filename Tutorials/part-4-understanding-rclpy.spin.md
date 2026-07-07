@@ -56,7 +56,8 @@ Let's build and run this node.
 
 We will get the following output (I have used "my_node" as the executable name):
 
-![Output of node without rclpy.spin() — node runs, prints message, and terminates](../Images/part_4/Image_1.png) _Figure 1: Node output without rclpy.spin() — the node prints its message once and terminates_
+![Output of node without rclpy.spin() — node runs, prints message, and terminates](../Images/part_4/Image_1.png) <br>
+ _Figure 1: Node output without rclpy.spin() — the node prints its message once and terminates_
 
 So basically what is happening here? As you can see in the screenshot shared above, when we ran the command to execute our node then our node got executed, it displayed the output and then it stopped. By stopping I mean now our node is not running or we can say it isn't alive anymore.
 
@@ -72,7 +73,8 @@ rqt_graph
 
 The following interface will open:
 
-![rqt_graph interface showing no active nodes](../Images/part_4/Image_2.png) _Figure 2: rqt_graph interface — no node name displayed since the node already terminated_
+![rqt_graph interface showing no active nodes](../Images/part_4/Image_2.png) 
+<br>_Figure 2: rqt_graph interface — no node name displayed since the node already terminated_
 
 Press the refresh icon on the top left of the graph. When you will press it you can see that no node name is being displayed which means that no node is currently actively running.
 
@@ -94,7 +96,7 @@ rclpy.spin(node)
 
 Now our code should look like:
 
-![Code screenshot showing rclpy.spin(node) added above rclpy.shutdown()](../Images/part_4/Image_3.png) _Figure 3: Updated code with rclpy.spin(node) added just above rclpy.shutdown()_
+![Code screenshot showing rclpy.spin(node) added above rclpy.shutdown()](../Images/part_4/Image_3.png) <br>_Figure 3: Updated code with rclpy.spin(node) added just above rclpy.shutdown()_
 
 We used the variable "node" while we were creating our node in the line:
 
@@ -121,7 +123,7 @@ These two commands must be executed from the root of your workspace folder. As y
 
 Now run your node. You will now notice that even after your message has been displayed the node hasn't been terminated yet. Consider the figure below:
 
-![Node output showing the node still running after the message is displayed](../Images/part_4/Image_4.png) _Figure 4: Node remains alive after displaying its message, thanks to rclpy.spin(node)_
+![Node output showing the node still running after the message is displayed](../Images/part_4/Image_4.png) <br>_Figure 4: Node remains alive after displaying its message, thanks to rclpy.spin(node)_
 
 To check whether the node is alive or not open another terminal while keeping the current one running and type:
 
@@ -131,7 +133,8 @@ rqt_graph
 
 After refreshing the graph you will see that a node name "New_Node" is being displayed as shown in the figure below:
 
-![rqt_graph showing New_Node as an active, running node](../Images/part_4/Image_5.png)_Figure 5: rqt_graph now shows "New_Node" as an active node_
+![rqt_graph showing New_Node as an active, running node](../Images/part_4/Image_5.png)<br>
+_Figure 5: rqt_graph now shows "New_Node" as an active node_
 
 This means our node is alive.
 
@@ -213,7 +216,7 @@ def timer():
 Now our node looks like:
 
 ![Code screenshot showing the timer() function defined inside main()](../Images/part_4/Image_6.png) 
-_Figure 6: Code with the timer() function added inside main()_
+<br>_Figure 6: Code with the timer() function added inside main()_
 
 So we have created a function which displays the message that we have intend to, but will the node display the message periodically as we want it to display?
 
@@ -256,7 +259,7 @@ if __name__ == "__main__":
 Let's build our package and run our node. You will see that our message is getting displayed after every 1 second as shown in the figure given below:
 
 ![Node output showing the message repeating every 1 second](../Images/part_4/Image_7.png)
-_Figure 7: Message printed repeatedly every 1 second via the timer callback_
+<br>_Figure 7: Message printed repeatedly every 1 second via the timer callback_
 
 Why is our message getting displayed every 1 second?
 
@@ -280,7 +283,9 @@ Now it will be fun to see happens when we build and run our node again.
 
 You will get the following output:
 
-![Node output showing the message printed only once, without repeats, after removing rclpy.spin()](../Images/part_4/Image_8.png) _Figure 8: Without rclpy.spin(), the timer callback never fires — no repeated messages_
+![Node output showing the message printed only once, without repeats, after removing rclpy.spin()](../Images/part_4/Image_8.png) 
+
+_Figure 8: Without rclpy.spin(), the timer callback never fires — no repeated messages_
 
 Message won't be displayed again and again.
 
@@ -395,7 +400,7 @@ Now let's build and run our node again.
 
 You will find something in interesting. The output which you will get will be:
 
-![Node output showing nothing printed at all after placing rclpy.spin(node) before the logger line](../Images/part_4/Image_9.png) _Figure 9: No output at all — spin() placed before the log line blocks everything after it_
+![Node output showing nothing printed at all after placing rclpy.spin(node) before the logger line](../Images/part_4/Image_9.png) <br>_Figure 9: No output at all — spin() placed before the log line blocks everything after it_
 
 As you can see no output has been displayed. If you try to understand why this happens then you won't find this surprising anymore.
 
@@ -457,7 +462,7 @@ is written before spin() function so it will be executed and our message will be
 
 The output that you will obtain will be:
 
-![Node output showing the message printed exactly once, since spin() blocks the timer setup that follows it](../Images/part_4/Image_10.png) _Figure 10: Message prints once — spin() blocks the timer creation code that comes after it_
+![Node output showing the message printed exactly once, since spin() blocks the timer setup that follows it](../Images/part_4/Image_10.png) <br>_Figure 10: Message prints once — spin() blocks the timer creation code that comes after it_
 
 As you can see message was not displayed multiple times because the lines of code required to do so didn't got executed.
 
@@ -489,7 +494,7 @@ In this blog we tried to use the spin() function to display a message periodical
 
 [ROS 2 Tutorial for Beginners (Part 5): Managing ROS 2 Workspace Storage Using Linux Commands](https://medium.com/@satyarthshree45/ros2-tutorial-for-beginners-part-5-managing-ros2-workspace-storage-using-linux-commands-f0c0b76c9559)
 
-## As Short Introduction
+## A Short Introduction
 
 Hi, I am Satyarth Shree, a first-semester BTech Robotics and Automation student at Lovely Professional University (LPU), India. I am an aspiring robotics engineer who is publicly documenting his learning journey using platforms like Medium and Substack.
 
