@@ -6,6 +6,7 @@ repo_url: https://github.com/Satyarth-Shree/ros2-guides.git
 theme:
   name: material
   logo: assets/ROS_Simplified_Logo.png
+  favicon: assets/ROS_Simplified_Logo.png
   palette:
     scheme: slate
   features:
