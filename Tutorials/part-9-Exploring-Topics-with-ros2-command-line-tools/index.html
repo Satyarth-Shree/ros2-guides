@@ -1,0 +1,1507 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Beginner-friendly ROS 2 tutorials from ROS Simplified">
+      
+      
+      
+        <link rel="canonical" href="https://docs.satyarthshree.com/Tutorials/part-9-Exploring-Topics-with-ros2-command-line-tools/">
+      
+      
+        <link rel="prev" href="../part-8-create-your-first-subscriber-node-in-python/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Part 9: Exploring Topics with ROS2 CLI Tools - ROS Simplified</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ros-2-tutorial-for-beginners-part-9-exploring-topics-with-ros-2-command-line-tools" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ROS Simplified" class="md-header__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS Simplified
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Part 9: Exploring Topics with ROS2 CLI Tools
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS Simplified" class="md-nav__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ROS Simplified
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-1-create-your-first-workspace-and-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1: Creating Your First Workspace and Package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-2-creating-your-first-node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2: Creating Your First Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-1-understanding-ros-2-nodes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.1: Understanding ROS 2 Nodes (Sub Part 1)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.2: Understanding ROS 2 Nodes (Sub Part 2)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-4-understanding-rclpy.spin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4: Understanding rclpy.spin()
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-5-manage-your-ROS-2-workspace-using-linux-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5: Managing Workspace Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-6-topics-and-publisher-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6: Topics and Publisher Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-7-creating-a-publisher-and-exploring-it-with-ros2-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7: Creating a Publisher and Exploring It with ROS2 CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-8-create-your-first-subscriber-node-in-python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8: Create Your First Subscriber Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 9: Exploring Topics with ROS2 CLI Tools
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 9: Exploring Topics with ROS2 CLI Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-a-built-in-publisher-and-subscriber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running a Built-In Publisher and Subscriber
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-command-ros2-node-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Command: ros2 node list
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#second-command-ros2-topic-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second Command: ros2 topic list
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#third-command-edge-case-related-to-ros2-daemon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Third Command (Edge case): Related to ros2 daemon
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fourth-command-ros2-topic-echo-topic_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fourth Command: ros2 topic echo /topic_name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fifth-command-ros2-topic-hz-topic_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fifth Command: ros2 topic hz /topic_name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sixth-command-ros2-topic-bw-topic_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sixth Command: ros2 topic bw /topic_name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seventh-command-ros2-topic-info-topic_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seventh Command: ros2 topic info /topic_name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eighth-command-ros2-interface-show-message_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eighth Command: ros2 interface show message_type
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ninth-command-ros2-topic-pub-r-rate_hz-topic_name-message_type-message_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ninth Command: ros2 topic pub -r rate_hz topic_name message_type "message_data"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tenth-command-pub-command-with-once-flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tenth Command: pub command with once flag
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eleventh-command-ros2-node-info-node_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eleventh Command: ros2 node info /node_name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-publication-ros-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About The Publication — ROS Simplified
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About the Author
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Connect
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-a-built-in-publisher-and-subscriber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running a Built-In Publisher and Subscriber
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#first-command-ros2-node-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Command: ros2 node list
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#second-command-ros2-topic-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second Command: ros2 topic list
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#third-command-edge-case-related-to-ros2-daemon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Third Command (Edge case): Related to ros2 daemon
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fourth-command-ros2-topic-echo-topic_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fourth Command: ros2 topic echo /topic_name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fifth-command-ros2-topic-hz-topic_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fifth Command: ros2 topic hz /topic_name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sixth-command-ros2-topic-bw-topic_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sixth Command: ros2 topic bw /topic_name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#seventh-command-ros2-topic-info-topic_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Seventh Command: ros2 topic info /topic_name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eighth-command-ros2-interface-show-message_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eighth Command: ros2 interface show message_type
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ninth-command-ros2-topic-pub-r-rate_hz-topic_name-message_type-message_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ninth Command: ros2 topic pub -r rate_hz topic_name message_type "message_data"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tenth-command-pub-command-with-once-flag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tenth Command: pub command with once flag
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#eleventh-command-ros2-node-info-node_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eleventh Command: ros2 node info /node_name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-publication-ros-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About The Publication — ROS Simplified
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About the Author
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Connect
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ros-2-tutorial-for-beginners-part-9-exploring-topics-with-ros-2-command-line-tools">ROS 2 Tutorial for Beginners (Part 9): Exploring Topics with ROS 2 Command Line Tools<a class="headerlink" href="#ros-2-tutorial-for-beginners-part-9-exploring-topics-with-ros-2-command-line-tools" title="Permanent link">&para;</a></h1>
+<p><strong>Satyarth Shree</strong> · 19 min read</p>
+<blockquote>
+<p>Learn how to inspect, monitor, and analyze ROS 2 topics using practical command-line tools and real publisher-subscriber examples.</p>
+</blockquote>
+<p>In previous part, we have successfully created and ran our first subscriber node while in <a href="https://medium.com/@satyarthshree45/ros-2-tutorial-for-beginners-part-7-creating-a-publisher-and-exploring-it-with-ros-2-cli-d98ac9cb4dd0">part 7</a> we created and ran our publisher node.</p>
+<p>So basically we have learned ROS 2 to a point where we can now create publisher and subscriber systems, but knowing only how to create them is not the end!</p>
+<p>Sometimes you will try to establish communication between two nodes by making one of them a publisher and the other one a subscriber, but the desired communication won't happen. Many unwanted or you can say unexpected errors might happen.</p>
+<p>Because of this reason we must have the ability to debug our topic and the publisher — subscriber system which we have created.</p>
+<p>This part is especially focused on various command line tools offered by ROS 2 which can help us debug, modify, inspect and test our systems. We will learn all these tools one by one.</p>
+<p>Knowing them completely will provide you with an ability to calmly navigate through any issue which you will face while building systems involving publisher, subscriber and topics.</p>
+<blockquote>
+<p>By the end of this article, you will be able to use various CLI tools provided by ROS 2 to inspect topics and nodes related to it.</p>
+</blockquote>
+<h2 id="running-a-built-in-publisher-and-subscriber">Running a Built-In Publisher and Subscriber<a class="headerlink" href="#running-a-built-in-publisher-and-subscriber" title="Permanent link">&para;</a></h2>
+<p>To learn different commands which will be taught in this article, you have to first run a publisher and a subscriber.</p>
+<p>ROS 2 provides a built in publisher and subscriber node named talker and listener respectively. You can run your own publisher and subscriber system but I would recommend running this one so that we are all on the same page.</p>
+<p>To start the built-in publisher run the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>run<span class="w"> </span>demo_nodes_cpp<span class="w"> </span>talker
+</code></pre></div>
+
+<p>Now to run the subscriber node open another terminal and run the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>run<span class="w"> </span>demo_nodes_cpp<span class="w"> </span>listener
+</code></pre></div>
+
+<p>Now your publisher — subscriber system is running. We will test all the commands which we sill study on this system.</p>
+<p>Open a third terminal to run various commands which we are now going to learn.</p>
+<h2 id="first-command-ros2-node-list">First Command: ros2 node list<a class="headerlink" href="#first-command-ros2-node-list" title="Permanent link">&para;</a></h2>
+<p>This command is used to check which nodes are currently running. When you will run it, you will see the following output:</p>
+<div class="codehilite"><pre><span></span><code>/listener
+/talker
+</code></pre></div>
+
+<p>These two are the built-in nodes which we just ran in the previous section of this article. If you have ran some other nodes then you will see their names instead of these ones.</p>
+<h2 id="second-command-ros2-topic-list">Second Command: ros2 topic list<a class="headerlink" href="#second-command-ros2-topic-list" title="Permanent link">&para;</a></h2>
+<p>This command is used to check which topics are currently active. When you run it, you will see the following output:</p>
+<div class="codehilite"><pre><span></span><code>/chatter
+/parameter_events
+/rosout
+</code></pre></div>
+
+<p><strong>parameter_events</strong> and <strong>rosout</strong> are topics which are always running in background.</p>
+<p>rosout is used for logging while parameter_events is used for parameter updates. <strong>Logging</strong> and <strong>parameter updates</strong> are some properties which ROS 2 automatically associates with a node. So whenever you run a node, these two topics are almost always running in the background.</p>
+<p>This definition is not 100% technically accurate. It is an easy way to understand why these two topics are always active.</p>
+<p>If you want a technically strict explanation, then the absolute correct way to explain this phenomenon is:</p>
+<p>Every ROS 2 node is provided with built-in logging and parameter-management capabilities. These capabilities use the /rosout and /parameter_events topics respectively, which is why these topics are commonly present whenever ROS 2 nodes are running.</p>
+<p>The topic <strong>chatter</strong> is running because the publisher and subscriber nodes which we have started communicate via this topic.</p>
+<blockquote>
+<p>So to conclude, this command provides us with the names of topics which are currently active.</p>
+</blockquote>
+<h2 id="third-command-edge-case-related-to-ros2-daemon">Third Command (Edge case): Related to ros2 daemon<a class="headerlink" href="#third-command-edge-case-related-to-ros2-daemon" title="Permanent link">&para;</a></h2>
+<p>In this section we will basically study three commands. These are related to ros2 daemon.</p>
+<p>First we will understand what is daemon, why is it important and then commands related to it.</p>
+<p>Whenever we use commands like ros2 node list or ros2 topic list then ROS 2 fetches information about the nodes or topics which are currently running from ROS 2 daemon.</p>
+<p>ROS 2 daemon can be understood as a background process which caches information like currently active nodes and topics so that command line tools can respond quickly.</p>
+<p>By caching information, I mean temporarily storing information.</p>
+<p>ROS 2 daemon continuously monitors ROS 2 graph and updates itself whenever new nodes, topics or services appear or disappear.</p>
+<p>But sometimes due to some technical glitch, ROS 2 daemon becomes stale and stops updating itself. Because of this issue you might not see the name of your node or topic when using CLI tools even if it is running in the background.</p>
+<p>This is a very rare issue, but it occurs.</p>
+<p>To fix it we have to restart ROS 2 daemon.</p>
+<p>First we have to stop ROS 2 daemon. To do so type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>daemon<span class="w"> </span>stop
+</code></pre></div>
+
+<p>Now we will start daemon again. To do so type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>daemon<span class="w"> </span>start
+</code></pre></div>
+
+<p>Now your daemon is restarted, so the issue of daemon going stale won't occur.</p>
+<p>To check whether your daemon is running or not you can type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>daemon<span class="w"> </span>status
+</code></pre></div>
+
+<p>If daemon is running, then you will see the following output:</p>
+<div class="codehilite"><pre><span></span><code>The daemon is running
+</code></pre></div>
+
+<p>And if it is not, then you will see the following output:</p>
+<div class="codehilite"><pre><span></span><code>The daemon is not running
+</code></pre></div>
+
+<p>Make sure that the daemon is running! Use the start command, if it is not.</p>
+<h2 id="fourth-command-ros2-topic-echo-topic_name">Fourth Command: ros2 topic echo /topic_name<a class="headerlink" href="#fourth-command-ros2-topic-echo-topic_name" title="Permanent link">&para;</a></h2>
+<p>Let's suppose you have made your publisher node but you haven't made your subscriber node and you want to check whether your publisher is publishing messages or not.</p>
+<p>Then this is the best command at your disposal. This command displays the messages which are being on published on your topic. The syntax of this command is:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/topic_name
+</code></pre></div>
+
+<p>Replace <strong>topic_name</strong> by the name of your topic.</p>
+<p>We are currently running a publisher named talker. This publisher publishes messages to a topic named <strong>chatter</strong>. So to check which messages are being published on this topic, type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/chatter
+</code></pre></div>
+
+<p>You will start seeing output as shown in the figure below.</p>
+<p><img alt="Figure 1: Output of the command — ros2 topic echo /chatter|470" src="../../Images/part_9/Image_1.png" /> <br> <em>Figure 1: Output of the command — ros2 topic echo /chatter</em></p>
+<p>If your publisher is not running and no topic named chatter is active then you will get a warning as shown in the figure below.</p>
+<p><img alt="Figure 2: Warning message being displayed if we try to echo a topic which is not active." src="../../Images/part_9/Image_2.png" /> <br> <em>Figure 2: Warning message being displayed if we try to echo a topic which is not active.</em></p>
+<blockquote>
+<p>So to summarize, we can say that this is a useful command as it allows us to check which messages are being published on a topic without running a subscriber node.</p>
+</blockquote>
+<h2 id="fifth-command-ros2-topic-hz-topic_name">Fifth Command: ros2 topic hz /topic_name<a class="headerlink" href="#fifth-command-ros2-topic-hz-topic_name" title="Permanent link">&para;</a></h2>
+<p>Hz is the SI unit to measure frequency. This command is used to measure the frequency at which messages are being published on a topic. By frequency, I mean number of messages being published every second.</p>
+<p>The syntax of this command is:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>hz<span class="w"> </span>/topic_name
+</code></pre></div>
+
+<p>Replace <strong>topic_name</strong> by the name of your topic. Since currently chatter topic is active so we will run the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>hz<span class="w"> </span>/chatter
+</code></pre></div>
+
+<p>You will get output as shown in the figure below.</p>
+<p><img alt="Figure 3: Output of the command — ros2 topic hz /chatter|451" src="../../Images/part_9/Image_3.png" /> <br> <em>Figure 3: Output of the command — ros2 topic hz /chatter</em></p>
+<p>As you can see the output displays five different parameters at once. They are —</p>
+<ol>
+<li>average rate</li>
+<li>min</li>
+<li>max</li>
+<li>std dev</li>
+<li>window</li>
+</ol>
+<p><strong>Min</strong> is the minimum duration which has been observed between two consequent messages. <strong>Max</strong> is the maximum duration which has been observed between two consequent messages.</p>
+<p><strong>Average rate</strong> is the average publishing frequency in Hz (messages per second). <strong>std dev</strong> stands for standard deviation.</p>
+<p>Here standard deviation measures how consistent the message publishing rate is. If the standard deviation is less then this means that messages are being published at regular intervals but if it is more then it means that timings between messages vary more.</p>
+<p><strong>window</strong> means number of intervals which were analyzed to estimate the frequency. Intervals means the duration between two consequent messages.</p>
+<blockquote>
+<p>To summarize, we can say that this command is useful because it allows us to check at which rate messages are being published on our topic.</p>
+</blockquote>
+<h2 id="sixth-command-ros2-topic-bw-topic_name">Sixth Command: ros2 topic bw /topic_name<a class="headerlink" href="#sixth-command-ros2-topic-bw-topic_name" title="Permanent link">&para;</a></h2>
+<p>This command shows us the amount of data being published on the topic every second. The syntax of this command is —</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>bw<span class="w"> </span>/topic_name
+</code></pre></div>
+
+<p>Replace <strong>topic_name</strong> by name of your topic. In this command bw means <strong>Bandwidth</strong>.</p>
+<p>In our case we are analyzing the topic chatter, so we will run the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>bw<span class="w"> </span>/chatter
+</code></pre></div>
+
+<p>You will see the output in a format which is shown in the figure given below.</p>
+<p><img alt="Figure 4: Output of the command — ros2 topic bw /chatter" src="../../Images/part_9/Image_4.png" /> <br> <em>Figure 4: Output of the command — ros2 topic bw /chatter</em></p>
+<p>You can see messages like:</p>
+<div class="codehilite"><pre><span></span><code><span class="mf">32</span><span class="w"> </span><span class="n">B</span><span class="o">/</span><span class="n">s</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="mf">2</span><span class="w"> </span><span class="n">messages</span>
+<span class="mf">29</span><span class="w"> </span><span class="n">B</span><span class="o">/</span><span class="n">s</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="mf">3</span><span class="w"> </span><span class="n">messages</span>
+</code></pre></div>
+
+<p>32 B/s from 2 messages means that approximately 32 Byte of data was published in a single second and this data was estimated by analyzing 2 messages.</p>
+<p>The second message states that after analyzing 3 messages it has been estimated that per second, 29 Byte of data is being published on this topic in every second.</p>
+<p>We can also see parameters like Message size mean, min and max in the output.</p>
+<p>Message mean size displays the average size of the message while max and min displays the maximum and minimum size of messages respectively which are being published on the topic.</p>
+<p>In our case, publisher is publishing only a single message every time so the values of these three parameters are same.</p>
+<blockquote>
+<p>To summarize, we can say that this command is useful because it allows us to check how much data is being published on our topic every second.</p>
+</blockquote>
+<h2 id="seventh-command-ros2-topic-info-topic_name">Seventh Command: ros2 topic info /topic_name<a class="headerlink" href="#seventh-command-ros2-topic-info-topic_name" title="Permanent link">&para;</a></h2>
+<p>This topic allows us to inspect information about a specific topic. The syntax of this command is —</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>info<span class="w"> </span>/topic_name
+</code></pre></div>
+
+<p>Replace <strong>topic_name</strong> by the name of your topic.</p>
+<p>In our case, we are dealing with the chatter topic currently, so we will run the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>info<span class="w"> </span>/chatter
+</code></pre></div>
+
+<p>You can also use this command for any other topic which is currently active. Just make sure that you are following the correct syntax. After running this command you will see the following output:</p>
+<div class="codehilite"><pre><span></span><code>Type: std_msgs/msg/String
+Publisher count: 1
+Subscription count: 1
+</code></pre></div>
+
+<p>Three different types of information are displayed whenever we run this command for any topic. They are Type, Publisher count and Subscription count.</p>
+<p>Publisher count is the number of publishers which are currently publishing on the topic. Subscription count is the number of subscribers which have subscribed to this topic.</p>
+<p>Every message which is published to a topic has a message type. The Type parameter shows the message type and the package from where that message type belongs.</p>
+<p>For example, in the output which we have got, the Type is:</p>
+<div class="codehilite"><pre><span></span><code>std_msgs/msg/String
+</code></pre></div>
+
+<p>This means that messages of the message type <strong>String</strong> are been published on this topic and the message definition file of this message type (which is String.msg) is stored in the <strong>std_msgs</strong> package.</p>
+<blockquote>
+<p>To summarize, we can say that this command is useful because it allows us to check the type, publisher count and subscription count of our topic.</p>
+</blockquote>
+<h2 id="eighth-command-ros2-interface-show-message_type">Eighth Command: ros2 interface show message_type<a class="headerlink" href="#eighth-command-ros2-interface-show-message_type" title="Permanent link">&para;</a></h2>
+<p>This command allows us to check what are the fields of a message or service type.</p>
+<p>For example, in previous section we learned that the type of the topic chatter is <strong>std_msgs/msg/String</strong>. But we do not know what this message type accepts as input and what is the type of that input.</p>
+<p>Basically what I am trying to say that we don't know the message definition of this String message type. This command basically shows us the message definition file of any message or service type. The message type contains information like the fields of that message type (in which you enter data which is published) and the type of those fields.</p>
+<p>The syntax of this command is:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>message_type
+</code></pre></div>
+
+<p>Replace <strong>message_type</strong> by the actual message type.</p>
+<p>In this case, the actual message type is written in a specific way. First we have to write the package name, then a forward slash, then the folder name inside which we write our message definitions which is the <strong>msg</strong> folder, then we again put a forward slash and then we write the message type.</p>
+<p>For example, the type of chatter topic which is: std_msgs/msg/String.</p>
+<p>Since we are dealing with this message type so we will write the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>std_msgs/msg/String
+</code></pre></div>
+
+<p>We will get the following output:</p>
+<div class="codehilite"><pre><span></span><code><span class="gh">#</span> This was originally provided as an example message.
+<span class="gh">#</span> It is deprecated as of Foxy
+<span class="gh">#</span> It is recommended to create your own semantically meaningful message.
+<span class="gh">#</span> However if you would like to continue using this please use the equivalent in example_msgs.
+
+string data
+</code></pre></div>
+
+<p>The lines starting with the hashtag symbol (#) are comments. You can safely ignore them as they do not get processed by ROS 2 build systems during compilation.</p>
+<p>Focus on the following line:</p>
+<div class="codehilite"><pre><span></span><code>string data
+</code></pre></div>
+
+<p>This line means that this message type has one field, which is data and type of that field is string. Whenever we will use this message we have to assign the value which we want to publish to this field (data) and the type of that value must be string.</p>
+<p>This is how you can check the field and data type that a message type allows.</p>
+<blockquote>
+<p>To summarize, we can say that this command is extremely useful as it allows us to inspect the message definition of a message type.</p>
+</blockquote>
+<h2 id="ninth-command-ros2-topic-pub-r-rate_hz-topic_name-message_type-message_data">Ninth Command: ros2 topic pub -r rate_hz topic_name message_type "message_data"<a class="headerlink" href="#ninth-command-ros2-topic-pub-r-rate_hz-topic_name-message_type-message_data" title="Permanent link">&para;</a></h2>
+<p>This command allows us to publish data at a topic without the need of creating any publisher node.</p>
+<p>The syntax of this command is:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>-r<span class="w"> </span>rate_hz<span class="w"> </span>topic_name<span class="w"> </span>message_type<span class="w"> </span><span class="s2">&quot;message_data&quot;</span>
+</code></pre></div>
+
+<p>Replace <strong>rate_hz</strong> by an integer or a float number. This represents the rate at which messages will be published to the topic. Replace <strong>topic_name</strong> by the name of the topic in which you want to publish your message.</p>
+<p>Replace <strong>message type</strong> by the actual message type of your topic. If you do not know the message type then just use the 7th command of this article to find it out. Copy paste the exact message type obtained after using the 7th command.</p>
+<p>Now inside the double quotes you have to write the message which you want to publish. There is a specific syntax that you have to follow while specifying the message.</p>
+<blockquote>
+<p>Carefully read the example explained below to understand this syntax.</p>
+</blockquote>
+<p>Currently we are running talker and listener which are publisher and subscriber nodes respectively from demo_nodes_cpp package. Click on the terminal in which you are running your talker node and press Ctrl + C to terminate it.</p>
+<p>To use this command, we will first kill the publisher which is already publishing messages to the topic <strong>chatter</strong> so that we can fully focus on observing the messages published because of this command.</p>
+<p>After terminating talker node, you will notice that listener node has stopped displaying any messages because now no publisher node is actively publishing on the topic chatter.</p>
+<p>Let's suppose I want to publish two messages every second on this topic, but I have forgotten what is the message type. So first I will run the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>info<span class="w"> </span>/chatter
+</code></pre></div>
+
+<p>This command will give the following output:</p>
+<div class="codehilite"><pre><span></span><code>Type: std_msgs/msg/String
+Publisher count: 0
+Subscription count: 1
+</code></pre></div>
+
+<p>Now we know the type of message being published on this topic.</p>
+<p>An interesting thing to note here is that publisher count is zero. This is because we terminated the talker node. When I explained this command earlier, both the publisher and subscription counts were one because both the nodes — talker and listener were running.</p>
+<p>Now we have decided the rate with which data will be published (2 Hz), the topic on which messages are to be published (chatter) and the message type of this topic.</p>
+<p>According to the syntax of the command we need to know one more thing, and that thing is the message data.</p>
+<p>Read very carefully from now onwards! I am going to explain the syntax of message data.</p>
+<p>As told in previous section, the <strong>interface</strong> command can be used to inspect our message type. When we check the message type, we can see which field is present and what is its data type.</p>
+<p>In previous section, when we checked the message type of topic chatter using the interface command, we got to know that it has a field named data which is of string data type.</p>
+<p>Now let's suppose I want to publish the following string:</p>
+<blockquote>
+<p>"I am learning ROS 2 from ROS Simplified."</p>
+</blockquote>
+<p>Then I will write message data in the following manner:</p>
+<blockquote>
+<p>"{data: 'I am learning ROS 2 from ROS Simplified.'}"</p>
+</blockquote>
+<p>This is how message data needs to be written. Syntactically we can write it as:</p>
+<blockquote>
+<p>"{field_name: value}"</p>
+</blockquote>
+<p>The first thing we have to do is either enclose the curly brackets in double or single inverted commas.</p>
+<p>The message type of our topic has data as a field and it's type is string. Which is why we replaced field name by data and value by the value of our field which is: 'I am learning ROS 2 from ROS Simplified'.</p>
+<p>Since we have used double inverted commas to enclose the curly brackets so we will use single inverted commas inside to write our string. The converse is also true. If we have used single inverted commas outside to enclose curly brackets then we will use double inverted commas inside to write string.</p>
+<p>Now the full command becomes:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>-r<span class="w"> </span><span class="m">2</span><span class="w"> </span>/chatter<span class="w"> </span>std_msgs/msg/String<span class="w"> </span><span class="s2">&quot;{data: &#39;I am learning ROS 2 from ROS Simplified.&#39;}&quot;</span>
+</code></pre></div>
+
+<p>As soon as you type this command and press enter you will start seeing that the subscriber node (which is listener in this case), has started displaying the message which we have published via this command.</p>
+<p>So basically this is a command which allows us to publish messages on our topic without the need of any publisher node.</p>
+<p>The utility of this command in day to day ROS 2 usage is that it can allow you to check whether your subscriber node is working correctly without creating a publisher node.</p>
+<p>Think of it as the counter part of the <strong>ros2 topic echo</strong> command. The echo command allows us to check whether our publisher node is working correctly without creating a subscriber node meanwhile this command allows us to check whether our subscriber node is working correctly without creating a publisher node.</p>
+<p>This is actually a very important insight!</p>
+<p>It tells us a lot about the design philosophy of ROS 2. It is not just a middleware used to create high end robots.</p>
+<p>It is an entire system which provides all the tools required in every step of building a complex robot including simulators (Gazebo), GUI tools like rqt graph to inspect an entire system visually and CLI tools like the ones we discussed in this article because real robots do not have monitors so you need text based tools.</p>
+<p>This also tells us a lot about how competent engineering minds like the creators of ROS 2 think. They do not just think about a huge sized flashy robotics arm. They broke it down into it's atomic components and realized the fact that these simple looking CLI tools will help us quickly test whether different sub parts of our system are working well or not.</p>
+<p>Let's suppose you are making an AGV (Autonomous Grounded Vehicle) which stops when the ultrasonic sensor mounted on it detects that there is an obstacle at a distance less than 5 cm from the robot.</p>
+<p>You have created a subscriber node which takes data from ultrasonic sensor and when the distance reading falls below 5 cm, it sends data to motors to stop spinning. Let's assume you have made a mistake!</p>
+<p>You have accidentally broken your ultrasonic sensor or it is currently not available for some other reason. How will you get to know whether your subscriber node which is responsible for stopping your car is working correctly or not?</p>
+<p>This is exactly where our ninth command, the one which we just studied comes into picture!</p>
+<p>We can use this command to publish fake sensor data to the topic which is associated with our subscriber node and in this way we can actually test whether our node is working properly or not and whether the car is stopping as expected.</p>
+<p>These all edge cases were considered while creating ROS 2 which is most probably the reason why we have been provided with so many CLI tools. They all have practical utility in real systems!</p>
+<p>Imagine having the foresight to predict the real world messiness to such an accurate degree and then to build tools to increase real world reliability. The minds of these people who created ROS 2 genuinely surprises me!</p>
+<p>In my opinion, ROS 2 is an engineering marvel!</p>
+<p>Alright let's come back to the topic of the article. I shall write a separate blog to share my opinion on the design philosophy of ROS 2 from what I have grasped.</p>
+<h2 id="tenth-command-pub-command-with-once-flag">Tenth Command: pub command with once flag<a class="headerlink" href="#tenth-command-pub-command-with-once-flag" title="Permanent link">&para;</a></h2>
+<p>The syntax of this command is:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>topic_name<span class="w"> </span>message_type<span class="w"> </span><span class="s2">&quot;{message_data}&quot;</span>
+</code></pre></div>
+
+<p>Notice that this command is similar to the previous one. We just replaced <strong>-r rate_hz</strong> by:</p>
+<div class="codehilite"><pre><span></span><code>--once
+</code></pre></div>
+
+<p>Terms like <strong>r</strong> and <strong>once</strong> are known as flags. This is an important technical term which you should remember. The <strong>r</strong> flag is also known as <strong>rate flag</strong> because it helps us in specifying the rate at which messages should be published on the topic.</p>
+<p>In the previous command, we used the <strong>r</strong> flag to specify the frequency at which messages should be published but in this command we have used the <strong>once</strong> tag.</p>
+<blockquote>
+<p>Because of the once flag, the message will be published only once on the topic. We can use this command if we want only a single message to be published.</p>
+</blockquote>
+<p>Only the flag changes, rest all the things are same as the previous command.</p>
+<p>Type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>pub<span class="w"> </span>--once<span class="w"> </span>/chatter<span class="w"> </span>std_msgs/msg/String<span class="w"> </span><span class="s2">&quot;{data: &#39;I am learning ROS 2 from ROS Simplified.&#39;}&quot;</span>
+</code></pre></div>
+
+<p>And you will notice that your subscriber node (listener, in our case) will display only one message.</p>
+<h2 id="eleventh-command-ros2-node-info-node_name">Eleventh Command: ros2 node info /node_name<a class="headerlink" href="#eleventh-command-ros2-node-info-node_name" title="Permanent link">&para;</a></h2>
+<p>This command can be considered as the counterpart of seventh command (ros2 topic info /topic_name) for ROS 2 nodes.</p>
+<p>The seventh command which we studied allows us to find information about a topic meanwhile this command allows us to find details about a node.</p>
+<p>Currently our subscriber node, which is named listener is running. Let's suppose I want to find details about this node then I will write the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>node<span class="w"> </span>info<span class="w"> </span>/listener
+</code></pre></div>
+
+<p>As you can see while using this command we have to replace <strong>node_name</strong> by the actual name of our node.</p>
+<p>You will get the following output after running this command:</p>
+<div class="codehilite"><pre><span></span><code><span class="o">/</span><span class="nx">listener</span>
+<span class="w">  </span><span class="nx">Subscribers</span><span class="p">:</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">chatter</span><span class="p">:</span><span class="w"> </span><span class="nx">std_msgs</span><span class="o">/</span><span class="nx">msg</span><span class="o">/</span><span class="nx">String</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">parameter_events</span><span class="p">:</span><span class="w"> </span><span class="nx">rcl_interfaces</span><span class="o">/</span><span class="nx">msg</span><span class="o">/</span><span class="nx">ParameterEvent</span>
+<span class="w">  </span><span class="nx">Publishers</span><span class="p">:</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">parameter_events</span><span class="p">:</span><span class="w"> </span><span class="nx">rcl_interfaces</span><span class="o">/</span><span class="nx">msg</span><span class="o">/</span><span class="nx">ParameterEvent</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">rosout</span><span class="p">:</span><span class="w"> </span><span class="nx">rcl_interfaces</span><span class="o">/</span><span class="nx">msg</span><span class="o">/</span><span class="nx">Log</span>
+<span class="w">  </span><span class="nx">Service</span><span class="w"> </span><span class="nx">Servers</span><span class="p">:</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">listener</span><span class="o">/</span><span class="nx">describe_parameters</span><span class="p">:</span><span class="w"> </span><span class="nx">rcl_interfaces</span><span class="o">/</span><span class="nx">srv</span><span class="o">/</span><span class="nx">DescribeParameters</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">listener</span><span class="o">/</span><span class="nx">get_parameter_types</span><span class="p">:</span><span class="w"> </span><span class="nx">rcl_interfaces</span><span class="o">/</span><span class="nx">srv</span><span class="o">/</span><span class="nx">GetParameterTypes</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">listener</span><span class="o">/</span><span class="nx">get_parameters</span><span class="p">:</span><span class="w"> </span><span class="nx">rcl_interfaces</span><span class="o">/</span><span class="nx">srv</span><span class="o">/</span><span class="nx">GetParameters</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">listener</span><span class="o">/</span><span class="nx">get_type_description</span><span class="p">:</span><span class="w"> </span><span class="nx">type_description_interfaces</span><span class="o">/</span><span class="nx">srv</span><span class="o">/</span><span class="nx">GetTypeDescription</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">listener</span><span class="o">/</span><span class="nx">list_parameters</span><span class="p">:</span><span class="w"> </span><span class="nx">rcl_interfaces</span><span class="o">/</span><span class="nx">srv</span><span class="o">/</span><span class="nx">ListParameters</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">listener</span><span class="o">/</span><span class="nx">set_parameters</span><span class="p">:</span><span class="w"> </span><span class="nx">rcl_interfaces</span><span class="o">/</span><span class="nx">srv</span><span class="o">/</span><span class="nx">SetParameters</span>
+<span class="w">    </span><span class="o">/</span><span class="nx">listener</span><span class="o">/</span><span class="nx">set_parameters_atomically</span><span class="p">:</span><span class="w"> </span><span class="nx">rcl_interfaces</span><span class="o">/</span><span class="nx">srv</span><span class="o">/</span><span class="nx">SetParametersAtomically</span>
+<span class="w">  </span><span class="nx">Service</span><span class="w"> </span><span class="nx">Clients</span><span class="p">:</span>
+
+<span class="w">  </span><span class="nx">Action</span><span class="w"> </span><span class="nx">Servers</span><span class="p">:</span>
+
+<span class="w">  </span><span class="nx">Action</span><span class="w"> </span><span class="nx">Clients</span><span class="p">:</span>
+</code></pre></div>
+
+<p>You can see terms like action, servers, client, parameters, rcl_interfaces etc.</p>
+<p>As we will progress further in this series, we will learn about each of these terms and then you will be able to understand what this information is telling us. For now you can just remember the utility of this command.</p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>These are the most useful commands which you will need to create publisher and subscriber systems. There are many other commands in ROS 2, which we will gradually learn as we progress further in this series but for our current level this is all we need.</p>
+<p>Do not try to memorize all these commands. Just start practicing ROS 2. You will automatically learn all of these when you will be working on nodes or different projects.</p>
+<p>I would recommend you to bookmark or save the link of this article for reference so that you can quickly look for commands in it whenever you are stuck.</p>
+<h2 id="whats-next">What's Next<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
+<p>Knowing commands is not the same as learning it! You can only claim that you have learned a command once you are comfortable with practically implementing it.</p>
+<p>Now before proceeding on to next topic of ROS 2, we will do two mini exercises.</p>
+<p>Details of the first mini exercise are given below:</p>
+<ol>
+<li>Create a publisher node which publishes random integers from 0 to 10 on a topic.</li>
+<li>Create a subscriber node which divides the number published on the topic by 2 and displays it.</li>
+</ol>
+<p>Hints for this mini exercise:</p>
+<ol>
+<li>Use Int64 message type from example_interfaces package (message type is example_interfaces/msg/Int64).</li>
+<li>Use ros2 interface show command to get details about this message type.</li>
+<li>Use random module provided by python for generating the random integers. You can learn how to use random module from AI, if you don't know about it. It is an easy module so you only need a maximum of 10 minutes of time to learn how to use it for this exercise.</li>
+<li>Instead of creating the entire system in one go first create the publisher node and then verify whether it is working using the echo command. If it is working, then you can create the subscriber node.</li>
+<li>Second approach is, to first create the subscriber node and then verify whether it is working or not using the pub command. If it is working, then you can create your publisher node.</li>
+<li>All the commands which you will need to debug or complete this mini exercise have already been explained in this blog. Use it as a reference.</li>
+</ol>
+<p>The concepts required to complete this exercise have been covered in a step by step manner from part 6 to part 9 of this tutorial series. If you have read all of them religiously and did hands on coding with me (as I always tell to do), then you will be able to complete this exercise.</p>
+<p>Details of the second mini exercise will be revealed once we have completed and discussed the first one.</p>
+<p>In the next part which is part 10 of this tutorial blog series, I will do the hands on coding of this mini exercise. If you face any problems then you can refer to that part.</p>
+<p>If you were able to complete this mini exercise then you may skip the next part, but I would recommend you to read it if you want insights on how to use the commands which we discussed in this article practically.</p>
+<blockquote>
+<p>Till then stay tuned and keep learning!!</p>
+</blockquote>
+<h2 id="about-the-publication-ros-simplified">About The Publication — ROS Simplified<a class="headerlink" href="#about-the-publication-ros-simplified" title="Permanent link">&para;</a></h2>
+<p><em>ROS Simplified</em> is a learner-driven publication dedicated to making ROS (Robot Operating System) concepts clear, practical, and accessible. We provide tutorials, conceptual explainers, and project walkthroughs designed to help students, hobbyists, and engineers understand and apply ROS efficiently.</p>
+<p>If you want to receive notifications of tutorials like these directly in your inbox then you can subscribe to ROS Simplified by visiting the publication using links given below.</p>
+<p>This blog has also been published under the publication — <a href="http://rossimplified.substack.com/">ROS Simplified</a>.</p>
+<p><a href="https://rossimplified.substack.com/p/get-started-with-ros-2-a-beginner">To view other parts of this ROS 2 Tutorial series click here.</a></p>
+<h2 id="about-the-author">About the Author<a class="headerlink" href="#about-the-author" title="Permanent link">&para;</a></h2>
+<p>Hi, I am Satyarth Shree, a first year BTech Robotics and Automation student at Lovely Professional University (LPU), India. I am an aspiring robotics engineer who is publicly documenting his learning journey using platforms like Medium and Substack.</p>
+<p>My areas of interest include ROS, python and mathematics. Currently, I am focusing on ROS more. I have also started a publication named ROS Simplified to make ROS accessible to everyone by providing beginner-friendly tutorials free of cost.</p>
+<h2 id="lets-connect">Let's Connect<a class="headerlink" href="#lets-connect" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>My Github</strong>: https://github.com/Satyarth-Shree</li>
+<li><strong>My LinkedIn</strong>: https://www.linkedin.com/in/satyarth-shree-761357374/</li>
+<li><strong>My CodeWars</strong>: https://www.codewars.com/users/Satyarth-Shree</li>
+<li><strong>My X</strong>: https://x.com/BuildUnderdog</li>
+<li><strong>My Hashnode</strong>: https://hashnode.com/@SatyarthShree</li>
+<li><strong>My Portfolio</strong>: https://satyarthshree.com</li>
+<li><strong>To professionally contact me for internships, collaborations or similar opportunities click here</strong>: https://forms.gle/SH9bj1oJwqPtJtD26</li>
+</ul>
+<hr />
+<p><strong>Tags:</strong> Ros2, Robotics, Ros2 Tutorials, Command Line Tools, Publisher Subscriber</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

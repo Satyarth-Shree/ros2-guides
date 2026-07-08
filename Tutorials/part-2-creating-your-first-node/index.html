@@ -1,0 +1,1337 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Beginner-friendly ROS 2 tutorials from ROS Simplified">
+      
+      
+      
+        <link rel="canonical" href="https://docs.satyarthshree.com/Tutorials/part-2-creating-your-first-node/">
+      
+      
+        <link rel="prev" href="../part-1-create-your-first-workspace-and-package/">
+      
+      
+        <link rel="next" href="../part-3-sub-part-1-understanding-ros-2-nodes/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Part 2: Creating Your First Node - ROS Simplified</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ros-2-tutorial-for-beginners-part-2-creating-your-first-node" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ROS Simplified" class="md-header__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS Simplified
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Part 2: Creating Your First Node
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS Simplified" class="md-nav__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ROS Simplified
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-1-create-your-first-workspace-and-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1: Creating Your First Workspace and Package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2: Creating Your First Node
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2: Creating Your First Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What are Nodes?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-workspace-and-a-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Workspace and a Package
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-code-of-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing Code of Node
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing Code of Node">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structure-of-a-python-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure of a Python Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-executable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating an Executable
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-our-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Our Node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Mistakes To Avoid
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Mistakes To Avoid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mistake-1-running-colcon-build-from-the-wrong-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake 1: Running colcon build from the wrong directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-2-not-sourcing-install-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake 2: Not sourcing install folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-3-forgetting-to-save-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake 3: Forgetting to save files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-4-syntax-error-while-typing-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake 4: Syntax Error while Typing Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-1-understanding-ros-2-nodes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.1: Understanding ROS 2 Nodes (Sub Part 1)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.2: Understanding ROS 2 Nodes (Sub Part 2)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-4-understanding-rclpy.spin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4: Understanding rclpy.spin()
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-5-manage-your-ROS-2-workspace-using-linux-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5: Managing Workspace Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-6-topics-and-publisher-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6: Topics and Publisher Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-7-creating-a-publisher-and-exploring-it-with-ros2-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7: Creating a Publisher and Exploring It with ROS2 CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-8-create-your-first-subscriber-node-in-python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8: Create Your First Subscriber Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-9-Exploring-Topics-with-ros2-command-line-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 9: Exploring Topics with ROS2 CLI Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-are-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What are Nodes?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-workspace-and-a-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Workspace and a Package
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-code-of-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing Code of Node
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing Code of Node">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structure-of-a-python-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure of a Python Library
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-an-executable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating an Executable
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-our-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running Our Node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Mistakes To Avoid
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Common Mistakes To Avoid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mistake-1-running-colcon-build-from-the-wrong-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake 1: Running colcon build from the wrong directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-2-not-sourcing-install-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake 2: Not sourcing install folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-3-forgetting-to-save-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake 3: Forgetting to save files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mistake-4-syntax-error-while-typing-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mistake 4: Syntax Error while Typing Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ros-2-tutorial-for-beginners-part-2-creating-your-first-node">ROS 2 Tutorial for Beginners (Part 2): Creating Your First Node<a class="headerlink" href="#ros-2-tutorial-for-beginners-part-2-creating-your-first-node" title="Permanent link">&para;</a></h1>
+<p>This tutorial is written for beginners who wish to understand what a node is and how they can create a ROS 2 node.</p>
+<p>If you are such a person then you are most welcomed to continue reading this article.</p>
+<h2 id="what-are-nodes">What are Nodes?<a class="headerlink" href="#what-are-nodes" title="Permanent link">&para;</a></h2>
+<p>The first question that arises in our mind is — what is a node? Instead of memorizing definitions I will show you exactly what is a node and how you can create one. Before creating a node it is important to know how to create a workspace and a package. Without creating a ROS 2 workspace and package you cannot create a ROS 2 node.</p>
+<p>If you know how to create a package then you can continue reading this blog. But if you don’t know how to do so then you won’t understand what we will be discussing.</p>
+<p>You can refer to the following article to learn how to create a workspace and a package:</p>
+<p><a href="part-1-create-your-first-workspace-and-package">ROS 2 Tutorial for Beginners (Part 1): Creating Your First Workspace and Package</a></p>
+<p>This article mentioned above is the part 1 of this ROS 2 beginner series.</p>
+<blockquote>
+<p>Note: It is very important to understand how to create a workspace and a package before you learn how to create a node. So only proceed if you know these pre requisites.</p>
+</blockquote>
+<h2 id="creating-a-workspace-and-a-package">Creating a Workspace and a Package<a class="headerlink" href="#creating-a-workspace-and-a-package" title="Permanent link">&para;</a></h2>
+<p>The two most popular programming languages that are used with ROS 2 is C++ and python. So most of the nodes that you will deal with will be either python nodes or C++ nodes. A node created using python is referred to as a python node and a node created using C++ programming language is called a C++ node.</p>
+<p>In this tutorial I will teach how you can create a python node. As a beginner let’s try to create a python node first as python is a high level user friendly programming language when compared to C++ so it will be easier for you to understand.</p>
+<p>Before creating a python node first you need to create a workspace and then you need to create a python package inside it. Let’s create a workspace named “ws” and a package named “py_pkg” inside it.</p>
+<p>First you need to source ROS 2 by running the following command on your terminal:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>/opt/ros/distro/setup.bash
+</code></pre></div>
+
+<p>In place of distro you have to write your ROS 2 distribution name which you are currently using. For example: If you are using ROS 2 humble then you have to write humble instead of distro. If you are using ROS 2 Jazzy then you need to write jazzy in place of distro.</p>
+<p>After running this command we will first create a folder named ws as shown below:</p>
+<p><img alt="Creating a workspace" src="../../Images/part_2/Image_1.png" /></p>
+<p>Now we have to create a source folder inside this folder which is our workspace. To do so we will first move inside this folder using change directory (cd) command and then we will create source folder as shown:</p>
+<p><img alt="Creating source folder inside our workspace" src="../../Images/part_2/Image_2.png" /></p>
+<p>Now we will build by workspace by running the command colcon build as shown below:</p>
+<p><img alt="Building our workspace" src="../../Images/part_2/Image_3.png" /></p>
+<p>Now to create a python package we will type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>pkg<span class="w"> </span>create<span class="w"> </span>py_pkg<span class="w"> </span>--build-type<span class="w"> </span>ament_python<span class="w"> </span>--dependencies<span class="w"> </span>rclpy
+</code></pre></div>
+
+<p>Now we will again run the command: colcon build to build our workspace as shown in the figure below:</p>
+<p><img alt="Building our workspace after creating package" src="../../Images/part_2/Image_4.png" /></p>
+<p>As you can see the following message is being displayed:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">Summary</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="kn">package</span><span class="w"> </span><span class="nx">finished</span><span class="w"> </span><span class="p">[</span><span class="m m-Double">1.08</span><span class="nx">s</span><span class="p">]</span>
+</code></pre></div>
+
+<p>This means our package has now been successfully build.</p>
+<p>Be careful about few things while executing commands. The command: colcon build must be executed from workspace and not from any other folder. The command to create package must be executed when you are inside the source folder. These things have already been discussed in part 1 of this blog series.</p>
+<p>Inside src folder we have a folder named py_pkg. Navigate inside the src folder using the cd command and then use the ls command to see the package as shown in the figure given below:</p>
+<p><img alt="Checking package inside source folder" src="../../Images/part_2/Image_5.png" /></p>
+<p>Inside the package named “py_pkg” there is another folder having the same name. Use the cd command to move inside this folder by typing the following command while you are inside you src folder:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>py_pkg/py_pkg/
+</code></pre></div>
+
+<p>These things have been already discussed in my previous blog. The things I am going to discuss next are new so pay attention.</p>
+<h2 id="creating-a-node">Creating a Node<a class="headerlink" href="#creating-a-node" title="Permanent link">&para;</a></h2>
+<p>Now to create a python node we first need to create a python file. To create a python file we will use the following command:</p>
+<div class="codehilite"><pre><span></span><code>touch<span class="w"> </span>my_first_node.py
+</code></pre></div>
+
+<p>After touch we have to write the name of our python file along with extension of a python file. By writing the command given above we have created a python file named “my_first_node”.</p>
+<p>Now we have to make this file python file an executable so that you can later use the node which you will create inside this file. To make this file an executable we will execute the following command:</p>
+<div class="codehilite"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>my_first_node.py
+</code></pre></div>
+
+<p>These commands have to be executed when you are inside the folder py_pkg which is inside your package named py_pkg which is inside src folder.</p>
+<p>The current structure of your workspace is as follows:</p>
+<p><img alt="Flowchart depicting structure of workspace which we have created" src="../../Images/part_2/Image_6.png" /></p>
+<p>As shown in the figure given above inside your package named “py_pkg” there exists a folder with the same name and inside that folder my_first_node.py exists. You should be now inside the folder in which you have created your node. After making your python file an executable run the command: ls and you will see the following output:</p>
+<p><img alt="Verifying whether our node has became an executable or not" src="../../Images/part_2/Image_7.png" /></p>
+<p>As you can see my_first_node.py is written in green color. When a file is written in green color then that means that file has now become an executable file. If file name is showing up in blue color in your system then maybe you have made some mistake while executing the command to convert file into an executable.</p>
+<p>There are two things that should be kept in mind if your file has not became an executable.</p>
+<p>Either you have made some syntax error while typing the command or you have executed the command in some other directory where your file didn’t existed.</p>
+<p>So first type the following command:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/ws/src/py_pkg/py_pkg/
+</code></pre></div>
+
+<p>This command will make sure that you are now inside the py_pkg folder inside your package where you need to make your file an executable. Now run this exact command:</p>
+<div class="codehilite"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>my_first_node.py
+</code></pre></div>
+
+<p>This will make your python file an executable. But before making an executable you need to make sure that your python file actually exists in the py_pkg folder inside your package. To check whether it exists or not use the ls command like I have told you earlier.</p>
+<p>Now after you have created an executable python file go back to your workspace in terminal and execute the following command from the workspace folder:</p>
+<div class="codehilite"><pre><span></span><code>code<span class="w"> </span>.
+</code></pre></div>
+
+<p>This will open VS Code. If you are confused how this happened I recommend you to read <a href="https://medium.com/@satyarthshree45/ros2-tutorial-for-beginners-part-1-creating-your-first-workspace-and-package-677f558e1f81">part 1 of this series</a>. After opening vs code you can now start programming your first node.</p>
+<p>Go to your python file and now let’s start programming it on vs code.</p>
+<p>Things might be feeling a little bit heavy especially if you are a beginner and you are not very much comfortable with Linux terminal commands. So I recommend pausing for a moment and revising what you have done till now before continuing further.</p>
+<p>ROS will drain your mental energy very quickly if you try to memorize things and try to move forward quickly. But if you try to understand things instead of just memorizing them then you will find it very enjoyable.</p>
+<p>After you are comfortable with what we have discussed till now you are welcomed to continue reading this article.</p>
+<p>We will create a python node which displays a message on screen. Let’s start creating it.</p>
+<h2 id="writing-code-of-node">Writing Code of Node<a class="headerlink" href="#writing-code-of-node" title="Permanent link">&para;</a></h2>
+<p>At the top of your python file you should write:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+</code></pre></div>
+
+<p>This line is known as <strong>shebang</strong>. This line tells the interpreter that “You should use python3 interpreter to execute this python file.”</p>
+<p>It needs to be added at the very top of your python file as shown below:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+</code></pre></div>
+
+<p>Now to use functionalities of ROS 2 we need to import python library for ROS 2 which is rclpy. So now we will write:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+</code></pre></div>
+
+<p>rclpy is basically a library. You need to have a basic idea of what a python library is and how it is internally structured or made before we continue creating our node.</p>
+<h3 id="structure-of-a-python-library">Structure of a Python Library<a class="headerlink" href="#structure-of-a-python-library" title="Permanent link">&para;</a></h3>
+<p>A python library is nothing but a folder that has some python files inside it. In the similar manner rclpy is nothing just a folder which has some python files inside it.</p>
+<p>One of the files inside this folder rclpy is node.py. This file has some important functions and classes which are required to create a node. We need to use these functionalities if we want to create a node.</p>
+<p>Basically rclpy has a file inside it named node.py and inside this file there is a class named Node. We have to use this class if we want to create a node which displays a message on our screen.</p>
+<hr />
+<p>To use this class we will now write the following line in our python file:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+</code></pre></div>
+
+<p>This command is used to import the Node class from the file node.py which is inside the library rclpy.</p>
+<p>Currently we have written this much code:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+</code></pre></div>
+
+<p>I have also explained why we have written each one of them.</p>
+<p>Now we will write our main code to display a inside a function called main().</p>
+<p>But why?</p>
+<p>You will understand why we are doing so later in this blog. First create a function named main() as shown in the code snippet given below:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+</code></pre></div>
+
+<p>Alright till now we have imported rclpy, imported a class named Node from rclpy and created a function named main().</p>
+<p>But can we use the functionalities of ROS 2? The answer is no.</p>
+<p>Node is one of the functionalities of ROS 2. If we wish to create a node then we must first get access to ROS 2 functionalities. To do so we will type the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</code></pre></div>
+
+<p>This line basically starts the ROS 2 engine. After this line gets executed you can now basically start using ROS 2 functionalities. You should type this line inside the main() function as I earlier told you that the main code to display messages need to go inside the main() function as shown in the code snippet below:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Think of ROS 2 as a car which is parked inside a garage. When you wrote the line:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+</code></pre></div>
+
+<p>You have basically opened the gate of the garage. You can see the car but you haven’t yet turned it on. In the similar way you can use ROS 2 functionalities but you haven’t yet enabled them.</p>
+<p>When you type:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Now you have started the engine of the car and now you can access it’s functionalities. So now your ROS 2 has started working in the background.</p>
+<p>This is what is happening here.</p>
+<p>Now you have to create a node. Creating a node involves giving your node a name. Let’s create a node named “python_node”. To do so we will type the following line below rclpy.init():</p>
+<div class="codehilite"><pre><span></span><code><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;python_node&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This line will be written as shown in the code snippet given below:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;python_node&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>We have basically passed the name of our node as an argument to the Node class that we earlier imported. We imported the Node class because it is required to create a node. We have used the variable node while calling the class Node. You can use some other variable also. There is no restriction on the variable that you want to use here. But make sure that the name of your node is correctly passed to the Node class.</p>
+<p>Now to print a message you need to write the following command:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>It will be written just below the line in which we have initialized our node as shown in the code block below:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;python_node&quot;</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Whatever message you want to display must be written in parenthesis of info() function between inverted commas like I have written “I am learning ROS 2.”</p>
+<p>Do you remember I earlier told you that typing rclpy.init() means enabling ROS 2 functionalities or you can also say that starting the ROS 2 engine. We have started the engine and now we have also written the code to display our message. It’s time to close the engine because now we no longer need it as our purpose is accomplished — a node that displays a message has been created.</p>
+<p>To again disable ROS2 functionalities write the rclpy.shutdown() at the end as shown in the code block given below:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;python_node&quot;</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Press Ctrl + S to save this code. </p>
+<p>You have successfully written your code but can you use this node now? The answer is no!</p>
+<hr />
+<h2 id="creating-an-executable">Creating an Executable<a class="headerlink" href="#creating-an-executable" title="Permanent link">&para;</a></h2>
+<p>In ROS 2 just finishing the code doesn’t mean your node is now usable. You have to create an executable to use your node. Before creating an executable you should decide a name for your executable. Let’s create an executable named “my_node”.</p>
+<p>In your VS code on the left side you can see various files and folders at the left side as shown in the figure below:</p>
+<p><img alt="File navigation pane of windows explorer" src="../../Images/part_2/Image_8.png" /></p>
+<p>You will find a file named setup.py inside your package as shown in this figure. Go to that file. At the end you will find ‘console_scripts’. Inside the square brackets of console_scripts write the following line as shown in the image below:</p>
+<p><img alt="Creating an executable" src="../../Images/part_2/Image_9.png" /></p>
+<p>Here basically my_node is the name of your executable, py_pkg is the name of the package inside which your node exists, my_first_node is the name of the file inside which your node exists and main is the function inside which you have written your code to create a node.</p>
+<p>Do you remember I earlier said that you will understand why we are writing our code inside the main() function later?</p>
+<p>As you can see we wrote our code inside main() function because we need to give the name of the function while we are creating an executable.</p>
+<p>Now when we run this executable then main function will run. Our node is inside main() function so our node will also run. main() function will run because we have specified it while creating an executable by writing main at the end in the line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">my_node</span> <span class="o">=</span> <span class="n">py_pkg</span><span class="o">.</span><span class="n">my_first_node</span><span class="p">:</span><span class="n">main</span>
+</code></pre></div>
+
+<p>Now save the file. Go to your terminal and make sure you are in the workspace folder. Then run colcon build as shown in the figure given below:</p>
+<p><img alt="Running colcon build after executable has been successfully created" src="../../Images/part_2/Image_10.png" /></p>
+<p><strong>Important Note: Make sure that you run colcon build only from the workspace folder and not from any other folder.</strong></p>
+<p>All the nodes that you create yourself are stored inside the install folder of the workspace when you run colcon build. So after you build you workspace you need to source the install folder to run the nodes that you create. To do so run the command shown in the figure below:</p>
+<p><img alt="Sourcing workspace after building it" src="../../Images/part_2/Image_11.png" /></p>
+<hr />
+<h2 id="running-our-node">Running Our Node<a class="headerlink" href="#running-our-node" title="Permanent link">&para;</a></h2>
+<p>Now to run your node type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>run<span class="w"> </span>py_pkg<span class="w"> </span>my_node
+</code></pre></div>
+
+<p>After “ros2 run” first you will type the name of your package inside which your node exists and then the name of the executable. The name of the executable that we wrote in setup.py file is my_node so we will type that.</p>
+<p>We will not type the name of the node we have to type the name of the executable which we wrote in console_scripts section of setup.py file.</p>
+<p>After running this command you will be able to see the message that we wanted to be displayed is getting displayed as shown in the figure below:</p>
+<p><img alt="Output of our node" src="../../Images/part_2/Image_12.png" /></p>
+<p>This means your node successfully worked and your message was displayed.</p>
+<hr />
+<h2 id="common-mistakes-to-avoid">Common Mistakes To Avoid<a class="headerlink" href="#common-mistakes-to-avoid" title="Permanent link">&para;</a></h2>
+<p>It is possible that you didn’t see this message getting displayed and you saw some error message instead of this message. Most probably you ran colcon build from the wrong folder or didn’t source the install folder or did some other mistakes. Below are the list of some mistakes which you likely did if your node is not running properly.</p>
+<p>Go through it once and most of the problems you are facing will be resolved.</p>
+<h3 id="mistake-1-running-colcon-build-from-the-wrong-directory">Mistake 1: Running colcon build from the wrong directory<a class="headerlink" href="#mistake-1-running-colcon-build-from-the-wrong-directory" title="Permanent link">&para;</a></h3>
+<p>If you ran colcon build from some other directory instead of your workspace folder then you node won’t work. If you did that mistake then go to that wrong folder and use ls command to check if folders like build, install and log are present inside that folder. If these folders are present in that folder then it is certain that you ran colcon build from that directory.</p>
+<p>Simply type the following command in that wrong directory:</p>
+<div class="codehilite"><pre><span></span><code>rm<span class="w"> </span>-rf<span class="w"> </span>build<span class="w"> </span>install<span class="w"> </span>log
+</code></pre></div>
+
+<p>Now go to your workspace by typing the following command:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/ws/
+</code></pre></div>
+
+<p>then run “colcon build” command.</p>
+<p>Now again try to run your node. If your node is still not running then you are probably doing the next mistake given below.</p>
+<h3 id="mistake-2-not-sourcing-install-folder">Mistake 2: Not sourcing install folder<a class="headerlink" href="#mistake-2-not-sourcing-install-folder" title="Permanent link">&para;</a></h3>
+<p>It is very much possible that you built your workspace correctly but you are still not able to run your node. If you are getting the error shown in the figure given below when you are trying to run your node then you are most probably making this mistake.</p>
+<p><img alt="Package not found error" src="../../Images/part_2/Image_13.png" /></p>
+<p>This error means you haven’t sourced ros2 or your install folder correctly. To fix it run these two commands one by one:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>/opt/ros/jazzy/setup.bash<span class="w">  </span>
+<span class="nb">source</span><span class="w"> </span>~/ws/install/setup.bash
+</code></pre></div>
+
+<p>Replace jazzy with your ROS 2 distribution. If you are using ROS 2 humble then type humble instead of jazzy. Now if you run the command to run your node then you will find that it ran successfully as shown in figure below:</p>
+<p><img alt="Fixing errors and then successfully running the node" src="../../Images/part_2/Image_14.png" /></p>
+<p>Most of you would have done this mistake. If your node is still not working then you may have done the third mistake.</p>
+<h3 id="mistake-3-forgetting-to-save-files">Mistake 3: Forgetting to save files<a class="headerlink" href="#mistake-3-forgetting-to-save-files" title="Permanent link">&para;</a></h3>
+<p>To create this node we basically made changes in two files which are my_first_node.py and setup.py. If you didn’t press ctrl + S to save these files and ran colcon build without saving them then your node won’t work because code related to your node hasn’t been saved and hence was not built when you ran colcon build.</p>
+<p>So after making changes first save your file and then run colcon build from the workspace. Now again run the command to source your install folder which is:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>~/ws/install/setup.bash
+</code></pre></div>
+
+<p>And then run the command to run your node which is:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>run<span class="w"> </span>py_pkg<span class="w"> </span>my_node
+</code></pre></div>
+
+<h3 id="mistake-4-syntax-error-while-typing-commands">Mistake 4: Syntax Error while Typing Commands<a class="headerlink" href="#mistake-4-syntax-error-while-typing-commands" title="Permanent link">&para;</a></h3>
+<p>Maybe you ran colcon build and sourced your install folder perfectly but then also you are encountering some errors. You might be making some spelling mistakes or some syntax errors while typing commands because of which the correct command is not getting executed. Make sure you have written commands in the exact same way as I have written in this blog. Do not give unnecessary spaces or change cases of letters from lower to upper or upper to lower. Syntax must be strictly followed.</p>
+<hr />
+<p>It is possible that you have made some other mistakes and are confused on how you can fix it. I have uploaded the src folder of my workspace on github. I am sharing the link of that github repo. You can check whether you have the same structure and files like I do or not.</p>
+<p>Here is the link of the repo: <a href="https://github.com/Satyarth-Shree/ros2-beginner-part-2-python-node">https://github.com/Satyarth-Shree/ros2-beginner-part-2-python-node</a></p>
+<p>Use this as a reference to check whether your src folder is correctly configured or not.</p>
+<hr />
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>I hope you understood how you can create a basic node which displays a message. Practice how you can create these nodes from scratch by creating multiple workspaces and nodes from scratch. In this blog you only learned how to create a simple node but you haven’t yet understood nodes completely.</p>
+<p>In the next part of this module I will teach you what is a node in greater depth and how you can run and introspect multiple nodes simultaneously. You will gain a complete understanding after reading the next article so do practice this one first.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

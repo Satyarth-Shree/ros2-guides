@@ -1,0 +1,1548 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Beginner-friendly ROS 2 tutorials from ROS Simplified">
+      
+      
+      
+        <link rel="canonical" href="https://docs.satyarthshree.com/Tutorials/part-7-creating-a-publisher-and-exploring-it-with-ros2-cli/">
+      
+      
+        <link rel="prev" href="../part-6-topics-and-publisher-foundations/">
+      
+      
+        <link rel="next" href="../part-8-create-your-first-subscriber-node-in-python/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Part 7: Creating a Publisher and Exploring It with ROS2 CLI - ROS Simplified</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ros-2-tutorial-for-beginners-part-7-creating-a-publisher-and-exploring-it-with-ros-2-cli" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ROS Simplified" class="md-header__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS Simplified
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Part 7: Creating a Publisher and Exploring It with ROS2 CLI
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS Simplified" class="md-nav__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ROS Simplified
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-1-create-your-first-workspace-and-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1: Creating Your First Workspace and Package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-2-creating-your-first-node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2: Creating Your First Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-1-understanding-ros-2-nodes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.1: Understanding ROS 2 Nodes (Sub Part 1)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.2: Understanding ROS 2 Nodes (Sub Part 2)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-4-understanding-rclpy.spin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4: Understanding rclpy.spin()
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-5-manage-your-ROS-2-workspace-using-linux-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5: Managing Workspace Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-6-topics-and-publisher-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6: Topics and Publisher Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7: Creating a Publisher and Exploring It with ROS2 CLI
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7: Creating a Publisher and Exploring It with ROS2 CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-weve-covered-so-far" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What we've covered so far
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-the-code-for-our-publisher-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing the Code for our Publisher Node
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing the Code for our Publisher Node">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create_timer-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_timer() method
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-argument-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Argument: Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-argument-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second Argument: Method
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#callback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Callback
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-2-build-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROS 2 Build Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-dependency-in-packagexml-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding dependency in package.xml file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploring-topics-via-ros-2-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploring Topics via ROS 2 CLI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploring Topics via ROS 2 CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-command-ros2-node-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Command: ros2 node list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-command-ros2-topic-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second Command: ros2 topic list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#third-command-ros2-topic-echo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Third Command: ros2 topic echo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-case-rarely-happens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Case (rarely happens)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-publication-ros-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About the Publication: ROS Simplified
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About the Author
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Connect
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-8-create-your-first-subscriber-node-in-python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8: Create Your First Subscriber Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-9-Exploring-Topics-with-ros2-command-line-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 9: Exploring Topics with ROS2 CLI Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-weve-covered-so-far" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What we've covered so far
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-the-code-for-our-publisher-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing the Code for our Publisher Node
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Writing the Code for our Publisher Node">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create_timer-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_timer() method
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-argument-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Argument: Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-argument-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second Argument: Method
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#callback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Callback
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ros-2-build-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROS 2 Build Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adding-dependency-in-packagexml-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adding dependency in package.xml file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploring-topics-via-ros-2-cli" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploring Topics via ROS 2 CLI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploring Topics via ROS 2 CLI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-command-ros2-node-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Command: ros2 node list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-command-ros2-topic-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second Command: ros2 topic list
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#third-command-ros2-topic-echo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Third Command: ros2 topic echo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge-case-rarely-happens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edge Case (rarely happens)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-publication-ros-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About the Publication: ROS Simplified
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About the Author
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Connect
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ros-2-tutorial-for-beginners-part-7-creating-a-publisher-and-exploring-it-with-ros-2-cli">ROS 2 Tutorial for Beginners (Part 7): Creating a Publisher and Exploring It with ROS 2 CLI<a class="headerlink" href="#ros-2-tutorial-for-beginners-part-7-creating-a-publisher-and-exploring-it-with-ros-2-cli" title="Permanent link">&para;</a></h1>
+<p><strong>Satyarth Shree</strong> · 13 min read · Apr 30, 2026</p>
+<blockquote>
+<p>Complete your publisher node, send messages, and use ROS 2 CLI tools to inspect topics and verify communication step-by-step</p>
+</blockquote>
+<h2 id="what-weve-covered-so-far">What we've covered so far<a class="headerlink" href="#what-weve-covered-so-far" title="Permanent link">&para;</a></h2>
+<p>In last part we understood what are publishers, subscribers, topics and we also started writing the code for our publisher node.</p>
+<p>We have written the code till the point where we have used the super class constructor call statement to call the constructor of our parent class which is the Node class in our case.</p>
+<p>I also told you what is a publisher object and what are the arguments that should be passed to it while we are creating it.</p>
+<p>Now we will start from this point onwards. For those who haven't read the previous part, I advise you to do so as this part is a direct continuation of that one.</p>
+<p><a href="https://medium.com/@satyarthshree45/ros-2-tutorial-for-beginners-part-6-topics-and-publisher-foundations-09b493c64bce">Click here to read the previous article.</a></p>
+<blockquote>
+<p>By the end of this article, you will be able to run your own publisher node and you will also be able to check whether it is properly running or not using command line tools.</p>
+</blockquote>
+<h2 id="writing-the-code-for-our-publisher-node">Writing the Code for our Publisher Node<a class="headerlink" href="#writing-the-code-for-our-publisher-node" title="Permanent link">&para;</a></h2>
+<p>Inside your constructor just below the super class constructor call write the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="s2">&quot;my_first_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now try to understand what is happening here.</p>
+<p>On the right side of "equal to (=)" symbol we have written the following statement:</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="s2">&quot;my_first_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This statement creates a publisher object using the create_publisher() method.</p>
+<p>We have passed three arguments to this method which are — String, "my_first_topic" and 10.</p>
+<p>The first argument specifies the type of message which this topic will be publishing, the second argument specifies the name of the topic on which messages will be published and the third argument specifies the QoS setting (queue size) if any delay happens during publishing.</p>
+<p>I have already discussed about these three arguments in detail in the previous part. Here we are implementing those three arguments in our actual code.</p>
+<blockquote>
+<p>Here comes the important part, read carefully!!</p>
+</blockquote>
+<p>If we just create a publisher object using the create_publisher() method, our object gets created but we lose the reference to it.</p>
+<p>This is the reason why we created an attribute named publisher and assigned our publisher object to it using the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="s2">&quot;my_first_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now we can use the attribute <strong>publisher</strong> to access our publisher object.</p>
+<p>So far we have written this much code:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;publisher_1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="s2">&quot;my_first_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now we will create a callback. But why so?</p>
+<p>The line we have just written has created a publisher object and the reference of that object has been assigned to the publisher attribute but we are not publishing anything yet.</p>
+<p>To publish some data we should create a callback which runs every time after a fixed duration so our messages can get published.</p>
+<p>We will use the following line to create a callback:</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_messages</span><span class="p">)</span>
+</code></pre></div>
+
+<p>As you can see we have used create_timer() method to create a callback.</p>
+<p>You must be thinking what does this line means and what will happen now?</p>
+<p>Let me explain.</p>
+<h3 id="create_timer-method">create_timer() method<a class="headerlink" href="#create_timer-method" title="Permanent link">&para;</a></h3>
+<p>While using the <strong>create_timer()</strong> method we have to pass two arguments.</p>
+<h3 id="first-argument-time">First Argument: Time<a class="headerlink" href="#first-argument-time" title="Permanent link">&para;</a></h3>
+<p>The first argument is the time after which we want our callback to run. In my case I have passed 1.0, which means that after every one second my callback will run.</p>
+<p>The time passed must always be off float data type.</p>
+<h3 id="second-argument-method">Second Argument: Method<a class="headerlink" href="#second-argument-method" title="Permanent link">&para;</a></h3>
+<p>In second argument we have to assign the method or you can say the function which we want to be called every time after the given amount of the time.</p>
+<p>Since in my second argument I have passed: self.publish_messages, which means that after every 1 seconds the method publish_messages() will be called.</p>
+<p>You can choose the name of the method according to your preference but make sure it doesn't has any spaces or special characters apart from underscore.</p>
+<p>So to summarize I can say that the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_messages</span><span class="p">)</span>
+</code></pre></div>
+
+<p>calls the method <strong>publish_messages()</strong> after every one second.</p>
+<p>In a more technical language, it is better to say that this line passes publish_messages() method as a reference to ROS 2 and asks it to call this method after every 1 second.</p>
+<p>I have been using the word "<strong>callback</strong>" in this article a lot. You might be getting confused what a callback is?</p>
+<p>Let's explore it first as it is necessary to know especially when you are trying to develop depth on publisher-subscriber systems.</p>
+<h3 id="callback">Callback<a class="headerlink" href="#callback" title="Permanent link">&para;</a></h3>
+<p>Simply put a callback is -</p>
+<p><strong>A function that ROS 2 calls automatically when something happens.</strong></p>
+<p>Here we are using a <strong>Timer callback</strong>. A timer callback is triggered at fixed intervals which depends on the time that you have passed to create_timer() method.</p>
+<p>In our case we have passed self.publish_messages as the second argument of the create_timer() method, which means that now this is our callback as it will be triggered (called) in fixed intervals.</p>
+<p>Those intervals have been specified in the first argument of create_timer() method. I have set the interval as 1.0 which means after every 1.0 second my callback will be called by ROS 2.</p>
+<p>If you have specified the time to be 2.0 seconds then your callback will be called after every two seconds.</p>
+<p>There are more type of callbacks like:</p>
+<ol>
+<li>Subscriber Callback</li>
+<li>Service Callback</li>
+<li>Action Callbacks</li>
+</ol>
+<p>We will study about them later in this tutorial series. I will also write entire blogs dedicated solely to callbacks as it is one of the fundamental concepts of ROS 2 which most people ignore and then later regret when the are not able to debug issues with their code.</p>
+<p>The timer callback line should be written inside our constructor just below the line where we have created our publisher object. So now our code is:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;publisher_1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="s2">&quot;my_first_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_messages</span><span class="p">)</span>
+</code></pre></div>
+
+<p>You might have already noticed the fact we haven't created any method named publish_messages() even though we have passed it as a reference to our timer callback.</p>
+<p>You are right!</p>
+<p>Our next step is to create the publish_messages and then write the code to publish our messages inside it.</p>
+<p>This method will be created inside our class as shown below:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;publisher_1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="s2">&quot;my_first_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_messages</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">publish_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</code></pre></div>
+
+<p>Now before continuing with coding any further you have to understand some things about ROS 2 Build Systems.</p>
+<h2 id="ros-2-build-systems">ROS 2 Build Systems<a class="headerlink" href="#ros-2-build-systems" title="Permanent link">&para;</a></h2>
+<p>ROS 2 provides us with the power to create our own custom message types. Right now in our code we are using the String message type from example_interfaces package which is a built in package offered by ROS 2.</p>
+<p>Whenever we create our own message type then we basically create a file having .msg extension inside a msg folder inside our package.</p>
+<p>We will learn how to create our own message types in future after we have studied server and client systems. Here I am basically trying to give you an idea of how the build systems work with message definition files.</p>
+<p>After we have defined our message type in the .msg file inside our msg folder, we build our workspace.</p>
+<p>While building our workspace, ROS 2 Build Systems or specifically ROS 2 interface generators convert .msg definition file into a python class and fields defined in this file into attributes of our class.</p>
+<p>To get an idea of what I am talking about type the following command on your terminal:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>interface<span class="w"> </span>show<span class="w"> </span>example_interfaces/msg/String
+</code></pre></div>
+
+<p>This command will basically display the content written inside String.msg file, which is the definition file for the String message type. You will get the following output:</p>
+<div class="codehilite"><pre><span></span><code><span class="nx">satyarth</span><span class="o">-</span><span class="nx">shree</span><span class="err">@</span><span class="nx">Satyarth</span><span class="p">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="nx">ros2</span><span class="w"> </span><span class="kd">interface</span><span class="w"> </span><span class="nx">show</span><span class="w"> </span><span class="nx">example_interfaces</span><span class="o">/</span><span class="nx">msg</span><span class="o">/</span><span class="nx">String</span>
+<span class="err">#</span><span class="w"> </span><span class="nx">This</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="nx">an</span><span class="w"> </span><span class="nx">example</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">using</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">primitive</span><span class="w"> </span><span class="nx">datatype</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="p">.</span>
+<span class="err">#</span><span class="w"> </span><span class="nx">If</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">want</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">test</span><span class="w"> </span><span class="nx">with</span><span class="w"> </span><span class="nx">this</span><span class="w"> </span><span class="nx">that</span><span class="err">&#39;</span><span class="nx">s</span><span class="w"> </span><span class="nx">fine</span><span class="p">,</span><span class="w"> </span><span class="nx">but</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">are</span><span class="w"> </span><span class="nx">deploying</span>
+<span class="err">#</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="nx">into</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">system</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">should</span><span class="w"> </span><span class="nx">create</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">semantically</span><span class="w"> </span><span class="nx">meaningful</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="k">type</span><span class="p">.</span>
+<span class="err">#</span><span class="w"> </span><span class="nx">If</span><span class="w"> </span><span class="nx">you</span><span class="w"> </span><span class="nx">want</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">embed</span><span class="w"> </span><span class="nx">it</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nx">another</span><span class="w"> </span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="nx">use</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">primitive</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nx">instead</span><span class="p">.</span>
+<span class="kt">string</span><span class="w"> </span><span class="nx">data</span>
+</code></pre></div>
+
+<p>The lines starting with hashtag symbol (#) are comments. You can ignore them. Focus on the following line:</p>
+<div class="codehilite"><pre><span></span><code>string data
+</code></pre></div>
+
+<p>This line basically tells that in String() message type we have a field named data which is of string type.</p>
+<p>So internally when ROS build systems will build this message definition file, it will create a class named String(), and that class will be having an attribute named data which will accept values of string type only.</p>
+<p>So basically inside our python code we have to now treat String as a class.</p>
+<p>Now go inside the publish_messages() method and write the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">message</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Now our code is:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;publisher_1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="s2">&quot;my_first_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_messages</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">publish_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>
+</code></pre></div>
+
+<p>"message" is now an object of the String() Class. Now we will use the data attribute of this class to store a value and then we will publish our message on our topic.</p>
+<p>To do so inside the publish_messages() method, we will write the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">message</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;I am learning ROS 2 from ROS Simplified.&quot;</span>
+</code></pre></div>
+
+<p>Since the attribute "data" is of string type so we can only pass a string as it's value. You can pass any string of your choice, but you must pass only a string and not some other data type.</p>
+<p>We have now specified our message type and the message which we want to publish, but we haven't published it yet.</p>
+<p>To publish our message we have to use publish() method of the Publisher class.</p>
+<p>To do so we will write the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now our code becomes the following:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;publisher_1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="s2">&quot;my_first_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_messages</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">publish_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;I am learning ROS 2 from ROS Simplified.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</code></pre></div>
+
+<p>After this code at the end we will add the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">()</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>What does these line means?</p>
+<blockquote>
+<p>What is rclpy.init()? What is rclpy.shutdown()? Why is rclpy.spin() needed here? …….</p>
+</blockquote>
+<p>You must be having a lot of such questions.</p>
+<p>This part has already been covered in <a href="https://medium.com/@satyarthshree45/ros-2-tutorial-for-beginners-part-2-creating-your-first-node-c33e92d54b5c">Part 2</a> and <a href="https://medium.com/@satyarthshree45/ros2-tutorial-for-beginners-part-4-understanding-rclpy-spin-and-creating-a-class-based-node-511c124f55c0">Part 4</a> of this tutorial series so you can refer from there if you have any confusion.</p>
+<p>So our final code is:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;publisher_1&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="s2">&quot;my_first_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">publish_messages</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">publish_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot;I am learning ROS 2 from ROS Simplified.&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span><span class="p">)</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">()</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Now we have to make an executable from this code and then run it.</p>
+<p>But before doing so you have to do one small change in your package.xml file.</p>
+<h2 id="adding-dependency-in-packagexml-file">Adding dependency in package.xml file<a class="headerlink" href="#adding-dependency-in-packagexml-file" title="Permanent link">&para;</a></h2>
+<p>We have used example_interfaces package here which means that now our package inside which we are currently creating our node depends on the example_interfaces package, so we have to add it as a dependency in our package.xml file.</p>
+<p>Your package.xml file currently has the following structure:</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="cp">&lt;?xml-model href=&quot;http://download.ros.org/schema/package_format3.xsd&quot; schematypens=&quot;http://www.w3.org/2001/XMLSchema&quot;?&gt;</span>
+<span class="nt">&lt;package</span><span class="w"> </span><span class="na">format=</span><span class="s">&quot;3&quot;</span><span class="nt">&gt;</span>
+<span class="w">  </span><span class="nt">&lt;name&gt;</span>first_package<span class="nt">&lt;/name&gt;</span>
+<span class="w">  </span><span class="nt">&lt;version&gt;</span>0.0.0<span class="nt">&lt;/version&gt;</span>
+<span class="w">  </span><span class="nt">&lt;description&gt;</span>TODO:<span class="w"> </span>Package<span class="w"> </span>description<span class="nt">&lt;/description&gt;</span>
+<span class="w">  </span><span class="nt">&lt;maintainer</span><span class="w"> </span><span class="na">email=</span><span class="s">&quot;satyarth-shree@todo.todo&quot;</span><span class="nt">&gt;</span>satyarth-shree<span class="nt">&lt;/maintainer&gt;</span>
+<span class="w">  </span><span class="nt">&lt;license&gt;</span>TODO:<span class="w"> </span>License<span class="w"> </span>declaration<span class="nt">&lt;/license&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;depend&gt;</span>rclpy<span class="nt">&lt;/depend&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;test_depend&gt;</span>ament_copyright<span class="nt">&lt;/test_depend&gt;</span>
+<span class="w">  </span><span class="nt">&lt;test_depend&gt;</span>ament_flake8<span class="nt">&lt;/test_depend&gt;</span>
+<span class="w">  </span><span class="nt">&lt;test_depend&gt;</span>ament_pep257<span class="nt">&lt;/test_depend&gt;</span>
+<span class="w">  </span><span class="nt">&lt;test_depend&gt;</span>python3-pytest<span class="nt">&lt;/test_depend&gt;</span>
+
+<span class="w">  </span><span class="nt">&lt;export&gt;</span>
+<span class="w">    </span><span class="nt">&lt;build_type&gt;</span>ament_python<span class="nt">&lt;/build_type&gt;</span>
+<span class="w">  </span><span class="nt">&lt;/export&gt;</span>
+<span class="nt">&lt;/package&gt;</span>
+</code></pre></div>
+
+<p>You can see the following line inside your package.xml file:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;depend&gt;</span>rclpy<span class="nt">&lt;/depend&gt;</span>
+</code></pre></div>
+
+<p>Below this line you have to add the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;depend&gt;</span>example_interfaces<span class="nt">&lt;/depend&gt;</span>
+</code></pre></div>
+
+<p>This line will add <strong>example_interfaces</strong> package as a dependency of the package inside which we are currently working on.</p>
+<p>Save all the files including your python file inside which you have created your node, package.xml and setup.py file inside which you have created your executable.</p>
+<p>If you don't know how to make an executable and then run the node then you can cover that part from <a href="https://medium.com/@satyarthshree45/ros-2-tutorial-for-beginners-part-2-creating-your-first-node-c33e92d54b5c">Part 2</a> of this tutorial series. It has already been discussed there.</p>
+<p>After doing all this, build and source your workspace and then run your node.</p>
+<p>When you run your node you will see nothing is being displayed as shown in the screenshot shared below:</p>
+<p><img alt="Running publisher node — no output displayed on screen despite the node actively publishing" src="../../Images/part_7/Image_1.png" /> <em>Figure 1: Running publisher node</em></p>
+<p>But why so? Why nothing is being displayed?</p>
+<p>This is a very common beginner's confusion.</p>
+<p>Nothing is being displayed because our publisher node is actively publishing messages to our topic but it is not actively displaying anything.</p>
+<h2 id="exploring-topics-via-ros-2-cli">Exploring Topics via ROS 2 CLI<a class="headerlink" href="#exploring-topics-via-ros-2-cli" title="Permanent link">&para;</a></h2>
+<p>Now we will check whether our publisher node is publishing messages on our topic or not using command line tools.</p>
+<p>This section is very important as the commands which I will discuss here will help you debug issues in multi node systems where they are multiple publishers and subscribers.</p>
+<p>We will work and create such systems once we learn subscribers which we will do so in upcoming one or two parts.</p>
+<p>Now let's start introspecting our topic with CLI tools provided by ROS 2.</p>
+<h3 id="first-command-ros2-node-list">First Command: ros2 node list<a class="headerlink" href="#first-command-ros2-node-list" title="Permanent link">&para;</a></h3>
+<p>Run your publisher node in one terminal and then open another terminal and type the following command in it:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>node<span class="w"> </span>list
+</code></pre></div>
+
+<p>This command displays the names of those nodes which are currently active/running.</p>
+<p>After running this command, I got the following output:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">satyarth</span><span class="o">-</span><span class="n">shree</span><span class="nv">@Satyarth</span><span class="err">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="n">ros2</span><span class="w"> </span><span class="n">node</span><span class="w"> </span><span class="n">list</span>
+<span class="o">/</span><span class="n">publisher_1</span>
+<span class="n">satyarth</span><span class="o">-</span><span class="n">shree</span><span class="nv">@Satyarth</span><span class="err">:</span><span class="o">~</span><span class="err">$</span>
+</code></pre></div>
+
+<p>Which means my node which is named publisher_1 is running.</p>
+<p>If you do not get any output then make sure that your publisher node is running on some another terminal and then try this command again.</p>
+<p>If your node is running then it will definitely show the name of the node.</p>
+<p>The output of this command confirms that our publisher node is running.</p>
+<p>Now we should know how to check whether our topic is currently active or not.</p>
+<h3 id="second-command-ros2-topic-list">Second Command: ros2 topic list<a class="headerlink" href="#second-command-ros2-topic-list" title="Permanent link">&para;</a></h3>
+<p>To check whether our topic is currently active or not type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>list
+</code></pre></div>
+
+<p>After running this command you will get the following output:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">satyarth</span><span class="o">-</span><span class="n">shree</span><span class="nv">@Satyarth</span><span class="err">:</span><span class="o">~</span><span class="err">$</span><span class="w"> </span><span class="n">ros2</span><span class="w"> </span><span class="n">topic</span><span class="w"> </span><span class="n">list</span>
+<span class="o">/</span><span class="n">my_first_topic</span>
+<span class="o">/</span><span class="n">parameter_events</span>
+<span class="o">/</span><span class="n">rosout</span>
+<span class="n">satyarth</span><span class="o">-</span><span class="n">shree</span><span class="nv">@Satyarth</span><span class="err">:</span><span class="o">~</span><span class="err">$</span>
+</code></pre></div>
+
+<p>The name of my topic was: my_first_topic, so this name has been displayed.</p>
+<p>If you used some another name for your topic then that name will be displayed.</p>
+<p>You might be thinking what are parameter_events and rosout which are being displayed here?</p>
+<p>These are some background processes which ROS 2 runs so don't worry about them. They are being run by the ROS 2 system itself, you will see them every time you run <strong>ros2 topic list.</strong></p>
+<p>If you are seeing the name of your topic in the output of this command then it confirms your topic is currently active.</p>
+<h3 id="third-command-ros2-topic-echo">Third Command: ros2 topic echo<a class="headerlink" href="#third-command-ros2-topic-echo" title="Permanent link">&para;</a></h3>
+<p>The previous command displayed the name of your topic. You might have noticed that a forward slash has been automatically included in the name of your topic at the very start even if you didn't included it yourself.</p>
+<p>This is a very common ROS behaviour.</p>
+<p>Now type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/my_first_topic
+</code></pre></div>
+
+<p>After echo you have to write the name of your topic. Make sure the name of the topic is the same as it was shown, when you ran the command: ros2 topic list command.</p>
+<p>After running this command you will be able to see the messages which are being published by your publisher node on your topic as shown in the image below:</p>
+<p><img alt="Output of the command: ros2 topic echo /my_first_topic showing repeated published messages" src="../../Images/part_7/Image_2.png" /> <em>Figure 2: Output of the command: ros2 topic echo /my_first_topic</em></p>
+<blockquote>
+<p>There are few very important things which you must take into consideration.</p>
+</blockquote>
+<p>Make sure before running these three commands on a terminal your publisher node is actually running on some another terminal. If you have interrupted your publisher node using Ctrl + C or closed the terminal in which it was running then you won't get any output using these commands.</p>
+<h2 id="edge-case-rarely-happens">Edge Case (rarely happens)<a class="headerlink" href="#edge-case-rarely-happens" title="Permanent link">&para;</a></h2>
+<p>There can be a scenario where your node is properly running but the name of your node and topic is not appearing when you are using the commands I told in previous section.</p>
+<p>This happens rarely, but it does.</p>
+<p>To fix this issue first type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>daemon<span class="w"> </span>stop
+</code></pre></div>
+
+<p>then type the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>daemon<span class="w"> </span>start
+</code></pre></div>
+
+<p>And now your commands will run if your node is running properly in the background.</p>
+<p>You might be thinking what is <strong>ros2 daemon</strong> here?</p>
+<p>In simple words, think of it as a background helper which helps keep track of what is happening in your ros2 system so your commands run faster.</p>
+<p>It collects information about topics, nodes and services which are currently active and stores it temporarily in the form of <strong>cache</strong> memory. So when you run commands like:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>node<span class="w"> </span>list
+ros2<span class="w"> </span>topic<span class="w"> </span>list
+ros2<span class="w"> </span>service<span class="w"> </span>list
+</code></pre></div>
+
+<p>They often get data from daemon instead of scanning everything again and again.</p>
+<p>Sometimes you will notice that these commands are not showing your nodes or topic even if they are running in the background and everything is correctly sourced. This usually happens when daemon cache is outdated.</p>
+<p>Stopping and then again starting daemon will reset this cache memory and then every command will run as expected.</p>
+<h2 id="whats-next">What's Next<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
+<p>This is basically the end of this part. If you have followed all the steps correctly then by now your publisher would definitely be running perfectly on your system.</p>
+<p>You basically took your first step in using ROS 2 communication mechanism.</p>
+<p>In the next article, I will talk about how you can create a subscriber which subscribes to a topic and displays all the messages which are being published on that topic.</p>
+<blockquote>
+<p>Till then stay tuned and keep learning!!</p>
+</blockquote>
+<p><strong>Edit:</strong> Part 8 has been released! Here is the link to read it: <a href="https://medium.com/@satyarthshree45/ros-2-tutorial-for-beginners-part-8-create-your-first-subscriber-node-in-python-57a4b2f978f2">ROS 2 Tutorial for Beginners (Part 8): Create Your First Subscriber Node in Python</a></p>
+<h2 id="about-the-publication-ros-simplified">About the Publication: ROS Simplified<a class="headerlink" href="#about-the-publication-ros-simplified" title="Permanent link">&para;</a></h2>
+<p><em>ROS Simplified</em> is a learner-driven publication dedicated to making ROS (Robot Operating System) concepts clear, practical, and accessible. We provide tutorials, conceptual explainers, and project walkthroughs designed to help students, hobbyists, and engineers understand and apply ROS efficiently.</p>
+<p>If you want to receive notifications of tutorials like these directly in your inbox then you can subscribe to ROS Simplified by visiting the publication using links given below.</p>
+<p>This blog has also been published under the publication — <a href="http://rossimplified.substack.com/">ROS Simplified</a>.</p>
+<p><a href="https://rossimplified.substack.com/p/get-started-with-ros-2-a-beginner">To view other parts of this ROS 2 Tutorial series click here.</a></p>
+<h2 id="about-the-author">About the Author<a class="headerlink" href="#about-the-author" title="Permanent link">&para;</a></h2>
+<p>Hi, I am Satyarth Shree, a second-semester BTech Robotics and Automation student at Lovely Professional University (LPU), India. I am an aspiring robotics engineer who is publicly documenting his learning journey using platforms like Medium and Substack.</p>
+<p>My areas of interest include ROS, python and mathematics. Currently, I am focusing on ROS more. I have also started a publication named ROS Simplified to make ROS accessible to everyone by providing beginner-friendly tutorials free of cost.</p>
+<h2 id="lets-connect">Let's Connect<a class="headerlink" href="#lets-connect" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>My Github</strong>: https://github.com/Satyarth-Shree</li>
+<li><strong>My LinkedIn</strong>: https://www.linkedin.com/in/satyarth-shree-761357374/</li>
+<li><strong>My CodeWars</strong>: https://www.codewars.com/users/Satyarth-Shree</li>
+<li><strong>My X</strong>: https://x.com/BuildUnderdog</li>
+<li><strong>My Hashnode</strong>: https://hashnode.com/@SatyarthShree</li>
+<li><strong>My Portfolio</strong>: https://satyarthshree.com</li>
+<li><strong>To professionally contact me for internships, collaborations or similar opportunities click here</strong>: https://forms.gle/SH9bj1oJwqPtJtD26</li>
+</ul>
+<hr />
+<p><strong>Tags:</strong> Ros 2, Python, Robotics, Ros2 Tutorial, Ros2 Publisher</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

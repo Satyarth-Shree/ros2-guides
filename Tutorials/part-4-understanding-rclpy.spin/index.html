@@ -1,0 +1,1305 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Beginner-friendly ROS 2 tutorials from ROS Simplified">
+      
+      
+      
+        <link rel="canonical" href="https://docs.satyarthshree.com/Tutorials/part-4-understanding-rclpy.spin/">
+      
+      
+        <link rel="prev" href="../part-3-sub-part-2/">
+      
+      
+        <link rel="next" href="../part-5-manage-your-ROS-2-workspace-using-linux-commands/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Part 4: Understanding rclpy.spin() - ROS Simplified</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ros2-tutorial-for-beginners-part-4-understanding-rclpyspin" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ROS Simplified" class="md-header__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS Simplified
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Part 4: Understanding rclpy.spin()
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS Simplified" class="md-nav__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ROS Simplified
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-1-create-your-first-workspace-and-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1: Creating Your First Workspace and Package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-2-creating-your-first-node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2: Creating Your First Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-1-understanding-ros-2-nodes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.1: Understanding ROS 2 Nodes (Sub Part 1)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.2: Understanding ROS 2 Nodes (Sub Part 2)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4: Understanding rclpy.spin()
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4: Understanding rclpy.spin()
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-article" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About This Article
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analyzing-behavior-of-rclpyspin-in-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analyzing behavior of rclpy.spin() in a Node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-application-of-rclpyspin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An Application of rclpy.spin()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="An Application of rclpy.spin()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-happens-without-spin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What happens without spin()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-happens-with-spin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What happens with spin()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-short-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Short Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Connect
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-5-manage-your-ROS-2-workspace-using-linux-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5: Managing Workspace Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-6-topics-and-publisher-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6: Topics and Publisher Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-7-creating-a-publisher-and-exploring-it-with-ros2-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7: Creating a Publisher and Exploring It with ROS2 CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-8-create-your-first-subscriber-node-in-python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8: Create Your First Subscriber Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-9-Exploring-Topics-with-ros2-command-line-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 9: Exploring Topics with ROS2 CLI Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-this-article" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About This Article
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analyzing-behavior-of-rclpyspin-in-a-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analyzing behavior of rclpy.spin() in a Node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-application-of-rclpyspin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        An Application of rclpy.spin()
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="An Application of rclpy.spin()">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-happens-without-spin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What happens without spin()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-happens-with-spin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What happens with spin()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-short-introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Short Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Connect
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ros2-tutorial-for-beginners-part-4-understanding-rclpyspin">ROS2 Tutorial for Beginners (Part 4): Understanding rclpy.spin()<a class="headerlink" href="#ros2-tutorial-for-beginners-part-4-understanding-rclpyspin" title="Permanent link">&para;</a></h1>
+<p><strong>Satyarth Shree</strong> · 13 min read</p>
+<p>Learn how <code>rclpy.spin()</code> keeps your ROS 2 node alive and how to structure nodes cleanly using Python classes.</p>
+<h2 id="about-this-article">About This Article<a class="headerlink" href="#about-this-article" title="Permanent link">&para;</a></h2>
+<p>This article is the 4th part of my <a href="https://rossimplified.substack.com/p/get-started-with-ros-2">ROS 2 Tutorial for Beginner series</a>. In part 2, I discussed how you can create a simple node which prints a message. This article is a direct continuation of that part. In that part we didn't covered how we can keep a node alive or running.</p>
+<p>You should know the following concepts before continuing to read this part:</p>
+<ol>
+<li>How to create a workspace</li>
+<li>How to create a package</li>
+<li>How to create a basic python node which displays a message</li>
+<li>How to run a python node</li>
+<li>How to build and source ROS workspace</li>
+</ol>
+<p>All these concepts have been covered in the previous parts of this ROS 2 Tutorial series. To read them you can visit the following link:</p>
+<p><a href="https://rossimplified.substack.com/p/get-started-with-ros-2">ROS 2 Tutorial for Beginners Series By ROS Simplified</a></p>
+<p>If there is a time constraint and you want to continue reading this blog directly then I recommend you clone the following Github repo:</p>
+<p><a href="https://github.com/Satyarth-Shree/ros2-beginner-part-2-python-node">GitHub — Satyarth-Shree/ros2-beginner-part-2-python-node</a></p>
+<p>Follow the instructions written in README.md file of this repo. After cloning and building this repo successfully you will get a ready made node.</p>
+<p>I highly recommend you to read other parts of this series, especially Part 2 before continuing with this article.</p>
+<h2 id="analyzing-behavior-of-rclpyspin-in-a-node">Analyzing behavior of rclpy.spin() in a Node<a class="headerlink" href="#analyzing-behavior-of-rclpyspin-in-a-node" title="Permanent link">&para;</a></h2>
+<p>Let's create a basic node which displays a message like we created in Part 2 of this series.</p>
+<p>The code for that node is:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;New_Node&quot;</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Let's build and run this node.</p>
+<blockquote>
+<p>I am not going to explain in detail on how to run this node because I have already covered that in part 2 of this tutorial series.</p>
+</blockquote>
+<p>We will get the following output (I have used "my_node" as the executable name):</p>
+<p><img alt="Output of node without rclpy.spin() — node runs, prints message, and terminates" src="../../Images/part_4/Image_1.png" /> <br>
+ <em>Figure 1: Node output without rclpy.spin() — the node prints its message once and terminates</em></p>
+<p>So basically what is happening here? As you can see in the screenshot shared above, when we ran the command to execute our node then our node got executed, it displayed the output and then it stopped. By stopping I mean now our node is not running or we can say it isn't alive anymore.</p>
+<p>To check whether our node is currently running or not we can us tools like rqt_graph.</p>
+<p>rqt_graph is basically a tool using which we can check which node is running and how nodes are communicating with each other. I have explained about it in part 3 of this tutorial series.</p>
+<p>Run the following command:</p>
+<div class="codehilite"><pre><span></span><code>rqt_graph
+</code></pre></div>
+
+<p>The following interface will open:</p>
+<p><img alt="rqt_graph interface showing no active nodes" src="../../Images/part_4/Image_2.png" /> 
+<br><em>Figure 2: rqt_graph interface — no node name displayed since the node already terminated</em></p>
+<p>Press the refresh icon on the top left of the graph. When you will press it you can see that no node name is being displayed which means that no node is currently actively running.</p>
+<p>First question which may come up in your mind is:</p>
+<p><strong>Why keeping a node alive is important?</strong></p>
+<p>When we will explore ROS more in upcoming articles you will learn that the publisher and subscriber system is actually a very important method of communication between different nodes.</p>
+<p>Without learning how to keep a node alive you cannot create this system.</p>
+<p>Therefore it is important to know how to keep a node alive.</p>
+<p>To keep a node alive you just need to add one line. The node we have created just now prints a simple message but dies just after that message is displayed. To make sure it runs even after the message is displayed add the following line just above the rclpy.shutdown() line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now our code should look like:</p>
+<p><img alt="Code screenshot showing rclpy.spin(node) added above rclpy.shutdown()" src="../../Images/part_4/Image_3.png" /> <br><em>Figure 3: Updated code with rclpy.spin(node) added just above rclpy.shutdown()</em></p>
+<p>We used the variable "node" while we were creating our node in the line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;New_Node&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Which is the reason why we used the variable name "node" inside parenthesis of spin() because "node" represents the node which displays the message in our program.</p>
+<p>spin() function must be used before the line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Because this line terminates the ROS communication system. Since this line shuts down the ROS 2 system so we need to make sure that it is always at the end after all our code related to our node is written.</p>
+<p>Now run these two commands one by one:</p>
+<ol>
+<li><code>colcon build</code></li>
+<li><code>source install/setup.bash</code></li>
+</ol>
+<p>These two commands must be executed from the root of your workspace folder. As you might already know running these two commands are necessary to build our workspace and then source the newly built version.</p>
+<p>Now run your node. You will now notice that even after your message has been displayed the node hasn't been terminated yet. Consider the figure below:</p>
+<p><img alt="Node output showing the node still running after the message is displayed" src="../../Images/part_4/Image_4.png" /> <br><em>Figure 4: Node remains alive after displaying its message, thanks to rclpy.spin(node)</em></p>
+<p>To check whether the node is alive or not open another terminal while keeping the current one running and type:</p>
+<div class="codehilite"><pre><span></span><code>rqt_graph
+</code></pre></div>
+
+<p>After refreshing the graph you will see that a node name "New_Node" is being displayed as shown in the figure below:</p>
+<p><img alt="rqt_graph showing New_Node as an active, running node" src="../../Images/part_4/Image_5.png" /><br>
+<em>Figure 5: rqt_graph now shows "New_Node" as an active node</em></p>
+<p>This means our node is alive.</p>
+<p>As you can see earlier we didn't used <strong>rclpy.spin(node)</strong> because of which our node got terminated immediately after displaying the message but when we used the spin() function then even after displaying the message our node is still alive.</p>
+<p>This is the importance of the spin() functionality. It can keep nodes alive which is necessary for continuous communication between two nodes like a publisher and subscriber based system.</p>
+<p>The point of our discussion so far is that I want you to understand how you can keep a node alive.</p>
+<p>From this discussion we can conclude that there are two types of nodes. The first one terminates immediately after performing it's function while the second one remains alive until we terminate it manually.</p>
+<p>There is no such strict classification, I have only put it in this way so you can create a mental model of what we are discussing in your mind.</p>
+<p>To terminate a node which is alive, click once on the terminal where you typed the command to run it and then press Ctrl + C.</p>
+<h2 id="an-application-of-rclpyspin">An Application of rclpy.spin()<a class="headerlink" href="#an-application-of-rclpyspin" title="Permanent link">&para;</a></h2>
+<p>Instead of trying to cram what is happening here we will try to understand what is the importance of <strong>rclpy.spin()</strong> by applying it.</p>
+<p>Let's try to create a node which displays a certain message periodically. Since we have to display a message again and again so we need to keep our node alive.</p>
+<p>But that is only one side of it. By only keeping a node alive you cannot get it to display a message multiple times. To do so we need to implement a function which displays the message which we want to and use a functionality to call that function periodically.</p>
+<p>So in this section we are basically going to learn two things:</p>
+<ol>
+<li>How to keep a node alive</li>
+<li>How to implement a timer function</li>
+</ol>
+<p>Currently our node somewhat looks like:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;New_Node&quot;</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>We have to create a function which displays the message "I am learning ROS 2." and then we need to find a way to call this function periodically.</p>
+<p>Let's name our function timer.</p>
+<p>Since purpose of this function will be to display our message so we will add the following line inside it:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am Learning ROS 2.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>We have already included this line in our main() function, but it has to be again included inside the new function which we are creating because we want it to get displayed again and again.</p>
+<p>Another important point is that our function named timer() must be created inside the main() function.</p>
+<p>But why?</p>
+<p>Because whenever we type the command to run this particular node, it always executes the main function as we have included the following line in our setup.py file:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">my_node</span> <span class="o">=</span> <span class="n">my_py_pkg</span><span class="o">.</span><span class="n">my_first_node</span><span class="p">:</span><span class="n">main</span>
+</code></pre></div>
+
+<p>So the code related to our node must always be included inside main function.</p>
+<p>As stated earlier we have created a function named timer which is:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">timer</span><span class="p">():</span>
+  <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now our node looks like:</p>
+<p><img alt="Code screenshot showing the timer() function defined inside main()" src="../../Images/part_4/Image_6.png" /> 
+<br><em>Figure 6: Code with the timer() function added inside main()</em></p>
+<p>So we have created a function which displays the message that we have intend to, but will the node display the message periodically as we want it to display?</p>
+<p>The answer is No!</p>
+<p>But why?</p>
+<p>Because even if we have created our function we haven't called it yet so it won't be getting used when we run our node.</p>
+<p>ROS offers us a method named create_timer() which let's us call a function every time after a set duration. If I want to call this function named timer() after every 1 second then I will simply add the following line of code below this function (just above the "rclpy.spin(node)" line):</p>
+<div class="codehilite"><pre><span></span><code><span class="n">node</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">timer</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The second argument of this function is the name of the function which needs to be executed and the first argument is the time interval between two consequent executions.</p>
+<p>Now the complete code is:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;New_Node&quot;</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">timer</span><span class="p">():</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">timer</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Let's build our package and run our node. You will see that our message is getting displayed after every 1 second as shown in the figure given below:</p>
+<p><img alt="Node output showing the message repeating every 1 second" src="../../Images/part_4/Image_7.png" />
+<br><em>Figure 7: Message printed repeatedly every 1 second via the timer callback</em></p>
+<p>Why is our message getting displayed every 1 second?</p>
+<p>This is because we have added the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">node</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">timer</span><span class="p">)</span>
+</code></pre></div>
+
+<blockquote>
+<p>This line is basically calling timer() function after every 1 second. If we enter some other number in place of 1.0 then our function will be called every time after that specific duration of time.</p>
+</blockquote>
+<p>If we replace 1.0 by some other time duration, let's say 2.0 then this message will be displayed periodically after every 2 seconds.</p>
+<p>To understand the importance of the rclpy.spin(), let's remove the following line from our code:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now it will be fun to see happens when we build and run our node again.</p>
+<p>You will get the following output:</p>
+<p><img alt="Node output showing the message printed only once, without repeats, after removing rclpy.spin()" src="../../Images/part_4/Image_8.png" /> </p>
+<p><em>Figure 8: Without rclpy.spin(), the timer callback never fires — no repeated messages</em></p>
+<p>Message won't be displayed again and again.</p>
+<p>Now the question arises why?</p>
+<p>To answer that question you need to understand that what happens when the following line is executed:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">node</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">timer</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Then you are basically saying:</p>
+<blockquote>
+<p>"Hey ROS 2, call the function timer() after every one second for me."</p>
+</blockquote>
+<p>This line doesn't calls the function. It only passes the function as a reference ROS 2.</p>
+<p>After this function is registered as a reference then the interpreter (translator which executes our python code) moves to the next line which is:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</code></pre></div>
+
+<p>This line shuts down the ROS 2 system.</p>
+<p>So basically the thing that is happening here is that our ROS 2 system doesn't gets a chance to call that function.</p>
+<p>ROS 2 can call the function timer(), but only when the node is spinning. To make our node spin we add the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Once this line is added then our node starts spinning and now ROS 2 calls the function again and again after the specified duration of time.</p>
+<p>The spin() function basically starts a ROS 2 executor loop which is necessary for timers to work.</p>
+<p>Below are some flowcharts which will help you understand what is happening.</p>
+<h3 id="what-happens-without-spin">What happens without spin()<a class="headerlink" href="#what-happens-without-spin" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="n">start</span><span class="w"> </span><span class="n">program</span>
+<span class="w">     </span><span class="err">│</span>
+<span class="w">     </span><span class="err">▼</span>
+<span class="n">create</span><span class="w"> </span><span class="n">node</span>
+<span class="w">     </span><span class="err">│</span>
+<span class="w">     </span><span class="err">▼</span>
+<span class="n">print</span><span class="w"> </span><span class="n">log</span><span class="w"> </span><span class="n">message</span>
+<span class="w">     </span><span class="err">│</span>
+<span class="w">     </span><span class="err">▼</span>
+<span class="n">create</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="p">(</span><span class="n">just</span><span class="w"> </span><span class="n">registers</span><span class="w"> </span><span class="n">callback</span><span class="p">)</span>
+<span class="w">     </span><span class="err">│</span>
+<span class="w">     </span><span class="err">▼</span>
+<span class="n">shutdown</span>
+<span class="w">     </span><span class="err">│</span>
+<span class="w">     </span><span class="err">▼</span>
+<span class="n">program</span><span class="w"> </span><span class="n">ends</span>
+</code></pre></div>
+
+<h3 id="what-happens-with-spin">What happens with spin()<a class="headerlink" href="#what-happens-with-spin" title="Permanent link">&para;</a></h3>
+<div class="codehilite"><pre><span></span><code><span class="nv">create</span><span class="w"> </span><span class="nv">timer</span>
+<span class="w">     </span>│
+<span class="w">     </span>▼
+<span class="nv">spin</span><span class="ss">(</span><span class="nv">node</span><span class="ss">)</span>
+<span class="w">     </span>│
+<span class="w">     </span>├─<span class="w"> </span><span class="k">wait</span>
+<span class="w">     </span>├─<span class="w"> </span><span class="k">wait</span>
+<span class="w">     </span>├─<span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">second</span><span class="w"> </span><span class="nv">passed</span>
+<span class="w">     </span>│
+<span class="w">     </span>▼
+<span class="k">call</span><span class="w"> </span><span class="nl">timer</span><span class="ss">()</span>
+<span class="w">     </span>│
+<span class="w">     </span>▼
+<span class="nv">print</span><span class="w"> </span><span class="nv">message</span>
+<span class="w">     </span>│
+<span class="w">     </span>▼
+<span class="nv">repeat</span><span class="w"> </span><span class="nv">forever</span>
+</code></pre></div>
+
+<p>True understanding can only be built once you deliberately try to break the code by experimenting with it continuously.</p>
+<p>Now we will do some experimentation with our ROS 2 node to build an even deeper understanding about it.</p>
+<p>Make sure to follow along by creating the node yourselves.</p>
+<p>Now I will be inserting the line: rclpy.spin(node) just after the line where we have created the node. So now we have the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;New_Node&quot;</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">timer</span><span class="p">():</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">timer</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Now let's build and run our node again.</p>
+<p>You will find something in interesting. The output which you will get will be:</p>
+<p><img alt="Node output showing nothing printed at all after placing rclpy.spin(node) before the logger line" src="../../Images/part_4/Image_9.png" /> <br><em>Figure 9: No output at all — spin() placed before the log line blocks everything after it</em></p>
+<p>As you can see no output has been displayed. If you try to understand why this happens then you won't find this surprising anymore.</p>
+<p>Take a good look at the code that I shared above. The line responsible for displaying the message is:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>But before this line I have added the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This line blocks interpreter from executing our code so the line which comes after this one do not get executed.</p>
+<p>The lines which come after the spin() function are not permanently skipped. They will be executed after spinning stops.</p>
+<p>After gaining command over the basics of spin() function we will also explore how to stop spinning. For now that part is not the scope of this tutorial blog.</p>
+<p>Now let's insert the line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+</code></pre></div>
+
+<p>just before the line where the timer() function is been defined. So now our code is give below:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Node</span><span class="p">(</span><span class="s2">&quot;New_Node&quot;</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">timer</span><span class="p">():</span>
+        <span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+    <span class="n">node</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">timer</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Try to predict the what shall be the output once we build and run this node. The hint is that the spin() function blocks the further execution of our code.</p>
+<p>Many of you might have guessed the answer correctly. Since the line:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">node</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;I am learning ROS 2.&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>is written before spin() function so it will be executed and our message will be displayed once. The timer() function and the line which is used to create timer comes after the line of spin() function so they won't be executed.</p>
+<p>The output that you will obtain will be:</p>
+<p><img alt="Node output showing the message printed exactly once, since spin() blocks the timer setup that follows it" src="../../Images/part_4/Image_10.png" /> <br><em>Figure 10: Message prints once — spin() blocks the timer creation code that comes after it</em></p>
+<p>As you can see message was not displayed multiple times because the lines of code required to do so didn't got executed.</p>
+<p>So what is the point of this discussion?</p>
+<p>Before introducing any definition of spin() function I decided to first explain you how it works practically so that you can easily understand once I write the textbook definition of it.</p>
+<blockquote>
+<p>spin() starts the ROS executor loop and continuously processes callbacks such as timers, subscriber callbacks, and service requests until the node is shut down.</p>
+</blockquote>
+<p>This is how I define the spin() function. It might not be the official one but it captures the application of the spin() function according to my level of understanding.</p>
+<p>Terms like "subscriber" and "service request" might seem confusing to you because we haven't explored them yet. But don't worry in the upcoming parts of this ROS tutorial series I will explain them also.</p>
+<p>For now you can keep in mind that just like timers which we discussed in this blog, subscribers and services that we create in ROS also need the involvement of spin() function.</p>
+<p>This is the end of our discussion for this part. If you have any doubts then you can drop a comment in the comments section below and I will try to reply as soon as possible.</p>
+<blockquote>
+<p>I am currently a full-time BTech student managing my studies alongside learning ROS2 and writing these tutorials, so my schedule can sometimes be quite busy. Thank you for your patience and for following along with the series.</p>
+</blockquote>
+<h2 id="whats-next">What's Next<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
+<p>In the next part of this blog I shall discuss how you can create a node using classes in python. Almost all industry grade code always uses classes so we should also learn how we can create node using it.</p>
+<p>In this blog we tried to use the spin() function to display a message periodically. In the next one we will try to achieve the same outcome but by using classes.</p>
+<blockquote>
+<p>Stay Tuned and Keep Learning!</p>
+</blockquote>
+<p><strong>Edit:</strong> Next part of this tutorial series has been released. Click here to read it:</p>
+<p><a href="https://medium.com/@satyarthshree45/ros2-tutorial-for-beginners-part-5-managing-ros2-workspace-storage-using-linux-commands-f0c0b76c9559">ROS 2 Tutorial for Beginners (Part 5): Managing ROS 2 Workspace Storage Using Linux Commands</a></p>
+<h2 id="a-short-introduction">A Short Introduction<a class="headerlink" href="#a-short-introduction" title="Permanent link">&para;</a></h2>
+<p>Hi, I am Satyarth Shree, a first-semester BTech Robotics and Automation student at Lovely Professional University (LPU), India. I am an aspiring robotics engineer who is publicly documenting his learning journey using platforms like Medium and Substack.</p>
+<p>My areas of interest include ROS, python and mathematics. Currently, I am focusing on ROS more. I have also started a publication named ROS Simplified to make ROS accessible to everyone by providing beginner-friendly tutorials free of cost.</p>
+<h2 id="lets-connect">Let's Connect<a class="headerlink" href="#lets-connect" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>My Github</strong>: https://github.com/Satyarth-Shree</li>
+<li><strong>My LinkedIn</strong>: https://www.linkedin.com/in/satyarth-shree-761357374/</li>
+<li><strong>My CodeWars</strong>: https://www.codewars.com/users/Satyarth-Shree</li>
+<li><strong>My X</strong>: https://x.com/BuildUnderdog</li>
+<li><strong>My Hashnode</strong>: https://hashnode.com/@SatyarthShree</li>
+<li><strong>My Portfolio</strong>: https://satyarth-shree.github.io/My-Portfolio/</li>
+<li><strong>To professionally contact me for internships, collaborations or similar opportunities click here</strong>: https://forms.gle/SH9bj1oJwqPtJtD26</li>
+</ul>
+<hr />
+<p><strong>Tags:</strong> Ros 2, Robotics, Robotics Engineering, Programming, Ros 2 Tutorial</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

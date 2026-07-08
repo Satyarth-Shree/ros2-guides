@@ -1,0 +1,1483 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Beginner-friendly ROS 2 tutorials from ROS Simplified">
+      
+      
+      
+        <link rel="canonical" href="https://docs.satyarthshree.com/Tutorials/part-6-topics-and-publisher-foundations/">
+      
+      
+        <link rel="prev" href="../part-5-manage-your-ROS-2-workspace-using-linux-commands/">
+      
+      
+        <link rel="next" href="../part-7-creating-a-publisher-and-exploring-it-with-ros2-cli/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Part 6: Topics and Publisher Foundations - ROS Simplified</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ros-2-tutorial-for-beginners-part-6-topics-and-publisher-foundations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ROS Simplified" class="md-header__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS Simplified
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Part 6: Topics and Publisher Foundations
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS Simplified" class="md-nav__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ROS Simplified
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-1-create-your-first-workspace-and-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1: Creating Your First Workspace and Package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-2-creating-your-first-node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2: Creating Your First Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-1-understanding-ros-2-nodes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.1: Understanding ROS 2 Nodes (Sub Part 1)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.2: Understanding ROS 2 Nodes (Sub Part 2)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-4-understanding-rclpy.spin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4: Understanding rclpy.spin()
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-5-manage-your-ROS-2-workspace-using-linux-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5: Managing Workspace Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6: Topics and Publisher Foundations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6: Topics and Publisher Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-weve-covered-so-far" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What we've covered so far
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-publisher-subscriber-system-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Publisher — Subscriber System Explained
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-publisher-and-a-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Publisher and a Topic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating a Publisher and a Topic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#writing-code-for-a-publisher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing Code for a Publisher
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-stage-creating-a-topic-and-the-foundation-of-a-publisher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Stage: Creating a Topic and the Foundation of a Publisher
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publisher-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publisher Object
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Publisher Object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-argument-type-of-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Argument: Type of Message
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-argument-name-of-the-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second Argument: Name of the Topic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#third-argument-qos-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Third Argument: QoS setting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-publication-ros-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About The Publication — ROS Simplified
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About The Author
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Connect
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-7-creating-a-publisher-and-exploring-it-with-ros2-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7: Creating a Publisher and Exploring It with ROS2 CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-8-create-your-first-subscriber-node-in-python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8: Create Your First Subscriber Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-9-Exploring-Topics-with-ros2-command-line-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 9: Exploring Topics with ROS2 CLI Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-weve-covered-so-far" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What we've covered so far
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-publisher-subscriber-system-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Publisher — Subscriber System Explained
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-a-publisher-and-a-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating a Publisher and a Topic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating a Publisher and a Topic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#writing-code-for-a-publisher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing Code for a Publisher
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-stage-creating-a-topic-and-the-foundation-of-a-publisher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Stage: Creating a Topic and the Foundation of a Publisher
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#publisher-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Publisher Object
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Publisher Object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#first-argument-type-of-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Argument: Type of Message
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#second-argument-name-of-the-topic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Second Argument: Name of the Topic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#third-argument-qos-setting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Third Argument: QoS setting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-publication-ros-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About The Publication — ROS Simplified
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About The Author
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lets-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Connect
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ros-2-tutorial-for-beginners-part-6-topics-and-publisher-foundations">ROS 2 Tutorial for Beginners (Part 6): Topics and Publisher Foundations<a class="headerlink" href="#ros-2-tutorial-for-beginners-part-6-topics-and-publisher-foundations" title="Permanent link">&para;</a></h1>
+<p><strong>Satyarth Shree</strong> · 18 min read · Apr 15, 2026</p>
+<blockquote>
+<p>Learn how ROS 2 topics enable communication between nodes and start building the foundation of your first publisher using Python</p>
+</blockquote>
+<h2 id="what-weve-covered-so-far">What we've covered so far<a class="headerlink" href="#what-weve-covered-so-far" title="Permanent link">&para;</a></h2>
+<p>In the previous 5 parts we have basically covered the following concepts:</p>
+<ol>
+<li>Creating a workspace</li>
+<li>Creating a package</li>
+<li>Creating a node which displays messages</li>
+<li>Introspecting nodes using command line tools</li>
+<li>Managing workspace storage using Linux commands</li>
+</ol>
+<p>There is something common about all of these concepts. None of them uses ROS 2 communication systems effectively.</p>
+<p>A node which displays messages just prints them on the terminal, which can even be done by a simple python file.</p>
+<p>You are not utilizing ROS effectively if you are not using it's communication systems. In the previous parts, I didn't talk about this because it was necessary to first cover the basics like creating a package and then creating a very basic node inside it.</p>
+<p>But now since we have already covered the basics so it's time to start utilizing the communication mechanisms provided by ROS 2.</p>
+<p>After reading this blog you will be yourself be able to create a system where different nodes communicate with each other.</p>
+<blockquote>
+<p>So let's start learning</p>
+</blockquote>
+<p><strong>This article has been published under a publication named</strong> <a href="http://rossimplified.substack.com/"><strong>ROS Simplified</strong></a> <strong>which is a learner driven publication dedicated to make ROS 2 easy to understand and accessible for beginners.</strong></p>
+<h2 id="the-publisher-subscriber-system-explained">The Publisher — Subscriber System Explained<a class="headerlink" href="#the-publisher-subscriber-system-explained" title="Permanent link">&para;</a></h2>
+<p>This is one of the most beginner friendly concepts in ROS 2 from where we can start learning how communication between different nodes work.</p>
+<p>Before you try to understand this system you should read previous parts as the concepts that I have taught there will be actively used in this article.</p>
+<p>I have already mentioned the concepts which I have discussed in previous parts in the <strong>"What we have covered so far"</strong> section of this blog. If you are already aware of those concepts then you can continue with this article.</p>
+<blockquote>
+<p>Now I will start explaining what a publisher — subscriber system really is in ROS 2.</p>
+</blockquote>
+<p>Instead of copy pasting bookish definitions I will tell you about my understanding of this system.</p>
+<p>So basically publisher can be defined as a <strong>node</strong> which publishes messages to a <strong>topic</strong> in ROS 2.</p>
+<p>As I said this may not be the bookish definition of publishers but it summarizes what happens practically whenever we run a publisher node.</p>
+<blockquote>
+<p>Now you might be thinking what is a topic?</p>
+</blockquote>
+<p>Let's start by a simple analogy.</p>
+<p>We all have used platforms like Youtube where we can watch videos posted by content creators.</p>
+<p>Let's assume you have subscribed to a Youtube channel named "ROS Simplified". Whenever someone will post a video on this channel then you will get a notification.</p>
+<p>If no video is posted then you won't receive any notifications.</p>
+<p>This is exactly what happens in a publisher — subscriber system.</p>
+<p>A publisher node publishes messages to a topic. Any subscriber node which subscribes a topic will receive all the messages which are being published on that topic.</p>
+<p>To correctly visualize the data flow look at the image shown below:</p>
+<p><img alt="Data flow in a publisher-subscriber system: first_publisher publishing to message_center topic, received by first_subscriber" src="../../Images/part_6/Image_1.png" /> <em>Figure 1: Data flow in a publisher-subscriber system</em></p>
+<p>Here I have created a publisher node named "first_publisher" which is publishing some data on a topic named "message_center". A subscriber node named "first_subscriber" has subscribed to this topic, so whenever a message gets published on this topic, first_subscriber will receive it.</p>
+<p>This is the actual data flow that happens in a publisher — subscriber model.</p>
+<p>More than one publishers can publish on a topic.</p>
+<p>The same goes for subscribers.</p>
+<p>More than one subscribers can subscribe to a topic.</p>
+<p>It is also possible that a topic has a publisher but no subscribers or has subscribers but no publishers.</p>
+<blockquote>
+<p>Relate this with the Youtube analogy which I mentioned earlier.</p>
+</blockquote>
+<p>It is possible for a youtube channel to have a content creator that is consistently publishing videos but hasn't gained any subscribers yet.</p>
+<p>This can be related with a topic having publishers, but no subscribers.</p>
+<p>It is also possible for a youtube channel to have subscribers but now the creator of that channel is no longer posting videos. We often call such a youtube channel a "<strong>dead channel</strong>".</p>
+<p>This can be related with a topic having subscribers, but no publishers.</p>
+<p>Refer the diagram given below to get a better understanding of what we are discussing here.</p>
+<p><img alt="A topic having more than one publisher and more than one subscriber" src="../../Images/part_6/Image_2.png" /> <em>Figure 2: A topic having more than one publishers and subscribers.</em></p>
+<p>As you can see in figure no.2 our topic which is message_center, has more than one publisher and more than one subscriber.</p>
+<p>Here is a more in depth overview of what is happening.</p>
+<p>The publishers which are: <strong>first_publisher</strong> and <strong>second_publisher</strong> are publishing messages to the same topic named <strong>message_center</strong>.</p>
+<p>The subscribers which are: <strong>first_subscriber</strong> and <strong>second_subscriber</strong> have subscribed to this topic, so all the messages which are being published in this topic will be received by both the subscribers.</p>
+<p>Many beginners have a misconception that first_subscriber will receive data published by first_publisher and second_subscriber will receive data published by second_publisher.</p>
+<p>So they build a mental model like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">+-------------------+</span><span class="c">        </span><span class="nb">+---------------------+</span>
+<span class="c">| first_publisher   | </span><span class="nb">-----</span><span class="nv">&gt;</span><span class="c"> | first_subscriber     |</span>
+<span class="nb">+-------------------+</span><span class="c">        </span><span class="nb">+---------------------+</span>
+
+<span class="nb">+-------------------+</span><span class="c">        </span><span class="nb">+---------------------+</span>
+<span class="c">| second_publisher  | </span><span class="nb">-----</span><span class="nv">&gt;</span><span class="c"> | second_subscriber    |</span>
+<span class="nb">+-------------------+</span><span class="c">        </span><span class="nb">+---------------------+</span>
+</code></pre></div>
+
+<blockquote>
+<p>But this is wrong!</p>
+<p>In reality, a subscriber which has subscribed to a topic will receive data from all the publishers publishing to that topic.</p>
+</blockquote>
+<p>So first_subscriber is receiving data from both first_publisher and second_publisher.</p>
+<p>The same goes for second_subscriber.</p>
+<p>The correct mental model is:</p>
+<div class="codehilite"><pre><span></span><code><span class="c">            </span><span class="nb">+-------------------+</span>
+<span class="c">            | first_publisher   |</span>
+<span class="c">            </span><span class="nb">+-------------------+</span>
+<span class="c">             |               |</span>
+<span class="c">             |               |</span>
+<span class="c">             v               v</span>
+<span class="nb">+---------------------+</span><span class="c">   </span><span class="nb">+--------------------+</span>
+<span class="c">| first_subscriber    |   | second_subscriber  |</span>
+<span class="nb">+---------------------+</span><span class="c">   </span><span class="nb">+--------------------+</span>
+
+<span class="c">            </span><span class="nb">+-------------------+</span>
+<span class="c">            | second_publisher  |</span>
+<span class="c">            </span><span class="nb">+-------------------+</span>
+<span class="c">             |               |</span>
+<span class="c">             |               |</span>
+<span class="c">             v               v</span>
+<span class="nb">+---------------------+</span><span class="c">   </span><span class="nb">+--------------------+</span>
+<span class="c">| first_subscriber    |   | second_subscriber  |</span>
+<span class="nb">+---------------------+</span><span class="c">   </span><span class="nb">+--------------------+</span>
+</code></pre></div>
+
+<p>You might start getting a bit confused thinking about these publisher-subscriber models and how they communicate with each other.</p>
+<p>It is normal to feel overwhelmed because most probably you are studying about internal communication mechanisms of ROS 2 for the very first time.</p>
+<p>Don't worry, now I will step by step explain how to create a publisher.</p>
+<p>Once you yourself create a publisher and see topics running on your system, you will naturally feel a more firm grasp over these concepts which we discussed just now.</p>
+<blockquote>
+<p>If you are too much confused, then forget what I have explained till now and focus on what I am going too.</p>
+</blockquote>
+<p>As stated earlier it is highly recommended that you read previous parts before reading this one because concepts taught in those parts will be required to completely understand this one.</p>
+<p>Here is the article from where you can start your learning ROS 2: <a href="https://rossimplified.substack.com/p/get-started-with-ros-2-a-beginner">ROS Simplified for Beginners</a></p>
+<blockquote>
+<p>Let's continue</p>
+</blockquote>
+<h2 id="creating-a-publisher-and-a-topic">Creating a Publisher and a Topic<a class="headerlink" href="#creating-a-publisher-and-a-topic" title="Permanent link">&para;</a></h2>
+<p>From our discussion till now we can conclude that:</p>
+<blockquote>
+<p>A publisher is basically a node which publishes messages or some data to a topic.</p>
+</blockquote>
+<p>The important word in the above written line is "node".</p>
+<p>That means to create a publisher we need to first create a node.</p>
+<p>Let's create a node named "<strong>first_publisher</strong>".</p>
+<p>To do so we have to first create a workspace, then create a package inside it and then create a node inside the package.</p>
+<p>I have already explained how to do this in <a href="https://medium.com/@satyarthshree45/ros-2-tutorial-for-beginners-part-2-creating-your-first-node-c33e92d54b5c">Part 2</a> of this tutorial series. If you have a confusion, you can refer from there.</p>
+<blockquote>
+<p>Make sure to use split screen feature to open this blog and your terminal or VS Code simultaneously so that you can also practice what you are learning.</p>
+</blockquote>
+<p>I am creating a workspace named "<strong>tutorial_part_6</strong>" and a package inside it named "<strong>first_package</strong>". You can choose any name according to your preference.</p>
+<p>I have created a file named "<strong>first_node.py</strong>" inside my package.</p>
+<p>After doing this much we can start writing the code for our publisher node.</p>
+<blockquote>
+<p>So complete till this step and then proceed to the next one.</p>
+</blockquote>
+<p>Now open the python file that you have created in VS Code or any other IDE which you prefer.</p>
+<h3 id="writing-code-for-a-publisher">Writing Code for a Publisher<a class="headerlink" href="#writing-code-for-a-publisher" title="Permanent link">&para;</a></h3>
+<p>The first line which we will write is shebang.</p>
+<p>You might be thinking what a shebang is? Let me explain you.</p>
+<p>A shebang is a line which tells our operating system (OS), which interpreter should be used to run this file.</p>
+<p>The shebang that we will use is:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+</code></pre></div>
+
+<p>This line tells our OS, that python3 should be used to execute this file. python3 here is basically an interpreter which is used to execute a python file.</p>
+<p>Shebang must be the very first line that should be written in your python program.</p>
+<p>After writing shebang we have to begin writing our main program. Since we are creating a python node so we obviously need rclpy, which is the ROS 2 client library for python.</p>
+<p>rclpy cannot be used directly as it is not a built-in library of python. We need to manually import it, so second line of our program will be:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+</code></pre></div>
+
+<blockquote>
+<p>We are basically creating a node here that publishes messages to a topic. To create a node we have to use functionalities of Node class which is present inside the node module in rclpy.</p>
+</blockquote>
+<p>You might be confused after reading what I just said.</p>
+<p>Let me break it down for you.</p>
+<p>rclpy is a library which has several modules inside it. Each one of these modules are designed for a specific purpose.</p>
+<p>Think of a library like a folder and modules like files inside it. So rclpy is basically a folder which has several usable files inside it known as modules.</p>
+<p>One of these files is named node.py</p>
+<p>It is also called the <strong>node</strong> module. Inside this node module, there is a class named <strong>Node</strong>.</p>
+<p>This class provides us with the means to create a node using python in ROS 2. You can yourself check whether this module or class exists or not.</p>
+<p>Just search: "<strong>rclpy official github repository</strong>" on any search engine that you are using. Then open the github repository of rclpy.</p>
+<p>Inside that repository you will find the node module, and inside that node module you will also find the Node class.</p>
+<p>So since we are creating a node here so we need to import this <strong>Node</strong> class.</p>
+<p>To do so we will now write the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+</code></pre></div>
+
+<p>So far we have written the following code:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+</code></pre></div>
+
+<p>It is important to build a mental model of what code we have written so far, so that you truly understand it, instead of ending up memorizing and forgetting it by day after tomorrow.</p>
+<p>Here is what we have done till now:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">+-------------------------------+</span>
+<span class="c">|Used shebang to tell the OS    |</span>
+<span class="c">|which interpreter should be    |</span>
+<span class="c">|used while executing this file |</span>
+<span class="nb">+-------------------------------+</span>
+<span class="c">               │</span>
+<span class="c">               ▼</span>
+<span class="nb">+-------------------------------+</span>
+<span class="c">|Imported rclpy to access ROS 2 |</span>
+<span class="c">|functionalities using python   |</span>
+<span class="nb">+-------------------------------+</span>
+<span class="c">               │</span>
+<span class="c">               ▼</span>
+<span class="nb">+-------------------------------+</span>
+<span class="c">|Imported &quot;Node&quot; class from     |</span>
+<span class="c">|&quot;node&quot; module to create a node |</span>
+<span class="nb">+-------------------------------+</span>
+</code></pre></div>
+
+<p>Instead of memorizing code try to understand the meaning of each line as written in the flowchart shared above.</p>
+<p>Now we will create a class.</p>
+<p>You might be thinking why we are creating a class and what is the use of it.</p>
+<p>Strictly speaking you can create a python node even without using classes but industry grade code and programs involving very complex coding is almost always written using classes.</p>
+<p>So it is better to practice how to use classes from the beginning as it will allow you to gain a firm grasp over it as you progress further in this tutorial series.</p>
+<p>Even if you are not much good in Object Oriented Programming part of python, don't worry.</p>
+<p>I will be explaining each line of code as we progress further.</p>
+<blockquote>
+<p>Alright before continuing further there is something I would like to tell you.</p>
+</blockquote>
+<p>Now we will start with the main coding of our publisher. So the upcoming section will be demanding a huge portion of your cognitive bandwidth to understand, especially if you are beginner who has never used ROS extensively before.</p>
+<p>If you are feeling tired or you are in an environment where you cannot focus, so I recommend stopping for now and continuing reading later when conditions are better.</p>
+<blockquote>
+<p>If you are ready then let's go</p>
+</blockquote>
+<p>To create a class we have to use the "<strong>class</strong>" keyword followed by the name of our class.</p>
+<p>Let's name our class "<strong>Publisher</strong>".</p>
+<p>We will write the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+</code></pre></div>
+
+<p>As you can see after Publisher, I have written the Node class inside parenthesis. This is the same Node class which we imported earlier.</p>
+<p>Now you might be thinking what is happening here?</p>
+<p>Why we are writing Node inside parenthesis while creating some another class?</p>
+<blockquote>
+<p>This is actually a very important concept in python. It is known as inheritance.</p>
+</blockquote>
+<p><strong>Inheritance</strong> means when a class inherits methods and attributes from some another class.</p>
+<p>The class which inherits methods and attributes from some another class is known as <strong>child class</strong> or <strong>sub class</strong>.</p>
+<p>The class from which, another class inherits is known as <strong>parent class</strong> or <strong>super class</strong>.</p>
+<p>So in our case <strong>Node</strong> is parent class and <strong>Publisher</strong> is child class, because Publisher is inheriting from Node.</p>
+<p><strong>Inheritance</strong> basically allows the child class to use all the methods and attributes of the parent class as well as it's own methods and attributes.</p>
+<p>So the child class basically becomes an extension of the parent class as it has all the attributes of the parent class along with it's own.</p>
+<blockquote>
+<p>This is actually a very powerful feature. If you are working on an important python project then you can basically create a <strong>Master class</strong> having all the main attributes and functions and several other classes inheriting from this master class.</p>
+</blockquote>
+<p>As I stated earlier that all the functionalities related to a node is defined in the Node class of the official github repository of rclpy.</p>
+<p>When we use the concept of inheritance and create the Publisher class then we have now created something using which we can use all the functionalities of the Node class.</p>
+<blockquote>
+<p>This is exactly why this line which you just wrote is very important.</p>
+</blockquote>
+<p>Without it, you won't be able to create node which can be considered as one of the most fundamental units of a system made using ROS 2.</p>
+<p>Now after you have defined your class, you must create a constructor inside it.</p>
+<p>A constructor is a special method which is used to initialize the attributes of an object when it is created from a class.</p>
+<p>Think of it in this way:</p>
+<blockquote>
+<p>A class actually defines attributes of the objects created using it. A constructor actually assigns values to those attributes for each object.</p>
+</blockquote>
+<p>To create a constructor you have to create a "<code>__init__</code>" function inside your class.</p>
+<p>This must be the first function that you should create inside your class.</p>
+<p>So now you have written the code up to this point:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</code></pre></div>
+
+<p>As you can see I have created a function named <code>__init__</code> inside my class.</p>
+<p>This function is the constructor of our class about which we were just talking about.</p>
+<p>You might be thinking why we have written "<strong>self</strong>" inside the parenthesis of constructor?</p>
+<p>Here "self" represents the objects which we will create using this class. So "self" must be the first argument which should be passed to the constructor.</p>
+<p>If you are not good with Object Oriented Programming and you want a dedicated tutorial related to it then you can fill the form given below.</p>
+<p><a href="https://form.jotform.com/261002073006034">Click here to fill python OOP tutorial form</a></p>
+<p>If sufficient number of people want a tutorial article dedicated to OOP then I will surely create it and publish soon under the publication — ROS Simplified.</p>
+<blockquote>
+<p>Things can start getting confusing from here especially if you haven't had much programming exposure yet, but bear with me, I will make it easier to understand it for you.</p>
+</blockquote>
+<p>Inside our constructor we will write create our publisher node.</p>
+<p>You might be thinking why inside the constructor? Why not inside some another method?</p>
+<p>Because whenever you create an object then constructor is automatically called in the background.</p>
+<p>This means that all the code written inside the constructor gets executed from top to bottom.</p>
+<p>If you have created your function inside some another method of class in place of constructor then you would have to explicitly call that method.</p>
+<blockquote>
+<p>This is actually a very important concept in OOP. Whenever you create an object from a class then only constructor gets automatically called in the background. To call other methods you have to do it explicitly.</p>
+</blockquote>
+<p>So creating our publisher inside constructor removes the headache of calling some another method of our class.</p>
+<p>If you want to structure your code in such a way that you do not want a publisher to be created whenever you create an object then it is the right move to create publisher inside some another method.</p>
+<p>How you structure your code depends entirely on which application you are working on.</p>
+<p>Since here, we are just learning how to create a publisher so we will be doing it inside the constructor function for simplicity.</p>
+<p>Later in these tutorial series when we dive into more advanced topics we will uncover some more aspects about classes. But for now this is enough.</p>
+<p>I would like you to take a break here and then process what is the role of each line of code we have written up till here. Rushing to complete a tutorial won't develop conceptual depth, thinking hard and trying to find the meaning of each line of code will.</p>
+<p>Remember you have opened this article to learn how to create a publisher not for entertainment.</p>
+<p>But the main motive of reading this article shouldn't be just to learn how to create a publisher, but also to develop an understanding of the ROS 2 system on the basis of which you can yourself decide which conditions are required for a publisher to exist.</p>
+<blockquote>
+<p>That is real conceptual depth.</p>
+</blockquote>
+<h3 id="final-stage-creating-a-topic-and-the-foundation-of-a-publisher">Final Stage: Creating a Topic and the Foundation of a Publisher<a class="headerlink" href="#final-stage-creating-a-topic-and-the-foundation-of-a-publisher" title="Permanent link">&para;</a></h3>
+<p>Only proceed beyond this point when you have fully understood what we have discussed till now.</p>
+<p>In ROS 2 every node has a name, so before creating our publisher node we must decide a name for it.</p>
+<p>Let's name our publisher node — "publisher_1". You can choose any other name of your preference but the important thing to note is that the name of a publisher shouldn't have blank spaces.</p>
+<p>For example, if you want to name your node "my node" then this name won't work because it has a blank space. So name it "my_node". In place of blank spaces you can use the underscore character.</p>
+<p>The second important thing to keep in mind is that the name of your node cannot contain special characters like @, #, $, % etc. You can only use underscores. Even hyphens (-) are not allowed.</p>
+<blockquote>
+<p>ROS 2 node naming convention follows strict rules. Always remember that.</p>
+</blockquote>
+<p>Decide the name of your node accordingly now. I am continuing with the name "publisher_1".</p>
+<p>Now inside the constructor we will add the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;publisher_1&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This line is called <strong>Superclass constructor call</strong> or <strong>Superclass Initialization</strong> or <strong>super() invocation</strong>.</p>
+<p>But why?</p>
+<p>Because this line class the constructor of our super class which is Node and initializes a node named publisher_1.</p>
+<p>We created a constructor for our class Publisher. Just like Publisher the Node class, which is the parent class of Publisher also has a constructor.</p>
+<p>If we want to create a node then we must call the constructor of this super class and pass the name of our node as an argument.</p>
+<p>As you can see inside the parenthesis of the superclass constructor call line, I have written the name of my node enclosed by double inverted commas.</p>
+<p>Now in the background the constructor of the Node class will be called and the node of my name will be passed as an argument to it.</p>
+<p>This will initialize our node in the ROS 2 communication system.</p>
+<p>The important thing to note is that while passing your node name as an argument to the superclass constructor call, always enclose it inside double inverted commas.</p>
+<p>If you don't do so then you will get an error. Let's say I wrote the following statement:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">publisher_1</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Then python will try to find a variable named publisher_1. Since no such variable exists so it will give an error.</p>
+<blockquote>
+<p>So make sure that your node name is enclosed inside single or double inverted commas.</p>
+</blockquote>
+<p>So far we have written this much of code:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;publisher_1&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now we will create a publisher.</p>
+<p>Before we start creating a publisher we must first decide the name of the topic on which our publisher will publish messages.</p>
+<p>The naming convention of topics is almost the same as nodes with one key difference.</p>
+<blockquote>
+<p>Topics allow forward slash (/) in their names while nodes don't.</p>
+</blockquote>
+<p>This is an interesting fact about which you should be aware off.</p>
+<p>I have decided to use "message_center" as the name of my topic.</p>
+<p>Now read very carefully.</p>
+<p>Let's revisit the definition of a publisher which we discussed earlier</p>
+<blockquote>
+<p>A publisher is basically a node that is transmitting a message to a topic.</p>
+</blockquote>
+<p>The important phrase in this definition is:</p>
+<blockquote>
+<p>transmitting a message to a topic</p>
+</blockquote>
+<p>This is not just a simple phrase. It carries a deep conceptual meaning.</p>
+<p>Let me explain.</p>
+<p>In ROS 2, there is something known as a "message". Each message has a message type.</p>
+<p>So when you are creating a publisher you have to basically specify which message your publisher will be publishing to a topic.</p>
+<p>When you are specifying a message you are also specifying the type of that message.</p>
+<p>This might be sounding confusing to you, so read carefully.</p>
+<p>ROS 2 provides you with the power to create your own custom messages and also define the type of your message.</p>
+<p>We often create our own type of messages in complex multi node systems where several publishers and subscribers are involved and we wish to create a useful application out of it.</p>
+<p>But for beginners like you and me who are new to ROS, creating our own custom messages is very difficult.</p>
+<p>To deal with this issue ROS 2 provides you with Built-In packages that allows you to use pre-built messages.</p>
+<p>You can use these pre-built messages to create a publisher of your own, without needing to create custom messages from scratch.</p>
+<p>These pre-built messages are stored inside packages. One such package which offers you built-in messages is <strong>example_interfaces</strong>.</p>
+<p>Inside the example_interfaces package there is a module named <strong>msg</strong>. This is a module which stores message definitions. Inside this module there is a message type known as <strong>String</strong>.</p>
+<p>But we cannot use this package.</p>
+<p>Why so?</p>
+<p>Because we haven't imported it yet.</p>
+<p>To import we have to write the following line, just above the line in which we have created our class Publisher:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+</code></pre></div>
+
+<p>Now our code looks like:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;publisher_1&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>This line which we have added just now will import the message type <strong>String</strong> from the <strong>msg</strong> module which is inside the <strong>example_interfaces</strong> package.</p>
+<p>You might have already notice that it is somewhat is similar to the "from rclpy.node ……………" line written just above it.</p>
+<h2 id="publisher-object">Publisher Object<a class="headerlink" href="#publisher-object" title="Permanent link">&para;</a></h2>
+<p>Now we will create a publisher object inside our class. This object is responsible for sending messages.</p>
+<p>To create a publisher object we have to use a method of the Node class (the parent class of our Publisher class).</p>
+<p>This method is known as <strong>create_publisher</strong>.</p>
+<p>While using this method we have to pass three arguments to it, otherwise it won't work.</p>
+<p>Those three arguments are — type of message, name of topic and QoS (Quality of Service) setting.</p>
+<h3 id="first-argument-type-of-message">First Argument: Type of Message<a class="headerlink" href="#first-argument-type-of-message" title="Permanent link">&para;</a></h3>
+<p>The task of a publisher object is to publish messages to a topic. As I told earlier that every message must have a message type, so while creating a publisher object we much specify it's message type.</p>
+<p>That is the first and foremost thing to be taken care off.</p>
+<p>In our case we will be using <strong>String</strong> type as already discussed above.</p>
+<h3 id="second-argument-name-of-the-topic">Second Argument: Name of the Topic<a class="headerlink" href="#second-argument-name-of-the-topic" title="Permanent link">&para;</a></h3>
+<p>Since the job of a publisher object is to publish messages to a topic so it needs to know on which topic, messages are supposed to be published.</p>
+<p>The name of the topic must be specified inside double quotes and should follow the naming conventions of a topic which I have already discussed earlier.</p>
+<h3 id="third-argument-qos-setting">Third Argument: QoS setting<a class="headerlink" href="#third-argument-qos-setting" title="Permanent link">&para;</a></h3>
+<p>Let's suppose our publisher is sending messages very fast, but the Middleware (DDS) is slow so our messages won't be able to reach our subscriber node timely.</p>
+<p>In this case data loss can occur as the speed on which messages are getting delivered is less than the speed with which messages are being sent, so it is possible that some messages do not get delivered at all.</p>
+<p>This is where <strong>QoS (Quality of Service)</strong> comes in.</p>
+<p>There is a QoS setting which specifies the queue size of a publisher node. Queue size means the number of messages which will be stored if they aren't being sent properly due to communication delay.</p>
+<p><strong>QoS</strong> is actually a very advanced topic. Trying to understand it while you are still a beginner can greatly confuse you, so let's drop this discussion for now.</p>
+<p>I will write separate articles on QoS once your fundamentals are clear.</p>
+<h2 id="whats-next">What's Next<a class="headerlink" href="#whats-next" title="Permanent link">&para;</a></h2>
+<p>We will be winding up here for now because this article has already became very long.</p>
+<p>In the next part we will write the code which is left and run our first publisher. This part was intended to build your foundation by focusing more on understanding what are topics and publishers, combined with a little bit of hands on coding.</p>
+<p>In the next part we will shift to full execution mode and we will complete our code which has been left incomplete along with running and testing our publisher using command line.</p>
+<h2 id="about-the-publication-ros-simplified">About The Publication — ROS Simplified<a class="headerlink" href="#about-the-publication-ros-simplified" title="Permanent link">&para;</a></h2>
+<p><em>ROS Simplified</em> is a learner-driven publication dedicated to making ROS (Robot Operating System) concepts clear, practical, and accessible. We provide tutorials, conceptual explainers, and project walkthroughs designed to help students, hobbyists, and engineers understand and apply ROS efficiently.</p>
+<p>If you want to receive notifications of tutorials like these directly in your inbox then you can subscribe to ROS Simplified by visiting the publication using links given below.</p>
+<p>This blog has also been published under the publication — <a href="http://rossimplified.substack.com/">ROS Simplified</a>.</p>
+<p><a href="https://rossimplified.substack.com/p/get-started-with-ros-2-a-beginner">To view other parts of this ROS 2 Tutorial series click here.</a></p>
+<h2 id="about-the-author">About The Author<a class="headerlink" href="#about-the-author" title="Permanent link">&para;</a></h2>
+<p>Hi, I am Satyarth Shree, a second-semester BTech Robotics and Automation student at Lovely Professional University (LPU), India. I am an aspiring robotics engineer who is publicly documenting his learning journey using platforms like Medium and Substack.</p>
+<p>My areas of interest include ROS, python and mathematics. Currently, I am focusing on ROS more. I have also started a publication named ROS Simplified to make ROS accessible to everyone by providing beginner-friendly tutorials free of cost.</p>
+<h2 id="lets-connect">Let's Connect<a class="headerlink" href="#lets-connect" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>My Github</strong>: https://github.com/Satyarth-Shree</li>
+<li><strong>My LinkedIn</strong>: https://www.linkedin.com/in/satyarth-shree-761357374/</li>
+<li><strong>My CodeWars</strong>: https://www.codewars.com/users/Satyarth-Shree</li>
+<li><strong>My X</strong>: https://x.com/BuildUnderdog</li>
+<li><strong>My Hashnode</strong>: https://hashnode.com/@SatyarthShree</li>
+<li><strong>My Portfolio</strong>: https://satyarthshree.com</li>
+<li><strong>To professionally contact me for internships, collaborations or similar opportunities click here</strong>: https://forms.gle/SH9bj1oJwqPtJtD26</li>
+</ul>
+<hr />
+<p><strong>Tags:</strong> Ros2, Robotics, Python Libraries, Ros2 Tutorial, Robot Operating System</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
