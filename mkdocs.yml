@@ -1,0 +1,35 @@
+site_name: ROS Simplified
+site_url: https://docs.satyarthshree.com
+site_description: Beginner-friendly ROS 2 tutorials from ROS Simplified
+repo_url: https://github.com/Satyarth-Shree/ros2-guides.git
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Tutorials:
+      - "Part 1: Creating Your First Workspace and Package": Tutorials/part-1-create-your-first-workspace-and-package.md
+      - "Part 2: Creating Your First Node": Tutorials/part-2-creating-your-first-node.md
+      - "Part 3.1: Understanding ROS 2 Nodes (Sub Part 1)": Tutorials/part-3-sub-part-1-understanding-ros-2-nodes.md
+      - "Part 3.2: Understanding ROS 2 Nodes (Sub Part 2)": Tutorials/part-3-sub-part-2.md
+      - "Part 4: Understanding rclpy.spin()": Tutorials/part-4-understanding-rclpy.spin.md
+      - "Part 5: Managing Workspace Storage": Tutorials/part-5-manage-your-ROS-2-workspace-using-linux-commands.md
+      - "Part 6: Topics and Publisher Foundations": Tutorials/part-6-topics-and-publisher-foundations.md
+      - "Part 7: Creating a Publisher and Exploring It with ROS2 CLI": Tutorials/part-7-creating-a-publisher-and-exploring-it-with-ros2-cli.md
+      - "Part 8: Create Your First Subscriber Node": Tutorials/part-8-create-your-first-subscriber-node-in-python.md
+      - "Part 9: Exploring Topics with ROS2 CLI Tools": Tutorials/part-9-Exploring-Topics-with-ros2-command-line-tools.md
+
+markdown_extensions:
+  - fenced_code
+  - codehilite
+  - admonition
+  - toc:
+      permalink: true
