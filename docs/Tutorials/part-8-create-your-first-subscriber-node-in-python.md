@@ -370,7 +370,7 @@ Once you do that you will start seeing messages in the terminal in which subscri
 
 ![Sourcing workspace in another terminal and then running the publisher node](../Images/part_8/Image_2.png) <br>_Image 2: Sourcing workspace in another terminal and then running publisher._
 
-![Subscriber node displaying messages after the publisher starts running](/Images/part_8/Image_3.png) <br> _Image 3: Subscriber started displaying messages after publisher starts running._
+![Subscriber node displaying messages after the publisher starts running](../Images/part_8/Image_3.png) <br> _Image 3: Subscriber started displaying messages after publisher starts running._
 
 While creating our publisher node we passed **1.0** as the first argument of create_timer() method. Because of this decision every second one message is being published by the publisher node on our topic.
 

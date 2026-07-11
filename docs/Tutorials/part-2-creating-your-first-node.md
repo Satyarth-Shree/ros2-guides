@@ -12,7 +12,7 @@ If you know how to create a package then you can continue reading this blog. But
 
 You can refer to the following article to learn how to create a workspace and a package:
 
-[ROS 2 Tutorial for Beginners (Part 1): Creating Your First Workspace and Package](part-1-create-your-first-workspace-and-package)
+[ROS 2 Tutorial for Beginners (Part 1): Creating Your First Workspace and Package](part-1-create-your-first-workspace-and-package.md)
 
 This article mentioned above is the part 1 of this ROS 2 beginner series.
 
