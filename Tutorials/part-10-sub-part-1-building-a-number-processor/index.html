@@ -1,0 +1,1561 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Beginner-friendly ROS 2 tutorials from ROS Simplified">
+      
+      
+      
+        <link rel="canonical" href="https://docs.satyarthshree.com/Tutorials/part-10-sub-part-1-building-a-number-processor/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/ROS_Simplified_Logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>ROS 2 Tutorial for Beginners (Part 10.1): Building a Number Processor with Publishers and Subscribers - ROS Simplified</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ros-2-tutorial-for-beginners-part-101-building-a-number-processor-with-publishers-and-subscribers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ROS Simplified" class="md-header__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  <img src="../../assets/ROS_Simplified_Logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ROS Simplified
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ROS 2 Tutorial for Beginners (Part 10.1): Building a Number Processor with Publishers and Subscribers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ROS Simplified" class="md-nav__button md-logo" aria-label="ROS Simplified" data-md-component="logo">
+      
+  <img src="../../assets/ROS_Simplified_Logo.png" alt="logo">
+
+    </a>
+    ROS Simplified
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Satyarth-Shree/ros2-guides.git" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-1-create-your-first-workspace-and-package/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1: Creating Your First Workspace and Package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-2-creating-your-first-node/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2: Creating Your First Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-1-understanding-ros-2-nodes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.1: Understanding ROS 2 Nodes (Sub Part 1)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-3-sub-part-2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3.2: Understanding ROS 2 Nodes (Sub Part 2)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-4-understanding-rclpy.spin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4: Understanding rclpy.spin()
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-5-manage-your-ROS-2-workspace-using-linux-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5: Managing Workspace Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-6-topics-and-publisher-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6: Topics and Publisher Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-7-creating-a-publisher-and-exploring-it-with-ros2-cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7: Creating a Publisher and Exploring It with ROS2 CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-8-create-your-first-subscriber-node-in-python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8: Create Your First Subscriber Node
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../part-9-Exploring-Topics-with-ros2-command-line-tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 9: Exploring Topics with ROS2 CLI Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-understand-and-break-down-the-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Understand and Break Down the System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-understanding-and-building-the-publisher-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Understanding and Building the Publisher Component
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Understanding and Building the Publisher Component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-import-required-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Import Required Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-create-publisher-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Create Publisher Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-create-timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Create Timer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-writer-timer-callback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Writer Timer Callback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-create-main-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Create main() function
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-create-an-executable-to-run-our-publisher-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Create an Executable to run our Publisher Node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-building-our-workspace-and-then-inspecting-our-publisher-node-using-command-line-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Building our Workspace and then Inspecting our Publisher node using Command Line Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Building our Workspace and then Inspecting our Publisher node using Command Line Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-5-running-and-inspecting-our-publisher-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Running and Inspecting our Publisher Node
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-debugging-and-troubleshooting-our-sub-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Debugging and Troubleshooting our Sub System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: Debugging and Troubleshooting our Sub System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-identifying-the-scope-of-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Identifying the Scope of Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-entry-point-of-the-scope-of-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Entry Point of the Scope of Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-analyzing-terminal-instance-for-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Analyzing Terminal Instance for Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-publication-ros-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About the Publication — ROS Simplified
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About the Author
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="About the Author">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lets-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Connect
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ros-2-tutorial-for-beginners-part-101-building-a-number-processor-with-publishers-and-subscribers">ROS 2 Tutorial for Beginners (Part 10.1): Building a Number Processor with Publishers and Subscribers<a class="headerlink" href="#ros-2-tutorial-for-beginners-part-101-building-a-number-processor-with-publishers-and-subscribers" title="Permanent link">&para;</a></h1>
+<p><strong>Satyarth Shree</strong> · _25 min read </p>
+<blockquote>
+<p>Build a complete ROS 2 mini project by creating a random number publisher, processing data with a subscriber, and validating communication using ROS 2 CLI tools.</p>
+</blockquote>
+<p>In previous part of this tutorial series, we covered how various command line tools can be used to inspect and debug our publisher — subscriber system.</p>
+<p>At the end of that part, I gave a mini exercise and mentioned that the solution of that exercise will be given in part 10 of this tutorial series.</p>
+<p>To remind all of you, the exercise give was:</p>
+<ol>
+<li>Create a publisher which publishes random integers from 0 to 10 on a topic.</li>
+<li>Create a subscriber node which receives these messages, divides them by 2 and then displays the new number.</li>
+</ol>
+<p>Let's name this simple mini project, a number processor system.</p>
+<p>So in this article, I will step by step explain and create this system. I advise you to follow and engage in hands on coding along with me while reading this article.</p>
+<p>Practical implementation is not built by only reading articles. It is built by deliberately focusing on hands on engineering skills.</p>
+<p>By the end of this article and the next one which comes just after it, you will gain the ability to independently build such systems without anyone's help under the condition that you follow every step being told.</p>
+<p>This is article 10.1, where we will build the publisher required to complete our mini exercise and then in part 10.2 we shall focus on subscriber node.</p>
+<p>Without wasting any further of your time, let's begin!</p>
+<h2 id="step-1-understand-and-break-down-the-system">Step 1: Understand and Break Down the System<a class="headerlink" href="#step-1-understand-and-break-down-the-system" title="Permanent link">&para;</a></h2>
+<p>This is the first and most important step to build any system!</p>
+<p>Don't just blindly open your VS Code, understand and break down what the problem demands.</p>
+<p>The problem basically says that we have to build a system where a publisher is publishing random integers ranging from 0 to 10 and subscriber node is receiving these messages, dividing by them by 2 and then displaying it.</p>
+<p>Now break down this system into it's sub systems or you can say sub components.</p>
+<p>There are essentially two sub components present here. The first one is a publisher node and the second one is a subscriber node.</p>
+<p>Now focus on one component, let's say the publisher one.</p>
+<p>The work of this component is to publish random integers lying between 0 to 10 on a topic.</p>
+<p>That's it, nothing else!</p>
+<p>Now focus on building solely this component. Forget the other one for now.</p>
+<p>The second approach is to pick up the second component, which is the subscriber node.</p>
+<p>The work of this component is to receive the numbers being published on the topic, divide them by 2 and then display the new number.</p>
+<p>Now focus solely on this component, forget the other one.</p>
+<p>What I am trying to say is that pick one component first and build it then go to the another one.</p>
+<p>I am writing this article with the assumption that you are a beginner who is working for the first time on a system like this. For beginners, the recommended approach is to first focus solely on one component instead of getting confused by focusing on the entire system as a whole.</p>
+<p>I will continue this article by adopting the first approach, which is to first focus on the publisher component. If you wish you can also go by the second approach by focusing on the subscriber node first.</p>
+<p>Both the approaches are equally valid paths to build this system, if you execute them correctly.</p>
+<h2 id="step-2-understanding-and-building-the-publisher-component">Step 2: Understanding and Building the Publisher Component<a class="headerlink" href="#step-2-understanding-and-building-the-publisher-component" title="Permanent link">&para;</a></h2>
+<p>Since we are building the publisher component first so we must have some pre — requisite knowledge about how to make it.</p>
+<p>In part 6 and 7 of this tutorial series we already covered how to make a publisher node. I am not asking you to memorize each and every line, but you should have a clear mental map of what a publisher node consists of.</p>
+<p>Let's construct this mental map quickly in your mind, in case you have forgotten it.</p>
+<ol>
+<li>While creating a publisher node, first we have to import all the required classes and libraries. Since we are creating a python node so the required libraries and classes are the rclpy library, Node class from node module of this library, the message type which we will be using to send messages and then random module which will be used to generate random integers.</li>
+<li>The second step is to create a class and define your publisher object inside the constructor of that class. By defining publisher object, I mean specifying the arguments of create_publisher method like message type, topic name and QoS history depth. This step also involves using the super class constructor statement to assign a name to our node.</li>
+<li>The third step is to create a timer using create_timer method and assign it a timer callback method.</li>
+<li>The fourth step is to write the code required to publish message to our topic inside the timer callback, so that whenever it runs our message will be published.</li>
+<li>The fifth step is to create a function named main outside the class inside which we will create an object of this class which will become our node. This function acts as an entry point and has to be specified in the setup.py file later on while creating an executable.</li>
+</ol>
+<p>This step by step mental map which you must keep in your mind has been depicted in the form of a flowchart, as shown below.</p>
+<div class="codehilite"><pre><span></span><code><span class="err">┌───────────────────────────────────────────────┐</span>
+<span class="err">│</span><span class="w"> </span><span class="nx">Step</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="nx">Import</span><span class="w"> </span><span class="nx">Required</span><span class="w"> </span><span class="nx">Dependencies</span><span class="w">          </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">rclpy</span><span class="w"> </span><span class="kn">library</span><span class="w">                              </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Node</span><span class="w"> </span><span class="kd">class</span><span class="w">                                 </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Required</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="k">type</span><span class="w">                      </span><span class="err">│</span>
+<span class="err">└───────────────────────────────────────────────┘</span>
+<span class="w">                     </span><span class="err">│</span>
+<span class="w">                     </span><span class="err">▼</span>
+<span class="err">┌───────────────────────────────────────────────┐</span>
+<span class="err">│</span><span class="w"> </span><span class="nx">Step</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="nx">Create</span><span class="w"> </span><span class="nx">Publisher</span><span class="w"> </span><span class="nx">Class</span><span class="w">                </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Inherit</span><span class="w"> </span><span class="nx">from</span><span class="w"> </span><span class="nx">Node</span><span class="w">                          </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Call</span><span class="w"> </span><span class="nx">super</span><span class="p">()</span><span class="w"> </span><span class="nx">constructor</span><span class="w">                   </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Assign</span><span class="w"> </span><span class="nx">node</span><span class="w"> </span><span class="nx">name</span><span class="w">                           </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Create</span><span class="w"> </span><span class="nx">publisher</span><span class="w"> </span><span class="nx">object</span><span class="w">                    </span><span class="err">│</span>
+<span class="err">│</span><span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nx">Message</span><span class="w"> </span><span class="k">type</span><span class="w">                           </span><span class="err">│</span>
+<span class="err">│</span><span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nx">Topic</span><span class="w"> </span><span class="nx">name</span><span class="w">                             </span><span class="err">│</span>
+<span class="err">│</span><span class="w">      </span><span class="o">-</span><span class="w"> </span><span class="nx">QoS</span><span class="w"> </span><span class="nx">depth</span><span class="w">                              </span><span class="err">│</span>
+<span class="err">└───────────────────────────────────────────────┘</span>
+<span class="w">                     </span><span class="err">│</span>
+<span class="w">                     </span><span class="err">▼</span>
+<span class="err">┌───────────────────────────────────────────────┐</span>
+<span class="err">│</span><span class="w"> </span><span class="nx">Step</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span><span class="w"> </span><span class="nx">Create</span><span class="w"> </span><span class="nx">Timer</span><span class="w">                          </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Use</span><span class="w"> </span><span class="nx">create_timer</span><span class="p">()</span><span class="w">                         </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Specify</span><span class="w"> </span><span class="nx">timer</span><span class="w"> </span><span class="nx">period</span><span class="w">                       </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Attach</span><span class="w"> </span><span class="nx">timer</span><span class="w"> </span><span class="nx">callback</span><span class="w"> </span><span class="nx">function</span><span class="w">             </span><span class="err">│</span>
+<span class="err">└───────────────────────────────────────────────┘</span>
+<span class="w">                     </span><span class="err">│</span>
+<span class="w">                     </span><span class="err">▼</span>
+<span class="err">┌───────────────────────────────────────────────┐</span>
+<span class="err">│</span><span class="w"> </span><span class="nx">Step</span><span class="w"> </span><span class="mi">4</span><span class="p">:</span><span class="w"> </span><span class="nx">Write</span><span class="w"> </span><span class="nx">Timer</span><span class="w"> </span><span class="nx">Callback</span><span class="w">                  </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Create</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="nx">object</span><span class="w">                      </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Fill</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="nx">data</span><span class="w">                          </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Publish</span><span class="w"> </span><span class="nx">message</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">topic</span><span class="w">                   </span><span class="err">│</span>
+<span class="err">└───────────────────────────────────────────────┘</span>
+<span class="w">                     </span><span class="err">│</span>
+<span class="w">                     </span><span class="err">▼</span>
+<span class="err">┌───────────────────────────────────────────────┐</span>
+<span class="err">│</span><span class="w"> </span><span class="nx">Step</span><span class="w"> </span><span class="mi">5</span><span class="p">:</span><span class="w"> </span><span class="nx">Create</span><span class="w"> </span><span class="nx">main</span><span class="p">()</span><span class="w"> </span><span class="nx">Function</span><span class="w">                </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Initialize</span><span class="w"> </span><span class="nx">rclpy</span><span class="w">                           </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Create</span><span class="w"> </span><span class="nx">node</span><span class="w"> </span><span class="nx">object</span><span class="w">                         </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Spin</span><span class="w"> </span><span class="nx">the</span><span class="w"> </span><span class="nx">node</span><span class="w">                              </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Shutdown</span><span class="w"> </span><span class="nx">rclpy</span><span class="w">                             </span><span class="err">│</span>
+<span class="err">│</span><span class="w">  </span><span class="err">•</span><span class="w"> </span><span class="nx">Used</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nx">executable</span><span class="w"> </span><span class="nx">entry</span><span class="w"> </span><span class="nx">point</span><span class="w">             </span><span class="err">│</span>
+<span class="err">└───────────────────────────────────────────────┘</span>
+</code></pre></div>
+
+<p>We will follow this mental model to create our publisher node.</p>
+<p>There is also a step which hasn't been mentioned in this flowchart. That step is the most basic step which you have to follow every time whenever you are making any system at any level, from beginner to advanced.</p>
+<p>This step is to create a workspace and a package. Only after these things are created, you can start working on your publisher node.</p>
+<p>Let's call this step as step 0.</p>
+<p>As you already know, you can choose a name of your choice for your package and workspace. I am choosing the name ros2-tutorial-part-10 and number_processor for my workspace and package respectively.</p>
+<p>After step 0, we will follow the mental map which we just discussed starting from the step 1.</p>
+<h3 id="step-1-import-required-dependencies">Step 1: Import Required Dependencies<a class="headerlink" href="#step-1-import-required-dependencies" title="Permanent link">&para;</a></h3>
+<p>Before importing dependencies there is one thing which you need to pay attention to and that is shebang.</p>
+<p>Shebang tells our operating system which interpreter should be used to execute this python file. The shebang which we will use is:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+</code></pre></div>
+
+<p>The first dependency which we will import after writing shebang is the rclpy library. This library provides us with all the functionality to write python nodes.</p>
+<p>To import this dependency, we will write the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>  <span class="c1"># Importing first dependency</span>
+</code></pre></div>
+
+<p>The statement written after the hashtag symbol (#) is a comment. It doesn't gets processed when interpreter executes our python file. So you can either write it or ignore it.</p>
+<p>It all depends on your choice.</p>
+<p>Now the second dependency which should be imported is the Node class from the node module of the rclpy library.</p>
+<p>Node class is very important because it helps us create Node objects which serve as our ROS 2 nodes in python.</p>
+<p>To do so we will type the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>  <span class="c1"># Importing second dependency</span>
+</code></pre></div>
+
+<p>We are creating a publisher node. The purpose of a publisher node is to publish some data to a particular topic. For this data transfer, we need a message type.</p>
+<p>As stated earlier, Int64 message type will be used for this data transfer. To use this message type, we have to first import it.</p>
+<p>This message type is a part of the example_interfaces package.</p>
+<p>To import it, we will write the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Int64</span>
+</code></pre></div>
+
+<p>Now we have imported all the three required dependencies in our python file, but there is one more thing which needs to be completed.</p>
+<p>The packages which we have imported must be added as a dependency in the package.xml file of our package.</p>
+<p>This is actually a very crucial step!</p>
+<p>If you have used some another package, but you haven't added it as a dependency then while building the workspace there is a very high probability of getting an error.</p>
+<p>By default whenever we create a python package, then rclpy automatically gets added as a dependency in package.xml file. We have also used the example_interfaces package in our python file, so we need to add it as a dependency too.</p>
+<p>To do so open the package.xml file of your workspace.</p>
+<p>You will see the following line, inside this file:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;depend&gt;</span>rclpy<span class="nt">&lt;/depend&gt;</span>
+</code></pre></div>
+
+<p>Below this line, add the following one:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;depend&gt;</span>example_interfaces<span class="nt">&lt;/depend&gt;</span>
+</code></pre></div>
+
+<p>Now when you will run colcon build later after building this node, then you won't get any errors because you have correctly listed the required dependencies.</p>
+<p>Here by errors, I mean you won't get any dependency errors. But you can still get some other type of error if you have made some mistake while making the node.</p>
+<p>To avoid such mistakes, read carefully and follow along.</p>
+<p>As mentioned earlier, that in this exercise we basically have to create a publisher which publishes random integers from 0 to 10.</p>
+<p>To do so we have to import the random module provided by python. This library comes with Python's standard library so there is no need to install it.</p>
+<p>Just write the following line, to import it:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+</code></pre></div>
+
+<p><strong>Note:</strong> This line must be written in the python file in which you are creating your publisher node, not in the package.xml file.</p>
+<p>This marks the end of the first step to make our publisher node.</p>
+<p>We have imported the required packages and libraries in our python file and we have also added them as dependencies in our package.xml file.</p>
+<p>Now it is time to start the second step!</p>
+<h3 id="step-2-create-publisher-class">Step 2: Create Publisher Class<a class="headerlink" href="#step-2-create-publisher-class" title="Permanent link">&para;</a></h3>
+<p>We will create a publisher class, which will is basically a child class of the Node class which we have already imported.</p>
+<p>Let's name this class — Publisher.</p>
+<p>To create this child class named Publisher, we will write the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+</code></pre></div>
+
+<p>Inside this class, we have to create a constructor, inside which we will create the publisher object.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</code></pre></div>
+
+<p>Now inside this function, which is the constructor of our class, we have to use the super class constructor call statement to assign a name to our node.</p>
+<p>Let's suppose I want to assign the name, "number_processor_publisher" to this node.</p>
+<p>To do so I will write the following line in the constructor of my class:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;number_processor_publisher&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now we have to create a publisher object. A publisher object can be created using the create_publisher method of the Node class. After using this method an object of the Publisher class is created.</p>
+<p>Here by object of the Publisher class, I mean the Publisher class of the rclpy library, not the the Publisher class which we created.</p>
+<p>This is an important distinction!</p>
+<p>The Publisher class which we created and the Publisher class which exists inside the rclpy library are two very different things, even though there name is the same.</p>
+<p>If we don't store the reference to this object, then python's garbage collector will likely clean up the publisher node after some time.</p>
+<p>To store the reference of the object, I will be using the publisher_ variable. Since we are working with classes, so this variable will become one of the attributes of our classes.</p>
+<p>Therefore it will be written as — self.publisher_.</p>
+<p>To create this publisher object, write the following line just after the super class constructor call statement:</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">publisher_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Int64</span><span class="p">,</span> <span class="s2">&quot;number_processor_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+
+<p>I have chosen the name — "number_processor_topic" as my topic name in which my publisher node will publish message.</p>
+<p>You can choose some other name of your choice, if you want. But whatever name you choose must follow the naming convention of topics defined by ROS 2.</p>
+<p>I have already discussed about this naming convention in part 8. You can read the naming convention by clicking here.</p>
+<p>To summarize till now, we have written this much of code:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>  <span class="c1"># Importing first dependency</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>  <span class="c1"># Importing second dependency</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Int64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>  <span class="c1"># For generating integers between 0 to 10</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;number_processor_publisher&quot;</span><span class="p">)</span>  <span class="c1"># Using the super class constructor call statement to assign node name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Int64</span><span class="p">,</span> <span class="s2">&quot;number_processor_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Creating publisher object</span>
+</code></pre></div>
+
+<p>Make sure the code you have written till now matches this code, which I have shared.</p>
+<p>You can ignore the comments while writing the code yourself. I have just written them, in case someone finds the code difficult to understand.</p>
+<p>Now it is time to move to step 3, after you have completed till this part!</p>
+<h3 id="step-3-create-timer">Step 3: Create Timer<a class="headerlink" href="#step-3-create-timer" title="Permanent link">&para;</a></h3>
+<p>To continuously publish messages on the topic, we need a timer which invokes a timer callback function every time after a specified time duration passes.</p>
+<p>To implement a timer we have to use a create_timer() function, which returns an object of the Timer class.</p>
+<p>This object allows us to create and access various functionalities related to timers.</p>
+<p>Just like the previous step in which we created the publisher object, we have to store the reference of the timer object.</p>
+<p>I have decided to use the timer_ variable to store the reference.</p>
+<p>Since we are using classes, so timer_ will be an attribute of the class, hence it will be written as: self.timer_.</p>
+<p>To create the timer object write the following line inside the constructor, just below the line in which we have created publisher object:</p>
+<div class="codehilite"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">timer_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer_callback</span><span class="p">)</span>
+</code></pre></div>
+
+<p>I have chosen the name — timer_callback for my timer callback function.</p>
+<p>This is basically the end of the step 3. Now we will move to step 4!</p>
+<h3 id="step-4-writer-timer-callback">Step 4: Writer Timer Callback<a class="headerlink" href="#step-4-writer-timer-callback" title="Permanent link">&para;</a></h3>
+<p>A timer callback is basically a function which gets invoked by timer every time after a specified duration.</p>
+<p>In our case, as seen in the previous step, we passed 1.0 as the first argument of the create_timer() method.</p>
+<p>Therefore, after each second our timer callback will be invoked.</p>
+<p>As you can see in the second argument, of the create_timer() method we wrote: self.timer_callback, which means the name of our callback function is timer_callback and it is a method of the class.</p>
+<p>So after giving proper indentation, we will create a new function with this name.</p>
+<p>To create this function write the following line:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">timer_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</code></pre></div>
+
+<p>Now inside this function we have to write the code to publish our message, which in this case is random integers between 0 to 10.</p>
+<p>We will use the randint() function offered by the random module to generate numbers and then we will use the publish() method of Publisher class to publish the messages.</p>
+<p>Here by Publisher class, I again mean the Publisher class of rclpy library, not the one which we created.</p>
+<p>To achieve this we have to add some lines inside the timer_callback(), function. After adding them our function becomes:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">timer_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="n">Int64</span><span class="p">()</span>
+    <span class="n">msg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">publisher_</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Message published: </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>The last line is optional. You can remove it if you want to, but it is useful for debugging as it allows us to know whether the callback is running or not.</p>
+<p><strong>Note:</strong> If you cannot understand any particular line or the syntax of lines which I have written till now, then I would recommend you to read part 6 and 7 of this tutorial series. In these two parts, I discussed each and every line of the publisher node in a highly detailed manner.</p>
+<p>This marks the end of out step 4 of creating the publisher node.</p>
+<p>Now we will move to the final step which is step 5!</p>
+<h3 id="step-5-create-main-function">Step 5: Create main() function<a class="headerlink" href="#step-5-create-main-function" title="Permanent link">&para;</a></h3>
+<p>After writing the code for the publisher we have to create an entry point. An entry point is basically a function using which our executable can run our node.</p>
+<p>You can assign any name to this function as long as it is within the naming conventions of python, but the preferred name is main().</p>
+<p>So I will create a global function named main(), which is not a method of the class. A global function is basically a function which can be accessed from anywhere inside a python file as it exists in the global environment.</p>
+<p>Any entry point which you create in python for ROS nodes is usually a global function, otherwise your executable might not work or you would need a lot of workarounds to make it work.</p>
+<p>Till now we have written this much of code:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>  <span class="c1"># Importing first dependency</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>  <span class="c1"># Importing second dependency</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Int64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>  <span class="c1"># For generating random integers from 0 to 10</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;number_processor_publisher&quot;</span><span class="p">)</span>  <span class="c1"># Using the super class constructor call statement to assign node name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Int64</span><span class="p">,</span> <span class="s2">&quot;number_processor_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Creating publisher object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer_callback</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">timer_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">int64</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher_</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Message published: </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Now we will start creating the main() function.</p>
+<p><strong>Note:</strong> main() function must be created outside the class. It shouldn't become a method of the class.</p>
+<p>Inside the main() function, we first have to initialize the ROS 2 client library for python and only after this initialization we can create out node.</p>
+<p>After the node is created, we have to use rclpy.spin() to make sure that callbacks keep running. At then end we have to use the rclpy.shutdown() statement to cleanly kill the ROS 2 process which has been started for this node.</p>
+<p>So our main() function becomes:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">()</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Now we will add the following line, after creating the main() function to ensure that the entry point for our executable is fully created:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Till now we have completed two major steps.</p>
+<p>The first one was to understand and break down the system while the second one was to create the publisher node.</p>
+<p>These 5 steps which we just discussed are classified as mini steps which comes under the second major step.</p>
+<p>This is the entire code which we have written so far:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>  <span class="c1"># Importing first dependency</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>  <span class="c1"># Importing second dependency</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Int64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>  <span class="c1"># For generating random integers from 0 to 10</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;number_processor_publisher&quot;</span><span class="p">)</span>  <span class="c1"># Using the super class constructor call statement to assign node name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Int64</span><span class="p">,</span> <span class="s2">&quot;number_processor_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Creating publisher object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer_callback</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">timer_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">Int64</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher_</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Message published: </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">()</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>Now comes the third major step!</p>
+<h2 id="step-3-create-an-executable-to-run-our-publisher-node">Step 3: Create an Executable to run our Publisher Node<a class="headerlink" href="#step-3-create-an-executable-to-run-our-publisher-node" title="Permanent link">&para;</a></h2>
+<p>We have written the code for our publisher node, but we haven't yet created an executable which will allow us to run it.</p>
+<p>To do so, open the setup.py file of your package and find the console scripts section written in it.</p>
+<p>This section is usually present near the bottom of the setup.py file.</p>
+<p>Your setup.py file will have code similar to the following one:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">setuptools</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_packages</span><span class="p">,</span> <span class="n">setup</span>
+
+<span class="n">package_name</span> <span class="o">=</span> <span class="s1">&#39;number_processor&#39;</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">package_name</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.0.0&#39;</span><span class="p">,</span>
+    <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]),</span>
+    <span class="n">data_files</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;share/ament_index/resource_index/packages&#39;</span><span class="p">,</span>
+            <span class="p">[</span><span class="s1">&#39;resource/&#39;</span> <span class="o">+</span> <span class="n">package_name</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s1">&#39;share/&#39;</span> <span class="o">+</span> <span class="n">package_name</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;package.xml&#39;</span><span class="p">]),</span>
+    <span class="p">],</span>
+    <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;setuptools&#39;</span><span class="p">],</span>
+    <span class="n">zip_safe</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">maintainer</span><span class="o">=</span><span class="s1">&#39;satyarth-shree&#39;</span><span class="p">,</span>
+    <span class="n">maintainer_email</span><span class="o">=</span><span class="s1">&#39;satyarth-shree@todo.todo&#39;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;TODO: Package description&#39;</span><span class="p">,</span>
+    <span class="n">license</span><span class="o">=</span><span class="s1">&#39;TODO: License declaration&#39;</span><span class="p">,</span>
+    <span class="n">extras_require</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s1">&#39;pytest&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>Before creating an executable we must first decide the name of our executable. I have chosen the name — number_publisher.</p>
+<p>So after giving proper indentation, I will write the following line in the console scripts section:</p>
+<div class="codehilite"><pre><span></span><code><span class="s2">&quot;number_publisher = number_processor.number_publisher:main&quot;</span>
+</code></pre></div>
+
+<p>After adding this line, our setup.py file will now look like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">setuptools</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_packages</span><span class="p">,</span> <span class="n">setup</span>
+
+<span class="n">package_name</span> <span class="o">=</span> <span class="s1">&#39;number_processor&#39;</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">package_name</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.0.0&#39;</span><span class="p">,</span>
+    <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]),</span>
+    <span class="n">data_files</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;share/ament_index/resource_index/packages&#39;</span><span class="p">,</span>
+            <span class="p">[</span><span class="s1">&#39;resource/&#39;</span> <span class="o">+</span> <span class="n">package_name</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s1">&#39;share/&#39;</span> <span class="o">+</span> <span class="n">package_name</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;package.xml&#39;</span><span class="p">]),</span>
+    <span class="p">],</span>
+    <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;setuptools&#39;</span><span class="p">],</span>
+    <span class="n">zip_safe</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">maintainer</span><span class="o">=</span><span class="s1">&#39;satyarth-shree&#39;</span><span class="p">,</span>
+    <span class="n">maintainer_email</span><span class="o">=</span><span class="s1">&#39;satyarth-shree@todo.todo&#39;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;TODO: Package description&#39;</span><span class="p">,</span>
+    <span class="n">license</span><span class="o">=</span><span class="s1">&#39;TODO: License declaration&#39;</span><span class="p">,</span>
+    <span class="n">extras_require</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s1">&#39;pytest&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;number_publisher = number_processor.number_publisher:main&quot;</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>If you are confused about the syntax which we have followed while creating this executable, then I would recommend you to read part 2 of this tutorial series.</p>
+<p>There I have explained how you can create an executable in more depth, which is why I have covered it briefly over here.</p>
+<p>Now we have created both the things — our publisher node as well as our executable to run it.</p>
+<p>The next major step is to build the workspace and then test our publisher node, whether it is properly working or not.</p>
+<h2 id="step-4-building-our-workspace-and-then-inspecting-our-publisher-node-using-command-line-tools">Step 4: Building our Workspace and then Inspecting our Publisher node using Command Line Tools<a class="headerlink" href="#step-4-building-our-workspace-and-then-inspecting-our-publisher-node-using-command-line-tools" title="Permanent link">&para;</a></h2>
+<p>After you have completed everything till step 3, follow this one.</p>
+<p>Move to the root of your workspace and then build it using the following command:</p>
+<div class="codehilite"><pre><span></span><code>colcon<span class="w"> </span>build
+</code></pre></div>
+
+<p>After building, it source the workspace by typing the following command:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>install/setup.bash
+</code></pre></div>
+
+<p>These commands must be executed sequentially, as shown in the image below:</p>
+<p><img alt="Building and sourcing our workspace" src="https://claude.ai/Images/part_10/sub_part_1/Image_1.png" /></p>
+<p><em>Figure 1: Building and sourcing our workspace</em></p>
+<p>If you are getting some errors then you would have likely made some mistake in one of these three files:</p>
+<ol>
+<li>number_publisher.py (The python file in which we have created our node)</li>
+<li>setup.py file (The python file in which we have created our executable)</li>
+<li>package.xml (The xml file in which we have added example_interfaces package as a dependency)</li>
+</ol>
+<p>Most common type of error which people do while working with ROS 2 nodes is syntax errors. If you miss even a comma in critical files like package.xml or setup.py, then you will find errors when you try to build your workspace.</p>
+<p>Sometimes no error will be shown and build will be successful but your node will fail to run.</p>
+<p>So make sure you are following whatever has been told in this article as it is to avoid any syntax errors.</p>
+<p>Now comes the fifth major step in which we will run our publisher node and inspect it via command line tools.</p>
+<h3 id="step-5-running-and-inspecting-our-publisher-node">Step 5: Running and Inspecting our Publisher Node<a class="headerlink" href="#step-5-running-and-inspecting-our-publisher-node" title="Permanent link">&para;</a></h3>
+<p>A common mistake that beginners do is that they make an entire system at once and then they wonder, where is the error, if it isn't working.</p>
+<p>ROS 2 is a middleware which has been designed to support modular software structures. So instead of building both the publisher and subscriber at once and then wondering why the system is not working, we will focus on the working on individual components first.</p>
+<p>Till now we have built one component, which is the publisher component. Before building the subscriber component, we will first check whether this component is working properly or not.</p>
+<p>This is exactly what we will be doing in this section.</p>
+<p>In my case, the name of the package inside which I have created my node is number_processor and the name of the executable which I have created to run this node is number_publisher.</p>
+<p>So to run my node, I will execute the following command in the same terminal instance where I have sourced my workspace:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>run<span class="w"> </span>number_processor<span class="w"> </span>number_publisher
+</code></pre></div>
+
+<p>You will see output being displayed:</p>
+<p><img alt="Output obtained after running publisher node" src="https://claude.ai/Images/part_10/sub_part_1/Image_2.png" /></p>
+<p><em>Figure 2: Output obtained after running publisher node</em></p>
+<p>This output is been displayed because we used the get_logger() method in our timer callback.</p>
+<p>To properly verify whether our publisher node is working or not we will now use the CLI tools about which we discussed in the part 9 of this tutorial series.</p>
+<p>Keep this terminal running as it is and open a second terminal instance. In this second terminal, write the following command and press enter:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span>list
+</code></pre></div>
+
+<p>You will get the following output after you run this command:</p>
+<p><img alt="Output of the command — ros2 topic list" src="https://claude.ai/Images/part_10/sub_part_1/Image_3.png" /></p>
+<p><em>Figure 3: Output of the command — ros2 topic list</em></p>
+<p>As you can see in figure no. 3, there are three different topics which are currently running. Out of these three the one on which our node is publishing messages is — "/number_processor_topic".</p>
+<p>The other two topics shown in the image are created automatically by ROS 2 whenever we run a node, so you don't have to do anything about them.</p>
+<p>To find the data being published on our topic, we will use the following command:</p>
+<div class="codehilite"><pre><span></span><code>ros2<span class="w"> </span>topic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/number_processor_topic
+</code></pre></div>
+
+<p>If your publisher node is working correctly, then you will see the following output being displayed:</p>
+<p><img alt="Output of the command — ros2 topic echo /number_processor_topic" src="https://claude.ai/Images/part_10/sub_part_1/Image_4.png" /></p>
+<p><em>Figure 4: Output of the command — ros2 topic echo /number_processor_topic</em></p>
+<p>As you can see in figure 4, numbers being published on the topic are in between 0 and 10.</p>
+<p>This is exactly what our publisher node was intended to do. Random numbers between 0 and 10 are getting published, which means our publisher node is working without any issues.</p>
+<p>So we basically ran and inspected our node. It is entirely possible that your publisher node is not working properly because you have made some mistakes while writing code.</p>
+<p>Now I will tell you how to debug a system when it isn't working properly.</p>
+<p>If you have got the publisher running then you can skip the next section, but I would recommend reading it as it gives you some important debugging system.</p>
+<p>If you got some errors and didn't succeeded in building this sub system then you should definitely read the next section.</p>
+<h3 id="step-6-debugging-and-troubleshooting-our-sub-system">Step 6: Debugging and Troubleshooting our Sub System<a class="headerlink" href="#step-6-debugging-and-troubleshooting-our-sub-system" title="Permanent link">&para;</a></h3>
+<p>First step of debugging a system is understanding the area where the possibility of errors is the maximum.</p>
+<p>I call this methodology — "<strong>The Scope of Error</strong>".</p>
+<p>This is not a widely used technical word. Instead, it is something that I started using myself, when I started spending significant time coding.</p>
+<h4 id="step-1-identifying-the-scope-of-error">Step 1: Identifying the Scope of Error<a class="headerlink" href="#step-1-identifying-the-scope-of-error" title="Permanent link">&para;</a></h4>
+<p>Here is the catch, when some error occurs most people start by checking everything which creates panic.</p>
+<p>When we are working on a complex project where multiple dependencies are involved which work in different environments then finding the scope of error becomes much harder.</p>
+<p>But in our case we are building a small component of a relatively simple system, so finding Scope of Error is relatively easy.</p>
+<p>The component which we are working on is the one you already know, the publisher component.</p>
+<p>Now to find the scope of error, ask yourself the following question:</p>
+<blockquote>
+<p><em>Where was the most manual work done?</em></p>
+</blockquote>
+<p>The area where the most amount of manual work was done is the area where the possibility of finding manual errors is usually the highest!</p>
+<p>The answer of the question is inside the src folder. You are right about that, but reduce the scope even more.</p>
+<p>We were primarily working in the number_processor package. So you may think that this is our scope.</p>
+<p>You are right, but reduce the scope even more.</p>
+<p>You will realize that the most amount of work was done in the following three files:</p>
+<ol>
+<li>Your python node file (which is number_publisher.py in my case)</li>
+<li>setup.py file</li>
+<li>package.xml file</li>
+</ol>
+<p>So is this the scope of your error?</p>
+<p>I would say the answer to this question is — almost, but not entirely.</p>
+<p>But why, so?</p>
+<p>Because there is one more area where manual work was done.</p>
+<p>That area is terminal. We ran two commands in terminal — one to build our workspace and the second one to source our workspace.</p>
+<p>These two commands may seem insignificant in size when compared with the large python file in which we have written our code, but they hold immense power.</p>
+<p>If you ran even a single of these two commands from the wrong directory, then your node won't run no matter how good your source code is.</p>
+<p>So basically I would say the correct Scope of Error from the system is the three files which I listed earlier and your terminal.</p>
+<p>I am very much confident that if you got some error in this part of our mini exercise then you have likely made a mistake in one of these four areas.</p>
+<p>One of the most effective way to identify the scope of error is to read the terminal logs which gets displayed whenever some error occurs.</p>
+<p>A common issue is that terminal logs are lengthy and it's tough to identify the error just by reading it, as it is not written in plain easily understandable english.</p>
+<p>But I would recommend you to try reading the error logs even if you find that difficult right now, so that you can gradually build your ability to debug systems independently.</p>
+<p>Now since we have identified the scope of error, let's move to the step 2 of debugging.</p>
+<h4 id="step-2-entry-point-of-the-scope-of-error">Step 2: Entry Point of the Scope of Error<a class="headerlink" href="#step-2-entry-point-of-the-scope-of-error" title="Permanent link">&para;</a></h4>
+<p>"Entry point of the Scope of Error" is another term which I frequently use when I talk with myself during development and coding sessions.</p>
+<p>After you have identified the Scope of Error, the Entry point of the scope of error is the file or the area of scope which you want to explore first.</p>
+<p>In my case I have decided that the entry point of scope of error will be the python file which consists our node.</p>
+<p>If you have made some syntax error in the node, then even if after building and sourcing your workspace correctly, you will keep getting errors.</p>
+<p>Make sure your python node file resembles exactly this structure:</p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">rclpy</span>  <span class="c1"># Importing first dependency</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rclpy.node</span><span class="w"> </span><span class="kn">import</span> <span class="n">Node</span>  <span class="c1"># Importing second dependency</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">example_interfaces.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Int64</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>  <span class="c1"># For generating random integers from 0 to 10</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Publisher</span><span class="p">(</span><span class="n">Node</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;number_processor_publisher&quot;</span><span class="p">)</span>  <span class="c1"># Using the super class constructor call statement to assign node name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_publisher</span><span class="p">(</span><span class="n">Int64</span><span class="p">,</span> <span class="s2">&quot;number_processor_topic&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Creating publisher object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timer_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_timer</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer_callback</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">timer_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">Int64</span><span class="p">()</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">publisher_</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Message published: </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">Publisher</span><span class="p">()</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">rclpy</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+<p>There should be zero syntax mistakes!</p>
+<p>After you have ensured that your python node matches exactly this structure, then you can reduce your scope of error even more.</p>
+<p>Now the error is likely in these three areas:</p>
+<ol>
+<li>setup.py file</li>
+<li>package.xml file</li>
+<li>The terminal instance from where you ran the node</li>
+</ol>
+<p>First we will inspect the setup.py file. Make sure you have correctly added your node as an executable. Syntax plays very important role here.</p>
+<p>My setup.py file which works correctly is having the following structure:</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">setuptools</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_packages</span><span class="p">,</span> <span class="n">setup</span>
+
+<span class="n">package_name</span> <span class="o">=</span> <span class="s1">&#39;number_processor&#39;</span>
+
+<span class="n">setup</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">package_name</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0.0.0&#39;</span><span class="p">,</span>
+    <span class="n">packages</span><span class="o">=</span><span class="n">find_packages</span><span class="p">(</span><span class="n">exclude</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">]),</span>
+    <span class="n">data_files</span><span class="o">=</span><span class="p">[</span>
+        <span class="p">(</span><span class="s1">&#39;share/ament_index/resource_index/packages&#39;</span><span class="p">,</span>
+            <span class="p">[</span><span class="s1">&#39;resource/&#39;</span> <span class="o">+</span> <span class="n">package_name</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s1">&#39;share/&#39;</span> <span class="o">+</span> <span class="n">package_name</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;package.xml&#39;</span><span class="p">]),</span>
+    <span class="p">],</span>
+    <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;setuptools&#39;</span><span class="p">],</span>
+    <span class="n">zip_safe</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">maintainer</span><span class="o">=</span><span class="s1">&#39;satyarth-shree&#39;</span><span class="p">,</span>
+    <span class="n">maintainer_email</span><span class="o">=</span><span class="s1">&#39;satyarth-shree@todo.todo&#39;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s1">&#39;TODO: Package description&#39;</span><span class="p">,</span>
+    <span class="n">license</span><span class="o">=</span><span class="s1">&#39;TODO: License declaration&#39;</span><span class="p">,</span>
+    <span class="n">extras_require</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;test&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s1">&#39;pytest&#39;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+    <span class="n">entry_points</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;console_scripts&#39;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;number_publisher = number_processor.number_publisher:main&quot;</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p>As you can see I gave proper indentation inside the console scripts section, before writing the line to create my executable. The line I have written to create my executable is:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">number_publisher</span> <span class="o">=</span> <span class="n">number_processor</span><span class="o">.</span><span class="n">number_publisher</span><span class="p">:</span><span class="n">main</span>
+</code></pre></div>
+
+<p>Here number_publisher is the name of my executable, number_processor is the name of the package inside which my node lives.</p>
+<p>The node is created inside the number_publisher.py file. In this file, the main() function acts as an entry point to the node which is written after the package name — number_publisher:main is written after being separated by a dot.</p>
+<p>So make sure the line which you have used to create your executable follows this syntax. To learn how to create an executable you can visit part 2. There a more in depth explanation has been provided.</p>
+<p>Now we have verified two things. The first one is the python file inside which we have created our node while the second one is setup.py file.</p>
+<p>If you had done any error in these two portions then it must have been resolved by now.</p>
+<p>If your error is still not resolved then continue reading.</p>
+<p>Now we will inspect the package.xml file.</p>
+<p>Make sure in the package.xml file you have included this line:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;depend&gt;</span>example_interfaces<span class="nt">&lt;/depend&gt;</span>
+</code></pre></div>
+
+<p>Just after the line:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;depend&gt;</span>rclpy<span class="nt">&lt;/depend&gt;</span>
+</code></pre></div>
+
+<p>I faintly remember once I wrote:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;depend&gt;</span>example_interfaces<span class="nt">&lt;depend&gt;</span>
+</code></pre></div>
+
+<p>Instead of</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">&lt;depend&gt;</span>example_interfaces<span class="nt">&lt;/depend&gt;</span>
+</code></pre></div>
+
+<p>As you can see I just missed a slash (/) symbol which might seem insignificant compared to huge lines of code.</p>
+<p>But package.xml is a file of significant importance for ROS 2 Build Systems as it gives a lot of information about a package and plays a very important role during the compilation process.</p>
+<p>When I made this mistake, my build command ran without any errors.</p>
+<p>But after I sourced the workspace, I realized my other packages got sourced but not this one on which I was currently working.</p>
+<p>A minor slash symbol was not easily visible to me when I tried to debug my system, because I focused on large files like the python node file.</p>
+<p>It took me 2 hours to realize that I have missed a small slash. After I corrected my mistake and again ran the build and source commands, then my package was properly sourced.</p>
+<p>What I concluded from this session was that even though colcon build ran successfully without any errors, my package was not registered as a package by ROS 2 Build Systems because of a minor syntax error in one line of the package.xml file.</p>
+<p>ROS 2 Internals are very complex. Sometimes commands will run smoothly without showing any signs of error but things will start failing silently. So make sure there are absolutely no errors in critical files like package.xml and setup.py which are of very high importance to ROS 2 build systems during the compilation process.</p>
+<p>Now there is one more thing left to debug!</p>
+<h4 id="step-3-analyzing-terminal-instance-for-errors">Step 3: Analyzing Terminal Instance for Errors<a class="headerlink" href="#step-3-analyzing-terminal-instance-for-errors" title="Permanent link">&para;</a></h4>
+<p>Focus on the terminal in which you ran the command to build and source your workspace.</p>
+<p>Make sure that these two commands were executed from the root of your workspace and not from any sub folder present inside it.</p>
+<p>If you ran the command to build your workspace from some another folder then your packages won't be properly compiled by ROS 2 build systems. Since compilation has not been done properly so your node won't work even if you source the workspace.</p>
+<p>If you have done this mistake of building from some another folder then navigate inside that folder via the cd command, and then execute the following command:</p>
+<div class="codehilite"><pre><span></span><code>rm<span class="w"> </span>-rf<span class="w"> </span>build/<span class="w"> </span>install/<span class="w"> </span>log/
+</code></pre></div>
+
+<p>This command will wipe out the files and folders which are automatically generated by ROS 2 build systems during the compilation process.</p>
+<p>Now navigate to the root of your workspace and type these commands one by one:</p>
+<div class="codehilite"><pre><span></span><code>colcon<span class="w"> </span>build
+<span class="nb">source</span><span class="w"> </span>install/setup.bash
+</code></pre></div>
+
+<p>Now your node will start working properly if all the errors which we discussed before have been fixed!</p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>This marks the end of this article. In the next one which is part 10.2, we will discuss how to make the subscriber component and by then our entire mini exercise will be completed.</p>
+<p>If you have followed all the steps mentioned in this article religiously, then your publisher component must be running successfully now.</p>
+<p>Stay Tuned and Keep learning!</p>
+<h2 id="about-the-publication-ros-simplified">About the Publication — ROS Simplified<a class="headerlink" href="#about-the-publication-ros-simplified" title="Permanent link">&para;</a></h2>
+<p>ROS Simplified is a learner-driven publication dedicated to making ROS (Robot Operating System) concepts clear, practical, and accessible. We provide tutorials, conceptual explainers, and project walkthroughs designed to help students, hobbyists, and engineers understand and apply ROS efficiently.</p>
+<p>If you want to receive notifications of tutorials like these directly in your inbox then you can subscribe to ROS Simplified by visiting the publication using links given below.</p>
+<p>This blog has also been published under the publication — ROS Simplified.</p>
+<p>To view other parts of this ROS 2 Tutorial series click here.</p>
+<h2 id="about-the-author">About the Author<a class="headerlink" href="#about-the-author" title="Permanent link">&para;</a></h2>
+<p>Hi, I am Satyarth Shree, a second-semester BTech Robotics and Automation student at Lovely Professional University (LPU), India. I am an aspiring robotics engineer who is publicly documenting his learning journey using platforms like Medium and Substack.</p>
+<p>My areas of interest include ROS, python and mathematics. Currently, I am focusing on ROS more. I have also started a publication named ROS Simplified to make ROS accessible to everyone by providing beginner-friendly tutorials free of cost.</p>
+<h3 id="lets-connect">Let's Connect<a class="headerlink" href="#lets-connect" title="Permanent link">&para;</a></h3>
+<ul>
+<li>My Github: https://github.com/Satyarth-Shree</li>
+<li>My LinkedIn: https://www.linkedin.com/in/satyarth-shree-761357374/</li>
+<li>My CodeWars: https://www.codewars.com/users/Satyarth-Shree</li>
+<li>My X: https://x.com/BuildUnderdog</li>
+<li>My Hashnode: https://hashnode.com/@SatyarthShree</li>
+<li>My Portfolio: https://satyarthshree.com</li>
+</ul>
+<p>To professionally contact me for internships, collaborations or similar opportunities click here: https://forms.gle/SH9bj1oJwqPtJtD26</p>
+<hr />
+<p><strong>Tags:</strong> Ros2, Robotics, Python, Robot Operating System, Ros2 Tutorial</p>
+<hr />
+<p><strong>Written by Satyarth Shree</strong> 32 followers · 22 following Aspiring Robotics Engineer | Exploring code, logic, and machines. Sharing my journey in robotics and programming. 🤖✨</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

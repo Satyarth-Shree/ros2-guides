@@ -2,46 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.satyarthshree.com/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
     </url>
     <url>
          <loc>https://docs.satyarthshree.com/Tutorials/part-1-create-your-first-workspace-and-package/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.satyarthshree.com/Tutorials/part-10-sub-part-1-building-a-number-processor/</loc>
+         <lastmod>2026-07-12</lastmod>
     </url>
     <url>
          <loc>https://docs.satyarthshree.com/Tutorials/part-2-creating-your-first-node/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
     </url>
     <url>
          <loc>https://docs.satyarthshree.com/Tutorials/part-3-sub-part-1-understanding-ros-2-nodes/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
     </url>
     <url>
          <loc>https://docs.satyarthshree.com/Tutorials/part-3-sub-part-2/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
     </url>
     <url>
          <loc>https://docs.satyarthshree.com/Tutorials/part-4-understanding-rclpy.spin/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
     </url>
     <url>
          <loc>https://docs.satyarthshree.com/Tutorials/part-5-manage-your-ROS-2-workspace-using-linux-commands/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
     </url>
     <url>
          <loc>https://docs.satyarthshree.com/Tutorials/part-6-topics-and-publisher-foundations/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
     </url>
     <url>
          <loc>https://docs.satyarthshree.com/Tutorials/part-7-creating-a-publisher-and-exploring-it-with-ros2-cli/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
     </url>
     <url>
          <loc>https://docs.satyarthshree.com/Tutorials/part-8-create-your-first-subscriber-node-in-python/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
     </url>
     <url>
          <loc>https://docs.satyarthshree.com/Tutorials/part-9-Exploring-Topics-with-ros2-command-line-tools/</loc>
-         <lastmod>2026-07-11</lastmod>
+         <lastmod>2026-07-12</lastmod>
     </url>
 </urlset>
