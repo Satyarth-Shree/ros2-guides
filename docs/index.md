@@ -1,4 +1,4 @@
-# ROS Simplified — ROS 2 Tutorials
+<div align="center"> <img src="assets/ROS_Simplified_Logo.png" alt="ROS Simplified Logo" width="200"/> <h1>ROS Simplified — ROS 2 Tutorials</h1> </div>
 
 Welcome to the documentation home of **ROS Simplified**, a learner-driven publication dedicated to making ROS (Robot Operating System) concepts clear, practical, and accessible.
 
@@ -22,17 +22,18 @@ The series currently covers workspace and package setup, node creation (both fun
 ## Tutorials
 
 |Part|Title|
-|---|---|
-|1|[Creating Your First Workspace and Package](Tutorials/part-1-create-your-first-workspace-and-package.md)|
-|2|[Creating Your First Node](Tutorials/part-2-creating-your-first-node.md)|
-|3 (Sub Part 1)|[Understanding ROS 2 Nodes — Sub Part 1](Tutorials/part-3-sub-part-1-understanding-ros-2-nodes.md)|
-|3 (Sub Part 2)|[Understanding ROS 2 Nodes — Sub Part 2](Tutorials/part-3-sub-part-2.md)|
-|4|[Understanding rclpy.spin()](Tutorials/part-4-understanding-rclpy.spin.md)|
-|5|[Manage Your ROS 2 Workspace Using Linux Commands](Tutorials/part-5-manage-your-ROS-2-workspace-using-linux-commands.md)|
-|6|[Topics and Publisher Foundations](Tutorials/part-6-topics-and-publisher-foundations.md)|
-|7|[Creating a Publisher and Exploring It with ROS2 CLI](Tutorials/part-7-creating-a-publisher-and-exploring-it-with-ros2-cli.md)|
-|8|[Create Your First Subscriber Node in Python](Tutorials/part-8-create-your-first-subscriber-node-in-python.md)|
-|9|[Exploring Topics with ROS2 Command Line Tools](Tutorials/part-9-Exploring-Topics-with-ros2-command-line-tools.md)|
+|:-:|:-:|
+|1|[Creating Your First Workspace and Package](https://claude.ai/chat/Tutorials/part-1-create-your-first-workspace-and-package.md)|
+|2|[Creating Your First Node](https://claude.ai/chat/Tutorials/part-2-creating-your-first-node.md)|
+|3 (Sub Part 1)|[Understanding ROS 2 Nodes — Sub Part 1](https://claude.ai/chat/Tutorials/part-3-sub-part-1-understanding-ros-2-nodes.md)|
+|3 (Sub Part 2)|[Understanding ROS 2 Nodes — Sub Part 2](https://claude.ai/chat/Tutorials/part-3-sub-part-2.md)|
+|4|[Understanding rclpy.spin()](https://claude.ai/chat/Tutorials/part-4-understanding-rclpy.spin.md)|
+|5|[Manage Your ROS 2 Workspace Using Linux Commands](https://claude.ai/chat/Tutorials/part-5-manage-your-ROS-2-workspace-using-linux-commands.md)|
+|6|[Topics and Publisher Foundations](https://claude.ai/chat/Tutorials/part-6-topics-and-publisher-foundations.md)|
+|7|[Creating a Publisher and Exploring It with ROS2 CLI](https://claude.ai/chat/Tutorials/part-7-creating-a-publisher-and-exploring-it-with-ros2-cli.md)|
+|8|[Create Your First Subscriber Node in Python](https://claude.ai/chat/Tutorials/part-8-create-your-first-subscriber-node-in-python.md)|
+|9|[Exploring Topics with ROS2 Command Line Tools](https://claude.ai/chat/Tutorials/part-9-Exploring-Topics-with-ros2-command-line-tools.md)|
+|10 (Sub Part 1)|[Building a Number Processor with Publishers and Subscribers](https://claude.ai/chat/Tutorials/part-10-sub-part-1-building-a-number-processor-with-publishers-and-subscribers.md)|
 
 ---
 

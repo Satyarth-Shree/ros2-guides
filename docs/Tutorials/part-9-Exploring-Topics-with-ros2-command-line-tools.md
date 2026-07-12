@@ -6,7 +6,7 @@
 
 In previous part, we have successfully created and ran our first subscriber node while in [part 7](https://medium.com/@satyarthshree45/ros-2-tutorial-for-beginners-part-7-creating-a-publisher-and-exploring-it-with-ros-2-cli-d98ac9cb4dd0) we created and ran our publisher node.
 
-So basically we have learned ROS 2 to a point where we can now create publisher and subscriber systems, but knowing only how to create them is not the end!
+So basically we have learned ROS 2 to a point where we can now create publisher and subscriber systems, b[[part-10-sub-part-1-building-a-number-processor]]ut knowing only how to create them is not the end!
 
 Sometimes you will try to establish communication between two nodes by making one of them a publisher and the other one a subscriber, but the desired communication won't happen. Many unwanted or you can say unexpected errors might happen.
 
