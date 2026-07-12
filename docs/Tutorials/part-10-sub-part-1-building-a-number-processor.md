@@ -1,6 +1,6 @@
 # ROS 2 Tutorial for Beginners (Part 10.1): Building a Number Processor with Publishers and Subscribers
 
-**Satyarth Shree** · _25 min read 
+**Satyarth Shree** · _25 minute read_
 
 > Build a complete ROS 2 mini project by creating a random number publisher, processing data with a subscriber, and validating communication using ROS 2 CLI tools.
 
