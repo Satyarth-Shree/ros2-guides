@@ -28,6 +28,7 @@ nav:
       - "Part 7: Creating a Publisher and Exploring It with ROS2 CLI": Tutorials/part-7-creating-a-publisher-and-exploring-it-with-ros2-cli.md
       - "Part 8: Create Your First Subscriber Node": Tutorials/part-8-create-your-first-subscriber-node-in-python.md
       - "Part 9: Exploring Topics with ROS2 CLI Tools": Tutorials/part-9-Exploring-Topics-with-ros2-command-line-tools.md
+      - "Part 10.1: Building a Number Processor using Publishers and Subscribers": Tutorials/part-10-sub-part-1-building-a-number-processor.md
 
 extra_css:
   - stylesheets/style.css
