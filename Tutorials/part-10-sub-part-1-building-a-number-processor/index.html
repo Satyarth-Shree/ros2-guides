@@ -13,6 +13,8 @@
         <link rel="canonical" href="https://docs.satyarthshree.com/Tutorials/part-10-sub-part-1-building-a-number-processor/">
       
       
+        <link rel="prev" href="../part-9-Exploring-Topics-with-ros2-command-line-tools/">
+      
       
       
         
@@ -23,7 +25,7 @@
     
     
       
-        <title>ROS 2 Tutorial for Beginners (Part 10.1): Building a Number Processor with Publishers and Subscribers - ROS Simplified</title>
+        <title>Part 10.1: Building a Number Processor using Publishers and Subscribers - ROS Simplified</title>
       
     
     
@@ -109,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              ROS 2 Tutorial for Beginners (Part 10.1): Building a Number Processor with Publishers and Subscribers
+              Part 10.1: Building a Number Processor using Publishers and Subscribers
             
           </span>
         </div>
@@ -254,8 +256,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -266,11 +270,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
@@ -291,7 +295,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -577,6 +581,303 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 10.1: Building a Number Processor using Publishers and Subscribers
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 10.1: Building a Number Processor using Publishers and Subscribers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#step-1-understand-and-break-down-the-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Understand and Break Down the System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-2-understanding-and-building-the-publisher-component" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Understanding and Building the Publisher Component
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 2: Understanding and Building the Publisher Component">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-import-required-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Import Required Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-create-publisher-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Create Publisher Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-create-timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Create Timer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-writer-timer-callback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Writer Timer Callback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-create-main-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Create main() function
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-3-create-an-executable-to-run-our-publisher-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Create an Executable to run our Publisher Node
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#step-4-building-our-workspace-and-then-inspecting-our-publisher-node-using-command-line-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: Building our Workspace and then Inspecting our Publisher node using Command Line Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 4: Building our Workspace and then Inspecting our Publisher node using Command Line Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-5-running-and-inspecting-our-publisher-node" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Running and Inspecting our Publisher Node
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-6-debugging-and-troubleshooting-our-sub-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 6: Debugging and Troubleshooting our Sub System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 6: Debugging and Troubleshooting our Sub System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-identifying-the-scope-of-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Identifying the Scope of Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-entry-point-of-the-scope-of-error" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Entry Point of the Scope of Error
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-analyzing-terminal-instance-for-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Analyzing Terminal Instance for Errors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-publication-ros-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About the Publication — ROS Simplified
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#about-the-author" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About the Author
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="About the Author">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lets-connect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Let's Connect
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
