@@ -574,7 +574,7 @@ source install/setup.bash
 
 These commands must be executed sequentially, as shown in the image below:
 
-![Building and sourcing our workspace](https://claude.ai/Images/part_10/sub_part_1/Image_1.png)
+![Building and sourcing our workspace](../Images/part_10/sub_part_1/Image_1.png)
 
 _Figure 1: Building and sourcing our workspace_
 
@@ -612,7 +612,7 @@ ros2 run number_processor number_publisher
 
 You will see output being displayed:
 
-![Output obtained after running publisher node](https://claude.ai/Images/part_10/sub_part_1/Image_2.png)
+![Output obtained after running publisher node](../Images/part_10/sub_part_1/Image_2.png)
 
 _Figure 2: Output obtained after running publisher node_
 
@@ -628,7 +628,7 @@ ros2 topic list
 
 You will get the following output after you run this command:
 
-![Output of the command — ros2 topic list](https://claude.ai/Images/part_10/sub_part_1/Image_3.png)
+![Output of the command — ros2 topic list|322](../Images/part_10/sub_part_1/Image_3.png)
 
 _Figure 3: Output of the command — ros2 topic list_
 
@@ -644,7 +644,7 @@ ros2 topic echo /number_processor_topic
 
 If your publisher node is working correctly, then you will see the following output being displayed:
 
-![Output of the command — ros2 topic echo /number_processor_topic](https://claude.ai/Images/part_10/sub_part_1/Image_4.png)
+![Output of the command — ros2 topic echo /number_processor_topic](../Images/part_10/sub_part_1/Image_4.png)
 
 _Figure 4: Output of the command — ros2 topic echo /number_processor_topic_
 
