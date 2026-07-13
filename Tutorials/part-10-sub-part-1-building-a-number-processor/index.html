@@ -1559,7 +1559,7 @@
 </code></pre></div>
 
 <p>These commands must be executed sequentially, as shown in the image below:</p>
-<p><img alt="Building and sourcing our workspace" src="https://claude.ai/Images/part_10/sub_part_1/Image_1.png" /></p>
+<p><img alt="Building and sourcing our workspace" src="../../Images/part_10/sub_part_1/Image_1.png" /></p>
 <p><em>Figure 1: Building and sourcing our workspace</em></p>
 <p>If you are getting some errors then you would have likely made some mistake in one of these three files:</p>
 <ol>
@@ -1582,7 +1582,7 @@
 </code></pre></div>
 
 <p>You will see output being displayed:</p>
-<p><img alt="Output obtained after running publisher node" src="https://claude.ai/Images/part_10/sub_part_1/Image_2.png" /></p>
+<p><img alt="Output obtained after running publisher node" src="../../Images/part_10/sub_part_1/Image_2.png" /></p>
 <p><em>Figure 2: Output obtained after running publisher node</em></p>
 <p>This output is been displayed because we used the get_logger() method in our timer callback.</p>
 <p>To properly verify whether our publisher node is working or not we will now use the CLI tools about which we discussed in the part 9 of this tutorial series.</p>
@@ -1591,7 +1591,7 @@
 </code></pre></div>
 
 <p>You will get the following output after you run this command:</p>
-<p><img alt="Output of the command — ros2 topic list" src="https://claude.ai/Images/part_10/sub_part_1/Image_3.png" /></p>
+<p><img alt="Output of the command — ros2 topic list|322" src="../../Images/part_10/sub_part_1/Image_3.png" /></p>
 <p><em>Figure 3: Output of the command — ros2 topic list</em></p>
 <p>As you can see in figure no. 3, there are three different topics which are currently running. Out of these three the one on which our node is publishing messages is — "/number_processor_topic".</p>
 <p>The other two topics shown in the image are created automatically by ROS 2 whenever we run a node, so you don't have to do anything about them.</p>
@@ -1600,7 +1600,7 @@
 </code></pre></div>
 
 <p>If your publisher node is working correctly, then you will see the following output being displayed:</p>
-<p><img alt="Output of the command — ros2 topic echo /number_processor_topic" src="https://claude.ai/Images/part_10/sub_part_1/Image_4.png" /></p>
+<p><img alt="Output of the command — ros2 topic echo /number_processor_topic" src="../../Images/part_10/sub_part_1/Image_4.png" /></p>
 <p><em>Figure 4: Output of the command — ros2 topic echo /number_processor_topic</em></p>
 <p>As you can see in figure 4, numbers being published on the topic are in between 0 and 10.</p>
 <p>This is exactly what our publisher node was intended to do. Random numbers between 0 and 10 are getting published, which means our publisher node is working without any issues.</p>
